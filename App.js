@@ -1,23 +1,41 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
+  Platform
 } from 'react-native';
+import {Login} from './components/login/login'
+import {StackNavigator} from 'react-navigation'
 
+
+/*
+################################################################################
+|--------------------------Navigation Routing----------------------------------|
+################################################################################
+*/
+const RootStack = StackNavigator({
+  Login: {
+    screen: Login,
+  },
+});
+
+
+/*
+################################################################################
+|----------------------Application Root Component------------------------------|
+################################################################################
+*/
+export default class App extends React.Component {
+  render() {
+    return <RootStack />;
+  }
+}
+/*
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
   android: 'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu',
 });
+
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -56,3 +74,4 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+*/
