@@ -3,8 +3,10 @@ import {
   Platform
 } from 'react-native';
 import {Login} from './components/login/login'
+import {Register} from './components/register/register'
 import {StackNavigator} from 'react-navigation'
 
+import {DeckSwiperExample} from './components/test'
 
 /*
 ################################################################################
@@ -12,10 +14,17 @@ import {StackNavigator} from 'react-navigation'
 ################################################################################
 */
 const RootStack = StackNavigator({
-  Login: {
+  Register: {
     screen: Login,
   },
-});
+},
+{
+  headerMode: 'none',
+  navigationOptions: {
+    headerVisible: false,
+  }
+ }
+);
 
 
 /*
