@@ -3,10 +3,8 @@ import {
   Platform
 } from 'react-native';
 import {Login} from './components/login/login'
-import {Register} from './components/register/register'
 import {StackNavigator} from 'react-navigation'
-
-import {DeckSwiperExample} from './components/test'
+import { Root } from "native-base";
 
 /*
 ################################################################################
@@ -34,7 +32,11 @@ const RootStack = StackNavigator({
 */
 export default class App extends React.Component {
   render() {
-    return <RootStack />;
+    return (
+      <Root>
+        <RootStack />
+      </Root>
+    )
   }
 }
 /*

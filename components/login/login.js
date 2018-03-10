@@ -1,21 +1,204 @@
 import React from 'react';
-import { View ,TextInput,ActivityIndicator,ImageBackground,StyleSheet,StatusBar} from 'react-native';
+import { View ,TextInput,ActivityIndicator,ImageBackground,StyleSheet,StatusBar,AsyncStorage} from 'react-native';
 import { 
-    Container, Header, Content, Form, Item, Input, sLabel ,Label,Icon,Button,Text,Card, CardItem,  Footer, FooterTab, Picker,} 
+    Container, Header, Content, Form, Item, Input, sLabel ,Label,Icon,Button,Text,Card, CardItem,  Footer, FooterTab, Picker,Toast} 
     from 'native-base';
+
+import {AuthService} from '../../services/auth'
+
 
 export class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {password: '',username:'',login_b:false,data: [{title:"no data yet"}],selected2:undefined,reg_v: false};
+    this.state = {
+      password: '',
+      username:'',
+      email:'',
+      login_b:false,
+      selected2:undefined,
+      reg_v: false,
+      access_token: null,
+      auth_service: new AuthService()
+    };
+    this.checkStoredToken()
+    
+    
   }
+  /**
+   * ##########################################################
+   * |--------------------checkStoredToken--------------------|
+   * |-Checks if user has a stored token                     -|
+   * |-if so passes it to validate token                     -|                                                        
+   * ##########################################################
+   */
+
+  checkStoredToken(){
+    AsyncStorage.getItem("access_token").then((value) => {
+      if(value!=undefined){
+        this.setState({access_token:value})
+        this.validateToken()
+      }
+    
+  }).done();
+  }
+
+
+  /**
+   * ##########################################################
+   * |----------------------validateToken---------------------|
+   * |-sends a post request to /auth/me to check             -|
+   * |-validity of stored token                              -|                                                        
+   * ##########################################################
+   */
+
+
+
+  validateToken(){
+    body =  JSON.stringify({
+      access_token: this.state.access_token
+    })
+    this.state.auth_service.post(body,'/auth/me')
+      //.then((response) =>{ return response.json()})
+      .then((response) => {
+        if(response.status!=200){
+          //invalid token
+        }
+        else{
+          //valid token
+          this.showToast('Already logged in! moving you to home','Take me there')
+        }
+      })
+      .catch((error) => {
+        alert("error happend")
+        console.error(error);
+      });
+  }
+
+
+
+  /**
+   * ##########################################################
+   * |--------------------------login-------------------------|
+   * |-sends a post request to /auth/login with              -|
+   * |-user data to check if user exists/authenticated       -|               
+   * |-if authenticated,stores token recieved for            -|
+   * |-future communication with server on user's behalf     -|                                   
+   * ##########################################################
+   */
+
+
+  login() {
+    body =  JSON.stringify({
+      email: this.state.email,
+      username: this.state.username,
+      password: this.state.password,
+    })
+    this.state.auth_service.post(body,'/auth/login')
+      .then((response) =>{ return response.json()})
+      .then((response) => {
+        if(this.state.auth_service.handleToken(response)){
+          this.showToast('Logged in Successfully','Cool')
+        }
+        else{
+          this.showToast(response.message||"something went wrong,try again","Okay")
+        }
+        this.setState({login_b:false})
+        //this.setState({data: responseJson.message})
+      })
+      .catch((error) => {
+        alert("error happend")
+        console.error(error);
+        this.setState({login_b:false})
+      });
+  }
+
+
+  /**
+   * ##########################################################
+   * |------------------------register------------------------|
+   * |-sends a post request to /auth/signup with             -|
+   * |-user data to create a new account if user does not    -|               
+   * |- exist,if created,stores token recieved for           -|
+   * |-future communication with server on user's behalf     -|                                   
+   * ##########################################################
+   */
+
+  register(){
+    body = JSON.stringify({
+      email: this.state.email,
+      username: this.state.username,
+      bloodType: this.state.selected2,
+      password: this.state.password,
+    })
+
+    this.state.auth_service.post(body,'/auth/signup')
+      .then((response) => {return response.json()})
+      .then((response) => {
+
+        if(this.state.auth_service.handleToken(response)){
+          this.showToast("Registered Successfully","Great")
+        }
+        else{
+          this.showToast(response.message||"something went wrong,try again","Okay")
+        }
+        this.setState({login_b:false})
+      })
+      .catch((error) => {
+        alert("error happend")
+        console.error(error);
+        this.setState({login_b:false})
+      });
+
+
+  }
+
+
+  /**
+   * ##########################################################
+   * |-----------------------handle Click---------------------|
+   * |-calls login/register based on the current view        -|                           
+   * ##########################################################
+   */
+  handleClick(){
+    if(!this.state.reg_v){
+      //login
+      this.login()
+    } 
+    else{
+      //sign up
+      this.register()
+    } 
+  }
+ /**
+   * ##########################################################
+   * |-----------------------onValueChange2-------------------|
+   * |-keeps track of blood type current value               -|                           
+   * ##########################################################
+   */
   onValueChange2(value) {
     this.setState({
       selected2: value
     });
   }
+   /**
+   * ##########################################################
+   * |-------------------------showToast----------------------|
+   * |-create Toast pattern to avoid repeating code          -|                           
+   * ##########################################################
+   */
+  showToast(msg,btn){
+    Toast.show({
+      text: msg,
+      position: 'bottom',
+      buttonText: btn,
+      duration: 5000
+    })
+  }
+
+
   render() {
     const self = this;
+    
 
     return (
         <ImageBackground style={styles.container}
@@ -32,32 +215,33 @@ export class Login extends React.Component {
 
                 
                 <Form style={{margin:15}}>
-                    <Item floatingLabel   style={{width:'100%'}}>
-                    <Label style={{color:'white'}}>Username </Label>
-                    <Input
+             
+                    
+                    <Item floatingLabel  style={{width:'100%'}}>
+                    <Label  style={{fontFamily:'Foundation',color:'white'}}>username</Label>
+                    <Input 
                     style={{color:'white'}}
-                      onChangeText={(text) => this.setState({username: text})}
+                        onChangeText={(text) => this.setState({username: text})}
                     />
                     
-
                     </Item>
-
                   {
                     this.state.reg_v    &&
-                    <Item floatingLabel  style={{width:'100%'}}>
-                    <Label  style={{color:'white'}}>Email</Label>
-                    <Input 
+                    <Item floatingLabel   style={{width:'100%'}}>
+                    <Label style={{fontFamily:'Foundation',color:'white'}}>Email </Label>
+                    <Input
                     style={{color:'white'}}
-                        onChangeText={(text) => this.setState({password: text})}
+                      onChangeText={(text) => this.setState({email: text})}
                     />
-                    
                     </Item>
-                    }
+                    
+                  }
 
                     
                     <Item floatingLabel  style={{width:'100%'}}>
-                    <Label  style={{color:'white'}}>Password</Label>
+                    <Label  style={{fontFamily:'Foundation',color:'white'}}>Password</Label>
                     <Input 
+                    secureTextEntry={true}
                     style={{color:'white'}}
                         onChangeText={(text) => this.setState({password: text})}
                     />
@@ -80,11 +264,11 @@ export class Login extends React.Component {
                         selectedValue={this.state.selected2}
                         onValueChange={this.onValueChange2.bind(this)}
                       >
-                        <Item label="A+"  style={{fontFamily:'Foundation'}} value="key0" />
-                        <Item label="A"  style={{fontFamily:'Foundation'}} value="key1" />
-                        <Item label="AB"  style={{fontFamily:'Foundation'}} value="key2" />
-                        <Item label="O"  style={{fontFamily:'Foundation'}} value="key3" />
-                        <Item label="O+"  style={{fontFamily:'Foundation'}} value="key4" />
+                        <Item label="A+"  style={{fontFamily:'Foundation'}} value="A+" />
+                        <Item label="A"  style={{fontFamily:'Foundation'}} value="A" />
+                        <Item label="AB"  style={{fontFamily:'Foundation'}} value="AB" />
+                        <Item label="O"  style={{fontFamily:'Foundation'}} value="O" />
+                        <Item label="O+"  style={{fontFamily:'Foundation'}} value="O+" />
                     </Picker>
                 }
 
@@ -92,9 +276,9 @@ export class Login extends React.Component {
 
 
                 <Button
-                 style={{margin:21,backgroundColor:'white'}}
+                 style={{margin:21,backgroundColor:'white',}}
                  block rounded bordered primary disabled={this.state.login_b} iconLeft
-                 onPress={ (dull)=>{ this.setState({login_b:true})} }
+                 onPress={ (dull)=>{ this.setState({login_b:true});this.handleClick()} }
 
                 >
 
@@ -108,12 +292,11 @@ export class Login extends React.Component {
                 }
                 {
                     !this.state.login_b &&
-                    <Text> { !this.state.reg_v ? 'Login' : 'Register'} </Text>
+                    <Text style={{fontFamily:'Foundation'}}> { !this.state.reg_v ? 'Login' : 'Register'} </Text>
                 }
          
                 </Button>
           
-                
             
 
             </Content>
@@ -126,15 +309,15 @@ export class Login extends React.Component {
 
             >
               <Icon  name="navigate" />
-              <Text>Register</Text>
+              <Text  style={{fontFamily:'Foundation'}}>Register</Text>
             </Button>
             <Button active ={!this.state.reg_v}
-            onPress={ (dull)=>{ this.setState({reg_v:false})} }
+            onPress={ (dull)=>{ this.setState({reg_v:false});} }
 
             
             >
               <Icon active name="person" />
-              <Text>Login</Text>
+              <Text  style={{fontFamily:'Foundation'}}>Login</Text>
             </Button>
           </FooterTab>
         </Footer>
@@ -150,17 +333,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
    
-    },
-    welcome: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 10,
-    },
-    instructions: {
-      textAlign: 'center',
-      color: '#333333',
-      marginBottom: 5,
-    },
+    }
   });
   
 
