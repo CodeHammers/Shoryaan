@@ -3,6 +3,8 @@ import {
   Platform
 } from 'react-native';
 import {Login} from './components/login/login'
+import {Home} from './components/home/home'
+
 import {StackNavigator} from 'react-navigation'
 import { Root } from "native-base";
 
@@ -12,16 +14,20 @@ import { Root } from "native-base";
 ################################################################################
 */
 const RootStack = StackNavigator({
-  Register: {
+  Login: {
     screen: Login,
+  },
+  Home:{
+    screen: Home
   },
 },
 {
   headerMode: 'none',
   navigationOptions: {
     headerVisible: false,
-  }
- }
+  },
+  initialRouteName: 'Login',
+},
 );
 
 
@@ -31,6 +37,7 @@ const RootStack = StackNavigator({
 ################################################################################
 */
 export default class App extends React.Component {
+
   render() {
     return (
       <Root>

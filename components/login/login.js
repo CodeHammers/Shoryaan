@@ -14,9 +14,9 @@ export class Login extends React.Component {
       password: '',
       username:'',
       email:'',
-      login_b:false,
+      show_loader:false,
       selected2:undefined,
-      reg_v: false,
+      register_or_login_view: false,
       access_token: null,
       auth_service: new AuthService()
     };
@@ -25,11 +25,9 @@ export class Login extends React.Component {
     
   }
   /**
-   * ##########################################################
-   * |--------------------checkStoredToken--------------------|
-   * |-Checks if user has a stored token                     -|
-   * |-if so passes it to validate token                     -|                                                        
-   * ##########################################################
+   * Checks if user has a stored token                     
+   * if so passes it to validate token                                                                          
+   * **********************************************************
    */
 
   checkStoredToken(){
@@ -44,15 +42,10 @@ export class Login extends React.Component {
 
 
   /**
-   * ##########################################################
-   * |----------------------validateToken---------------------|
-   * |-sends a post request to /auth/me to check             -|
-   * |-validity of stored token                              -|                                                        
-   * ##########################################################
+   * sends a post request to /auth/me to check             
+   * validity of stored token                                                                                     
+   * **********************************************************
    */
-
-
-
   validateToken(){
     body =  JSON.stringify({
       access_token: this.state.access_token
@@ -66,6 +59,7 @@ export class Login extends React.Component {
         else{
           //valid token
           this.showToast('Already logged in! moving you to home','Take me there')
+          this.props.navigation.navigate('Home')
         }
       })
       .catch((error) => {
@@ -77,13 +71,11 @@ export class Login extends React.Component {
 
 
   /**
-   * ##########################################################
-   * |--------------------------login-------------------------|
-   * |-sends a post request to /auth/login with              -|
-   * |-user data to check if user exists/authenticated       -|               
-   * |-if authenticated,stores token recieved for            -|
-   * |-future communication with server on user's behalf     -|                                   
-   * ##########################################################
+   * sends a post request to /auth/login with               
+   * user data to check if user exists/authenticated                     
+   * if authenticated,stores token recieved for             
+   * future communication with server on user's behalf                                         
+   * **********************************************************
    */
 
 
@@ -102,25 +94,23 @@ export class Login extends React.Component {
         else{
           this.showToast(response.message||"something went wrong,try again","Okay")
         }
-        this.setState({login_b:false})
+        this.setState({show_loader:false})
         //this.setState({data: responseJson.message})
       })
       .catch((error) => {
         alert("error happend")
         console.error(error);
-        this.setState({login_b:false})
+        this.setState({show_loader:false})
       });
   }
 
 
   /**
-   * ##########################################################
-   * |------------------------register------------------------|
-   * |-sends a post request to /auth/signup with             -|
-   * |-user data to create a new account if user does not    -|               
-   * |- exist,if created,stores token recieved for           -|
-   * |-future communication with server on user's behalf     -|                                   
-   * ##########################################################
+   * sends a post request to /auth/signup with             
+   * user data to create a new account if user does not                   
+   * exist,if created,stores token recieved for           
+   * future communication with server on user's behalf                                        
+   * **********************************************************
    */
 
   register(){
@@ -141,12 +131,12 @@ export class Login extends React.Component {
         else{
           this.showToast(response.message||"something went wrong,try again","Okay")
         }
-        this.setState({login_b:false})
+        this.setState({show_loader:false})
       })
       .catch((error) => {
         alert("error happend")
         console.error(error);
-        this.setState({login_b:false})
+        this.setState({show_loader:false})
       });
 
 
@@ -154,13 +144,11 @@ export class Login extends React.Component {
 
 
   /**
-   * ##########################################################
-   * |-----------------------handle Click---------------------|
-   * |-calls login/register based on the current view        -|                           
-   * ##########################################################
+   *  calls login/register based on the current view                                
+   * **********************************************************
    */
   handleClick(){
-    if(!this.state.reg_v){
+    if(!this.state.register_or_login_view){
       //login
       this.login()
     } 
@@ -170,28 +158,28 @@ export class Login extends React.Component {
     } 
   }
  /**
-   * ##########################################################
-   * |-----------------------onValueChange2-------------------|
-   * |-keeps track of blood type current value               -|                           
-   * ##########################################################
+   * keeps track of blood type current value                                       
+   * **********************************************************
    */
-  onValueChange2(value) {
+  onBloodTypeChanged(value) {
     this.setState({
       selected2: value
     });
   }
    /**
-   * ##########################################################
-   * |-------------------------showToast----------------------|
-   * |-create Toast pattern to avoid repeating code          -|                           
-   * ##########################################################
+   * create Toast pattern to avoid repeating code                                     
+   * **********************************************************
    */
   showToast(msg,btn){
     Toast.show({
       text: msg,
       position: 'bottom',
       buttonText: btn,
-      duration: 5000
+      duration: 5000,
+      style: {
+        backgroundColor: "#212121",
+        opacity:0.76
+       }
     })
   }
 
@@ -226,7 +214,7 @@ export class Login extends React.Component {
                     
                     </Item>
                   {
-                    this.state.reg_v    &&
+                    this.state.register_or_login_view    &&
                     <Item floatingLabel   style={{width:'100%'}}>
                     <Label style={{fontFamily:'Foundation',color:'white'}}>Email </Label>
                     <Input
@@ -255,14 +243,14 @@ export class Login extends React.Component {
 
 
                 {
-                    this.state.reg_v    &&
+                    this.state.register_or_login_view    &&
                     <Picker padder
                     style={{marginLeft:21,color:'white',marginRight:21}}
                       mode="dropdown"
                         placeholder="Blood Type"
                         note={false}
                         selectedValue={this.state.selected2}
-                        onValueChange={this.onValueChange2.bind(this)}
+                        onValueChange={this.onBloodTypeChanged.bind(this)}
                       >
                         <Item label="A+"  style={{fontFamily:'Foundation'}} value="A+" />
                         <Item label="A"  style={{fontFamily:'Foundation'}} value="A" />
@@ -277,22 +265,22 @@ export class Login extends React.Component {
 
                 <Button
                  style={{margin:21,backgroundColor:'white',}}
-                 block rounded bordered primary disabled={this.state.login_b} iconLeft
-                 onPress={ (dull)=>{ this.setState({login_b:true});this.handleClick()} }
+                 block rounded bordered primary disabled={this.state.show_loader} iconLeft
+                 onPress={ (dull)=>{ this.setState({show_loader:true});this.handleClick()} }
 
                 >
 
-                {this.state.login_b && (
+                {this.state.show_loader && (
                  <ActivityIndicator size="large" color="#0000ff" />
                 )            
                 }
                 {
-                    !this.state.login_b    &&
-                    <Icon name={ !this.state.reg_v ? 'person' : 'navigate'} />
+                    !this.state.show_loader    &&
+                    <Icon name={ !this.state.register_or_login_view ? 'person' : 'navigate'} />
                 }
                 {
-                    !this.state.login_b &&
-                    <Text style={{fontFamily:'Foundation'}}> { !this.state.reg_v ? 'Login' : 'Register'} </Text>
+                    !this.state.show_loader &&
+                    <Text style={{fontFamily:'Foundation'}}> { !this.state.register_or_login_view ? 'Login' : 'Register'} </Text>
                 }
          
                 </Button>
@@ -304,15 +292,15 @@ export class Login extends React.Component {
           <FooterTab>
             
             <Button 
-              onPress={ (dull)=>{ this.setState({reg_v:true})} }
-              active ={this.state.reg_v}
+              onPress={ (dull)=>{ this.setState({register_or_login_view:true})} }
+              active ={this.state.register_or_login_view}
 
             >
               <Icon  name="navigate" />
               <Text  style={{fontFamily:'Foundation'}}>Register</Text>
             </Button>
-            <Button active ={!this.state.reg_v}
-            onPress={ (dull)=>{ this.setState({reg_v:false});} }
+            <Button active ={!this.state.register_or_login_view}
+            onPress={ (dull)=>{ this.setState({register_or_login_view:false});} }
 
             
             >
