@@ -52,7 +52,7 @@ export class Home extends React.Component {
 
 
           <Card>
-            <CardItem>
+            <CardItem  button onPress={() => {this.props.navigation.navigate('Search')}}>
               <Left>
                 <Thumbnail source={require('../../heart.png')} />
                 <Body>
@@ -65,8 +65,8 @@ export class Home extends React.Component {
 
 
 
-          <Card>
-            <CardItem>
+          <Card >
+            <CardItem button onPress={() => {this.props.navigation.navigate('Profile')}}>
               <Left>
                 <Thumbnail source={require('../../prof.png')} />
                 <Body>

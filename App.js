@@ -4,8 +4,9 @@ import {
 } from 'react-native';
 import {Login} from './components/login/login'
 import {Home} from './components/home/home'
+import {Profile} from './components/profile/profile'
+import {Search} from './components/search/search'
 
-import {ImageBackground,StatusBar,StyleSheet} from 'react-native'
 import {StackNavigator} from 'react-navigation'
 import { Root } from "native-base";
 
@@ -21,6 +22,12 @@ const RootStack = StackNavigator({
   Home:{
     screen: Home
   },
+  Profile:{
+    screen: Profile
+  },
+  Search:{
+    screen: Search
+  }
 },
 {
   headerMode: 'none',
@@ -43,7 +50,6 @@ export default class App extends React.Component {
     return (
 
         <Root>
-   
           <RootStack />
         </Root>
     )
