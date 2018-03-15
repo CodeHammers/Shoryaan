@@ -5,6 +5,7 @@ import {
 import {Login} from './components/login/login'
 import {Home} from './components/home/home'
 
+import {ImageBackground,StatusBar,StyleSheet} from 'react-native'
 import {StackNavigator} from 'react-navigation'
 import { Root } from "native-base";
 
@@ -26,7 +27,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'Login',
+  initialRouteName: 'Home',
 },
 );
 
@@ -40,12 +41,16 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Root>
-        <RootStack />
-      </Root>
+
+        <Root>
+   
+          <RootStack />
+        </Root>
     )
   }
 }
+
+
 /*
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
