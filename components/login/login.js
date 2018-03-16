@@ -59,10 +59,12 @@ export class Login extends React.Component {
         else{
           response = response.json()
           .then((res_json)=>{
+       
             this.props.navigation.navigate('Home', {
               username: res_json.username,
               email: res_json.email,
               bloodtype: res_json.bloodtype
+              
             })
 
             }

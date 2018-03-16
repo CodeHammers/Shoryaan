@@ -18,6 +18,14 @@ export  class AuthService{
         }
         )
     }
+    /**
+     * modified version of post
+     * sends data with tokens attached to request
+     * enables accessing protected routes
+     */
+    post_with_tokens(body,route){
+
+    }
    /**
    *  Recieves a response from HTTP Request and extracts the
    *  access and refresh tokens to store them                                                                           
