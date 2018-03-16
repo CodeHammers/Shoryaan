@@ -57,13 +57,23 @@ export class Login extends React.Component {
           //invalid token
         }
         else{
+          response = response.json()
+          .then((res_json)=>{
+            this.props.navigation.navigate('Home', {
+              username: res_json.username,
+              email: res_json.email,
+              bloodtype: res_json.bloodtype
+            })
+
+            }
+          )
           //valid token
-          this.showToast('Already logged in! moving you to home','Take me there')
-          this.props.navigation.navigate('Home')
+          this.showToast('Already logged in! moving you to home','Good')
+  
         }
       })
       .catch((error) => {
-        alert("error happend")
+        alert("Cannot Connect to Server")
         console.error(error);
       });
   }
@@ -90,6 +100,11 @@ export class Login extends React.Component {
       .then((response) => {
         if(this.state.auth_service.handleToken(response)){
           this.showToast('Logged in Successfully','Cool')
+          this.props.navigation.navigate('Home', {
+            username: this.state.username,
+            email: this.state.email,
+          })
+
         }
         else{
           this.showToast(response.message||"something went wrong,try again","Okay")
@@ -98,7 +113,7 @@ export class Login extends React.Component {
         //this.setState({data: responseJson.message})
       })
       .catch((error) => {
-        alert("error happend")
+        alert("Cannot Connect to Server")
         console.error(error);
         this.setState({show_loader:false})
       });
@@ -127,6 +142,11 @@ export class Login extends React.Component {
 
         if(this.state.auth_service.handleToken(response)){
           this.showToast("Registered Successfully","Great")
+          this.props.navigation.navigate('Home', {
+            username: this.state.username,
+            email: this.state.email,
+          })
+
         }
         else{
           this.showToast(response.message||"something went wrong,try again","Okay")
@@ -134,7 +154,7 @@ export class Login extends React.Component {
         this.setState({show_loader:false})
       })
       .catch((error) => {
-        alert("error happend")
+        alert("Cannot Connect to Server")
         console.error(error);
         this.setState({show_loader:false})
       });

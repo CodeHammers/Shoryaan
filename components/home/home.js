@@ -8,10 +8,11 @@ import {AuthService} from '../../services/auth'
 export class Home extends React.Component {
     constructor(props) {
         super(props);
+        const { params } = this.props.navigation.state;
         this.state = {
-          username:'',
-          email:'',
-          access_token: null,
+          username:params.username || "unknown",
+          email:params.email || "unknown",
+          bloodtype: params.bloodtype || "?",
           auth_service: new AuthService()
         };
         
@@ -36,7 +37,7 @@ export class Home extends React.Component {
         <View style={{flex:0.75,backgroundColor:'#f5f5f5'}}>
         
           <Text style={{margin:11,color:'#212121',fontFamily:'foundation'}}>         
-           Good Day ! </Text>
+           welcome , {this.state.username}!</Text>
 
          <Card>
             <CardItem>
@@ -66,7 +67,7 @@ export class Home extends React.Component {
 
 
           <Card >
-            <CardItem button onPress={() => {this.props.navigation.navigate('Profile')}}>
+            <CardItem button onPress={() => {this.props.navigation.navigate('Profile',{username: this.state.username,email: this.state.email,bloodtype:this.state.bloodtype})}}>
               <Left>
                 <Thumbnail source={require('../../prof.png')} />
                 <Body>

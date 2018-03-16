@@ -2,21 +2,23 @@ import React from 'react';
 import {View,Image} from 'react-native'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,Fab , Card, CardItem,Thumbnail} from 'native-base';
 import {ImageBackground,StatusBar,StyleSheet} from 'react-native'
-import {H3} from 'native-base'
+import {H3,Input,Item,Label} from 'native-base'
 import {AuthService} from '../../services/auth'
 
 
 export class Profile extends React.Component {
     constructor(props) {
         super(props);
+        const { params } = this.props.navigation.state;
         this.state = {
-          username:'',
-          email:'',
-          access_token: null,
+          username:params.username || "unknown",
+          email:params.email || "unknown",
+          bloodtype: params.bloodtype || "unkown",
           auth_service: new AuthService()
         };
         
-    }      
+    } 
+   
     render() {
         const self = this;
         return (   
@@ -28,16 +30,16 @@ export class Profile extends React.Component {
         
                 <StatusBar
                 backgroundColor={'transparent'}
-                barStyle="light-content"
+                barStyle="light-content"Emad
                 translucent
                 />
                 <Header style={{backgroundColor:'transparent'}} noShadow={true} androidStatusBarColor={'transparent'}/>
 
                  <Thumbnail round source={require('../../hos.png')} />
-                    <Text style={{color:'white'}}> Kareem Emad</Text>
+                    <Text style={{color:'white'}}> {this.state.username}</Text>
                     <Text style={{color:'white'}}>
                     
-                    <Icon name='md-pin' color={'white'} />
+                    <Icon name='pin' style={{color:'white'}} />
                     Cairo,Egypt
                     </Text>
 
@@ -48,14 +50,14 @@ export class Profile extends React.Component {
                         <Left>
                             <Body>
                             <Text>User Name</Text>
-                            <Text note> Kareem Emad </Text>
+                            <Item>
+                                 <Input disabled={true} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder={this.state.username} />
+                            </Item>
                             </Body>
                         </Left>
-                        <Right>
-                            <Button transparent >
+                        <Button transparent Right >
                             <Text>Edit</Text>
-                            </Button>
-                        </Right>
+                        </Button>
                         </CardItem>
                     </Card>
                     <Card>
@@ -63,15 +65,14 @@ export class Profile extends React.Component {
                         <Left>
                             <Body>
                             <Text>E-mail</Text>
-                            <Text note> kareememad400@gmail.com </Text>
-
+                            <Item>
+                                 <Input disabled={true} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder={this.state.email} />
+                            </Item>
                             </Body>
                         </Left>
-                        <Right>
-                            <Button transparent >
+                            <Button transparent Right >
                             <Text>Edit</Text>
                             </Button>
-                        </Right>
                         </CardItem>
                     </Card>
                     <Card>
@@ -79,15 +80,14 @@ export class Profile extends React.Component {
                         <Left>
                             <Body>
                             <Text>Blood Type</Text>
-                            <Text note> O+ </Text>
-
+                            <Item>
+                                 <Input disabled={true} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder={this.state.bloodtype} />
+                            </Item>
                             </Body>
                         </Left>
-                        <Right>
-                            <Button transparent >
+                        <Button transparent Right >
                             <Text>Edit</Text>
-                            </Button>
-                        </Right>
+                        </Button>
                         </CardItem>
                     </Card>
 
@@ -96,15 +96,13 @@ export class Profile extends React.Component {
                         <Left>
                             <Body>
                             <Text>Password</Text>
-                            <Text note>Filtered </Text>
+                            <Text note>Protected </Text>
 
                             </Body>
                         </Left>
-                        <Right>
-                            <Button transparent >
+                        <Button transparent Right >
                             <Text>Edit</Text>
-                            </Button>
-                        </Right>
+                        </Button>
                         </CardItem>
                     </Card>
 
