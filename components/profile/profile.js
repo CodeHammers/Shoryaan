@@ -1,7 +1,7 @@
 import React from 'react';
 import {View,Image} from 'react-native'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,Fab , Card, CardItem,Thumbnail} from 'native-base';
-import {ImageBackground,StatusBar,StyleSheet,AsyncStorage} from 'react-native'
+import {ImageBackground,StatusBar,StyleSheet,AsyncStorage,ScrollView} from 'react-native'
 import {H3,Input,Toast,Item,Label,Picker} from 'native-base'
 import {AuthService} from '../../services/auth'
 
@@ -16,6 +16,8 @@ export class Profile extends React.Component {
           bloodtype: params.bloodtype || "?",
           native_username: params.username || "unknown",
           native_bloodtype: params.bloodtype || "?",
+          current_password:"",
+          new_password: "",
           edit_username:false,
           edit_password:false,
           edit_bloodtype:false,
@@ -81,6 +83,29 @@ export class Profile extends React.Component {
         })
     }
 
+    edit_password(){
+        if(!this.state.edit_password)
+            return;
+    
+        body = JSON.stringify({
+            password: this.state.current_password,
+            reset_password: this.state.new_password,
+            access_token: this.state.access_token 
+            })
+        this.state.auth_service.post(body,'/auth/resetpassword')
+        .then((response)=>{
+            if(response.status!=200){
+                this.setState({bloodtype:this.state.native_bloodtype})
+                this.showToast("Invalid update","ok")
+            }
+            else{
+                this.setState({native_bloodtype:this.state.bloodtype})
+                this.showToast("update sucess","ok")
+            }
+        })
+
+    }
+
     /**
      * create Toast pattern to avoid repeating code                                     
      * **********************************************************
@@ -115,7 +140,6 @@ export class Profile extends React.Component {
             
         
             <Container>
-
                 <View style={styles.container} >
         
                 <StatusBar
@@ -125,7 +149,7 @@ export class Profile extends React.Component {
                 />
                 <Header style={{backgroundColor:'transparent'}} noShadow={true} androidStatusBarColor={'transparent'}/>
 
-                 <Thumbnail round source={require('../../hos.png')} />
+                 <Thumbnail round source={require('../../prof.png')} />
                     <Text style={{color:'white'}}> {this.state.native_username}</Text>
                     <Text style={{color:'white'}}>
                     
@@ -134,14 +158,28 @@ export class Profile extends React.Component {
                     </Text>
 
                 </View>
-                <View style={{flex:0.65,backgroundColor:'#f5f5f5'}}>
+                <ScrollView>
+                <View style={{flex:0.55,backgroundColor:'#f5f5f5'}}>
+                    <Card>
+                        <CardItem>
+                        <Left>
+                            <Body>
+                            <Text>E-mail</Text>
+                            <Item>
+                                 <Input disabled={true} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder={this.state.email} />
+                            </Item>
+                            </Body>
+                        </Left>
+              
+                        </CardItem>
+                    </Card>
                     <Card>
                         <CardItem>
                         <Left>
                             <Body>
                             <Text>User Name</Text>
-                            <Item>
-                                 <Input disabled={!this.state.edit_username} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  
+                            <Item success={this.state.edit_username}>
+                                 <Input  disabled={!this.state.edit_username} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  
                                  placeholder={this.state.username} 
                                  onChangeText={(text) => this.setState({username: text})}
                                  />
@@ -153,21 +191,7 @@ export class Profile extends React.Component {
                         </Button>
                         </CardItem>
                     </Card>
-                    <Card>
-                        <CardItem>
-                        <Left>
-                            <Body>
-                            <Text>E-mail</Text>
-                            <Item>
-                                 <Input disabled={true} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder={this.state.email} />
-                            </Item>
-                            </Body>
-                        </Left>
-                            <Button disabled transparent Right >
-                            <Text>Edit</Text>
-                            </Button>
-                        </CardItem>
-                    </Card>
+          
                     <Card>
                         <CardItem>
                         <Left>
@@ -208,11 +232,17 @@ export class Profile extends React.Component {
                             {
                                 this.state.edit_password &&(
                                     <View>
-                                    <Item>
-                                        <Input disabled={true} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder={this.state.email} />
+                                    <Item success={true}>
+                                        <Input  style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder='Old Password'
+                                            onChangeText={(text) => this.setState({current_password: text})}
+                                            secureTextEntry={true}
+                                        />
                                     </Item>
-                                    <Item>
-                                        <Input disabled={true} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder={this.state.email} />
+                                    <Item success={true}>
+                                        <Input style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder='New Password' 
+                                            onChangeText={(text) => this.setState({new_password: text})}
+                                            secureTextEntry={true}
+                                        />
                                     </Item>
                                     </View>
                                 )
@@ -220,7 +250,7 @@ export class Profile extends React.Component {
                             </Body>
                         </Left>
                         <Button transparent Right 
-                        onPress={()=>{this.setState({edit_password:!this.state.edit_password});}}>
+                        onPress={()=>{this.setState({edit_password:!this.state.edit_password});this.edit_password()}}>
                             <Text>
                             { !this.state.edit_password?'Edit':'Done'}
                             </Text>
@@ -228,9 +258,8 @@ export class Profile extends React.Component {
                         </CardItem>
                     </Card>
 
-
                 </View>
-
+                </ScrollView>
             </Container>
 
         )
@@ -242,7 +271,7 @@ export class Profile extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: .35,
+    flex: .45,
     backgroundColor:'#555',
     alignItems: 'center'
   }
