@@ -1,7 +1,7 @@
 import React from 'react';
 import { View ,TextInput,ActivityIndicator,ImageBackground,StyleSheet,StatusBar,AsyncStorage} from 'react-native';
 import { 
-    Container, Header, Content, Form, Item, Input, sLabel ,Label,Icon,Button,Text,Card, CardItem,  Footer, FooterTab, Picker,Toast} 
+    Container, Header, Content, Form, Item, Input, sLabel ,Label,Icon,Button,Text,Card, CardItem,  Footer, FooterTab, Picker,Toast,Thumbnail} 
     from 'native-base';
 
 import {AuthService} from '../../services/auth'
@@ -234,16 +234,22 @@ export class Login extends React.Component {
         <ImageBackground style={styles.container}
         source={require('../../blood_s.jpg')}>
 
-        <Container style={{opacity:.5,backgroundColor:'#E91E63'}}>
-        <StatusBar
-          backgroundColor={'transparent'}
-          barStyle="light-content"
-          translucent
-        />
+        <Container style={{opacity:.65,backgroundColor:'#E91E63'}}>
+ 
             <Content>
-                
+                <View style={{alignContent:'center',alignItems:'center',flex:.35}}>
+                    <StatusBar
+                        backgroundColor={'transparent'}
+                        barStyle="light-content"
+                        translucent
+                      />
+                    <Header style={{backgroundColor:'transparent'}} noShadow={true} androidStatusBarColor={'transparent'}/>
 
-                
+                    <Thumbnail round source={require('../../diagonise.png')} />
+                    <Text style={{color:'white'}}> Shoryaan</Text>
+                </View>
+
+                <View style={{flex:.65}}>
                 <Form style={{margin:15}}>
              
                     
@@ -331,7 +337,7 @@ export class Login extends React.Component {
          
                 </Button>
           
-            
+            </View>
 
             </Content>
             <Footer>
@@ -355,6 +361,7 @@ export class Login extends React.Component {
             </Button>
           </FooterTab>
         </Footer>
+      
         </Container>
         </ImageBackground>
 
