@@ -15,7 +15,7 @@ export class Login extends React.Component {
       username:'',
       email:'',
       show_loader:false,
-      selected2:undefined,
+      selected2:'?',
       register_or_login_view: false,
       access_token: null,
       auth_service: new AuthService()
@@ -31,6 +31,7 @@ export class Login extends React.Component {
    */
 
   checkStoredToken(){
+    
     AsyncStorage.getItem("access_token").then((value) => {
       if(value!=undefined){
         this.setState({access_token:value})
@@ -98,10 +99,19 @@ export class Login extends React.Component {
       password: this.state.password,
     })
     this.state.auth_service.post(body,'/auth/login')
-      .then((response) =>{ return response.json()})
+      .then((response) =>{ 
+        if(response.status!=200)
+          return null;
+        
+        return response.json()})
       .then((response) => {
-        if(this.state.auth_service.handleToken(response)){
-          this.showToast('Logged in Successfully','Cool')
+        if(response==null){
+          this.showToast("invalid credentials","Okay")
+          this.setState({show_loader:false})
+          return ;
+        }
+        if( this.state.auth_service.handleToken(response)){
+          this.showToast('Logged in Successfully','Great')
           this.props.navigation.navigate('Home', {
             username: this.state.username,
             email: this.state.email,
@@ -115,7 +125,7 @@ export class Login extends React.Component {
         //this.setState({data: responseJson.message})
       })
       .catch((error) => {
-        alert("Cannot Connect to Server")
+        alert(error)
         console.error(error);
         this.setState({show_loader:false})
       });
@@ -134,14 +144,24 @@ export class Login extends React.Component {
     body = JSON.stringify({
       email: this.state.email,
       username: this.state.username,
-      bloodType: this.state.selected2,
+      bloodtype: this.state.selected2,
       password: this.state.password,
     })
 
     this.state.auth_service.post(body,'/auth/signup')
-      .then((response) => {return response.json()})
       .then((response) => {
-
+        if(response.status!=200){
+         return null;
+        }
+        
+        return response.json()
+      })
+      .then((response) => {
+        if(response==null){
+          this.showToast("invalid credentials","Okay")
+          this.setState({show_loader:false})
+          return ;
+        }
         if(this.state.auth_service.handleToken(response)){
           this.showToast("Registered Successfully","Great")
           this.props.navigation.navigate('Home', {
@@ -269,16 +289,20 @@ export class Login extends React.Component {
                     <Picker padder
                     style={{marginLeft:21,color:'white',marginRight:21}}
                       mode="dropdown"
-                        placeholder="Blood Type"
                         note={false}
                         selectedValue={this.state.selected2}
                         onValueChange={this.onBloodTypeChanged.bind(this)}
                       >
-                        <Item label="A+"  style={{fontFamily:'Foundation'}} value="A+" />
-                        <Item label="A"  style={{fontFamily:'Foundation'}} value="A" />
-                        <Item label="AB"  style={{fontFamily:'Foundation'}} value="AB" />
-                        <Item label="O"  style={{fontFamily:'Foundation'}} value="O" />
-                        <Item label="O+"  style={{fontFamily:'Foundation'}} value="O+" />
+                        <Item label='O+'  style={{fontFamily:'Foundation'}} value='O+' />
+                        <Item label="O-"  style={{fontFamily:'Foundation'}} value="O-" />
+                        <Item label="AB"  style={{fontFamily:'Foundation'}} value="A+" />
+                        <Item label="A-"  style={{fontFamily:'Foundation'}} value="A-" />
+                        <Item label="B+"  style={{fontFamily:'Foundation'}} value="B+" />
+                        <Item label="B-"  style={{fontFamily:'Foundation'}} value="B-" />
+                        <Item label="AB+"  style={{fontFamily:'Foundation'}} value="AB+" />
+                        <Item label="AB-"  style={{fontFamily:'Foundation'}} value="AB-" />
+
+                        <Item label="?"  style={{fontFamily:'Foundation'}} value="?" />
                     </Picker>
                 }
 

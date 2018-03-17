@@ -144,7 +144,7 @@ export class Profile extends React.Component {
         
                 <StatusBar
                 backgroundColor={'transparent'}
-                barStyle="light-content"Emad
+                barStyle="light-content"
                 translucent
                 />
                 <Header style={{backgroundColor:'transparent'}} noShadow={true} androidStatusBarColor={'transparent'}/>
@@ -178,7 +178,7 @@ export class Profile extends React.Component {
                         <Left>
                             <Body>
                             <Text>User Name</Text>
-                            <Item success={this.state.edit_username}>
+                            <Item  success={this.state.edit_username}>
                                  <Input  disabled={!this.state.edit_username} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  
                                  placeholder={this.state.username} 
                                  onChangeText={(text) => this.setState({username: text})}
@@ -204,11 +204,15 @@ export class Profile extends React.Component {
                                 selectedValue={this.state.bloodtype}
                                 onValueChange={this.onBloodTypeChanged.bind(this)}
                             >
-                                <Item label="A+"  style={{fontFamily:'Foundation'}} value="A+" />
-                                <Item label="A"  style={{fontFamily:'Foundation'}} value="A" />
-                                <Item label="AB"  style={{fontFamily:'Foundation'}} value="AB" />
-                                <Item label="O"  style={{fontFamily:'Foundation'}} value="O" />
-                                <Item label="O+"  style={{fontFamily:'Foundation'}} value="O+" />
+                                 <Item label='O+'  style={{fontFamily:'Foundation'}} value='O+' />
+                                <Item label="O-"  style={{fontFamily:'Foundation'}} value="O-" />
+                                <Item label="AB"  style={{fontFamily:'Foundation'}} value="A+" />
+                                <Item label="A-"  style={{fontFamily:'Foundation'}} value="A-" />
+                                <Item label="B+"  style={{fontFamily:'Foundation'}} value="B+" />
+                                <Item label="B-"  style={{fontFamily:'Foundation'}} value="B-" />
+                                <Item label="AB+"  style={{fontFamily:'Foundation'}} value="AB+" />
+                                <Item label="AB-"  style={{fontFamily:'Foundation'}} value="AB-" />
+
                                 <Item label="?"  style={{fontFamily:'Foundation'}} value="?" />
 
                             </Picker>
