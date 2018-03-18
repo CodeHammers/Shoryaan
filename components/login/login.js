@@ -18,6 +18,9 @@ export class Login extends React.Component {
       selected2:'?',
       register_or_login_view: false,
       access_token: null,
+      valid_pass: undefined,
+      valid_username: undefined,
+      valid_email: undefined,
       auth_service: new AuthService()
     };
     this.checkStoredToken()
@@ -47,7 +50,8 @@ export class Login extends React.Component {
    * validity of stored token                                                                                     
    * **********************************************************
    */
-  validateToken(){
+  validateToken(no_toast){
+    this.setState({show_loader:true})
     body =  JSON.stringify({
       access_token: this.state.access_token
     })
@@ -55,6 +59,7 @@ export class Login extends React.Component {
       //.then((response) =>{ return response.json()})
       .then((response) => {
         if(response.status!=200){
+          this.setState({show_loader:false})
           //invalid token
         }
         else{
@@ -67,18 +72,23 @@ export class Login extends React.Component {
               bloodtype: res_json.bloodtype
               
             })
+            this.setState({show_loader:false})
+
 
             }
           )
           //valid token
-          this.showToast('Already logged in! moving you to home','Good')
+          if(no_toast!=true)
+            this.showToast('Already logged in! moving you to home','Good')
   
         }
       })
       .catch((error) => {
+        this.setState({show_loader:false})
         alert("Cannot Connect to Server")
         console.error(error);
       });
+
   }
 
 
@@ -93,6 +103,11 @@ export class Login extends React.Component {
 
 
   login() {
+    if( true!=this.state.valid_pass || this.state.valid_username!=true){
+      this.showToast("Errors Detected in form ","I'll check")
+      this.setState({show_loader:false})
+      return;
+    }
     body =  JSON.stringify({
       email: this.state.email,
       username: this.state.username,
@@ -112,10 +127,13 @@ export class Login extends React.Component {
         }
         if( this.state.auth_service.handleToken(response)){
           this.showToast('Logged in Successfully','Great')
+          this.validateToken(true)
+          /*
           this.props.navigation.navigate('Home', {
             username: this.state.username,
             email: this.state.email,
           })
+          */
 
         }
         else{
@@ -125,10 +143,27 @@ export class Login extends React.Component {
         //this.setState({data: responseJson.message})
       })
       .catch((error) => {
-        alert(error)
-        console.error(error);
+        alert("Could not connect to server")
         this.setState({show_loader:false})
       });
+  }
+
+
+  validate_username(email){
+    el =this.state.username.length
+    return (el >=2 || this.setState({valid_username:false}) ) && this.setState({valid_username:true})
+  }
+  validate_password(){
+    
+    pl =this.state.password.length
+     return (pl >=8 || this.setState({valid_pass:false}) ) && this.setState({valid_pass:true})
+  }
+  validate_email(){
+    return ( this.validateEmail(this.state.email) || this.setState({valid_email:false}) ) && this.setState({valid_email:true})
+  }
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   }
 
 
@@ -141,6 +176,11 @@ export class Login extends React.Component {
    */
 
   register(){
+    if(true!=this.state.valid_email || true!=this.state.valid_pass || this.state.valid_username!=true){
+      this.showToast("Errors Detected in form ","I'll check")
+      this.setState({show_loader:false})
+      return;
+    }
     body = JSON.stringify({
       email: this.state.email,
       username: this.state.username,
@@ -158,7 +198,7 @@ export class Login extends React.Component {
       })
       .then((response) => {
         if(response==null){
-          this.showToast("invalid credentials","Okay")
+          this.showToast("User Exists","Hmmm")
           this.setState({show_loader:false})
           return ;
         }
@@ -167,6 +207,7 @@ export class Login extends React.Component {
           this.props.navigation.navigate('Home', {
             username: this.state.username,
             email: this.state.email,
+            bloodtype: this.state.selected2
           })
 
         }
@@ -177,7 +218,6 @@ export class Login extends React.Component {
       })
       .catch((error) => {
         alert("Cannot Connect to Server")
-        console.error(error);
         this.setState({show_loader:false})
       });
 
@@ -234,10 +274,12 @@ export class Login extends React.Component {
         <ImageBackground style={styles.container}
         source={require('../../blood_s.jpg')}>
 
-        <Container style={{opacity:.65,backgroundColor:'#E91E63'}}>
+        <Container style={{opacity:.63,backgroundColor:'#E91E63'}}>
  
             <Content>
-                <View style={{alignContent:'center',alignItems:'center',flex:.35}}>
+ 
+              <View  style={{alignContent:'center',alignItems:'center',flex: 1}}>
+                <View>
                     <StatusBar
                         backgroundColor={'transparent'}
                         barStyle="light-content"
@@ -245,43 +287,69 @@ export class Login extends React.Component {
                       />
                     <Header style={{backgroundColor:'transparent'}} noShadow={true} androidStatusBarColor={'transparent'}/>
 
-                    <Thumbnail round source={require('../../diagonise.png')} />
+                    <Thumbnail round source={require('../../gene.png')} />
                     <Text style={{color:'white'}}> Shoryaan</Text>
                 </View>
-
-                <View style={{flex:.65}}>
                 <Form style={{margin:15}}>
-             
-                    
-                    <Item floatingLabel  style={{width:'100%'}}>
-                    <Label  style={{fontFamily:'Foundation',color:'white'}}>username</Label>
-                    <Input 
-                    style={{color:'white'}}
-                        onChangeText={(text) => this.setState({username: text})}
-                    />
-                    
+                    <Item style={{width:'100%'}}>
+                      <Icon style={{color:'white'}}   active name='person' />
+                      <Input style={{color:'white'}}  
+                      placeholderTextColor='white' placeholder='username'
+                      onChangeText={(text) => {this.setState({username: text});this.validate_username()} }
+                      />
+                      {this.state.valid_username ==true&&
+                        (
+                          <Icon style={{color:'#f5f5f5'}}  name='checkmark-circle' />
+                        )
+                      }
+                      {this.state.valid_username==false &&
+                        (
+                          <Icon style={{color:'#f5f5f5'}}  name='close-circle' />
+                        )
+                      }
                     </Item>
+                              
                   {
                     this.state.register_or_login_view    &&
-                    <Item floatingLabel   style={{width:'100%'}}>
-                    <Label style={{fontFamily:'Foundation',color:'white'}}>Email </Label>
-                    <Input
-                    style={{color:'white'}}
-                      onChangeText={(text) => this.setState({email: text})}
-                    />
-                    </Item>
+                        <Item style={{width:'100%'}}>
+                        <Icon style={{color:'white'}}   active name='mail' />
+                        <Input style={{color:'white'}}  
+                        placeholderTextColor='white' placeholder='email'
+                        onChangeText={(text) =>{ this.setState({email: text});this.validate_email()}}
+                        />
+
+                       {this.state.valid_email ==true&&
+                        (
+                          <Icon style={{color:'#f5f5f5'}}  name='checkmark-circle' />
+                        )
+                      }
+                      {this.state.valid_email==false &&
+                        (
+                          <Icon style={{color:'#f5f5f5'}}  name='close-circle' />
+                        )
+                      }
+                      </Item>
                     
                   }
 
-                    
-                    <Item floatingLabel  style={{width:'100%'}}>
-                    <Label  style={{fontFamily:'Foundation',color:'white'}}>Password</Label>
-                    <Input 
-                    secureTextEntry={true}
-                    style={{color:'white'}}
-                        onChangeText={(text) => this.setState({password: text})}
-                    />
-                    
+                  
+                    <Item style={{width:'100%'}}>
+                      <Icon style={{color:'white'}}   active name='key' />
+                      <Input style={{color:'white'}}  
+                      secureTextEntry={true}
+                      placeholderTextColor='white' placeholder='password'
+                      onChangeText={(text) => {this.setState({password: text});this.validate_password()}  }
+                      />
+                      {this.state.valid_pass ==true&&
+                        (
+                          <Icon style={{color:'#f5f5f5'}}  name='checkmark-circle' />
+                        )
+                      }
+                      {this.state.valid_pass==false &&
+                        (
+                          <Icon style={{color:'#f5f5f5'}}  name='close-circle' />
+                        )
+                      }
                     </Item>
   
 
@@ -293,7 +361,7 @@ export class Login extends React.Component {
                 {
                     this.state.register_or_login_view    &&
                     <Picker padder
-                    style={{marginLeft:21,color:'white',marginRight:21}}
+                    style={{color:'white',width:'90%'}}
                       mode="dropdown"
                         note={false}
                         selectedValue={this.state.selected2}

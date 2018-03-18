@@ -1,7 +1,7 @@
 import React from 'react';
 import {View,Image} from 'react-native'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,Fab , Card, CardItem,Thumbnail} from 'native-base';
-import {ImageBackground,StatusBar,StyleSheet} from 'react-native'
+import {ImageBackground,StatusBar,StyleSheet,ScrollView} from 'react-native'
 import {H3} from 'native-base'
 import {AuthService} from '../../services/auth'
 
@@ -38,7 +38,7 @@ export class Home extends React.Component {
         
           <Text style={{margin:11,color:'#212121',fontFamily:'foundation'}}>         
            welcome , {this.state.username}!</Text>
-
+          <ScrollView>
          <Card>
             <CardItem>
               <Left>
@@ -58,7 +58,7 @@ export class Home extends React.Component {
                 <Thumbnail source={require('../../heart.png')} />
                 <Body>
                   <Text>Search and Donate</Text>
-                  <Text note>GeekyAnts</Text>
+                  <Text note>search for hospitals nearby and their needs(blood types needed)</Text>
                 </Body>
               </Left>
             </CardItem>
@@ -72,7 +72,7 @@ export class Home extends React.Component {
                 <Thumbnail source={require('../../prof.png')} />
                 <Body>
                   <Text>My Profile</Text>
-                  <Text note>GeekyAnts</Text>
+                  <Text note>show/edit your profile details</Text>
                 </Body>
               </Left>
             </CardItem>
@@ -85,23 +85,18 @@ export class Home extends React.Component {
                 <Thumbnail source={require('../../hos.png')} />
                 <Body>
                   <Text>I'm a hospital owner/authoritive</Text>
-                  <Text note>GeekyAnts</Text>
+                  <Text note>you can create a hospital entity and add others to manage it you</Text>
                 </Body>
               </Left>
             </CardItem>
           </Card>
+          </ScrollView>
 
-
-
-
-
-        
-        </View>
 
           <Fab
             active={this.state.active}
             direction="up"
-            containerStyle={{marginTop:115 ,elevation:3}}
+            containerStyle={{marginTop:-25 ,elevation:3}}
             style={{ backgroundColor: '#1976D2' }}
             position="topRight"
             onPress={() => this.setState({ active: !this.state.active })}>
@@ -116,6 +111,12 @@ export class Home extends React.Component {
               <Icon name="mail" />
             </Button>
           </Fab>
+
+
+
+        
+        </View>
+
       </Container>
 
         )
