@@ -5,6 +5,7 @@ import {H3} from 'native-base'
 import {AuthService} from '../../services/auth'
 
 export class Home extends React.Component {
+  
     constructor(props) {
         super(props);
         const { params } = this.props.navigation.state;
@@ -15,6 +16,7 @@ export class Home extends React.Component {
           auth_service: new AuthService()
         };
     }      
+    
     render() {
         const self = this;
         return (

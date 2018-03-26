@@ -18,7 +18,7 @@ export class Profile extends React.Component
             name: "Sayed Kotb Sayed Kotb",
             email: "sayed@shoryaan.com",
             age: "20",
-            governorate: "Giza",
+            governorate: "Cairo",
             city: "Nozha",
             gender: "Male",
             bloodType: "A+",

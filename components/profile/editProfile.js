@@ -72,22 +72,26 @@ export class EditProfile extends React.Component
 
     getGovernorateIndex(){
         var idx = this.state.states.indexOf(this.state.governorate);
-        return idx;
+        if(idx == -1) return 0;
+        else return idx;
     }
 
     getBloodTypeIndex(){
         var idx = this.state.bloodTypes.indexOf(this.state.bloodType);
-        return idx;
+        if(idx == -1) return 0;
+        else return idx;
     }
 
     getAgeIndex(){
         var idx = this.state.ages.indexOf(this.state.age);
-        return idx;
+        if(idx == -1) return 0;
+        else return idx;
     }
 
     getGenderIndex(){
         var idx = this.state.genders.indexOf(this.state.gender);
-        return idx;
+        if(idx == -1) return 0;
+        else return idx;
     }
 
 
