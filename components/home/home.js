@@ -1,7 +1,6 @@
 import React from 'react';
-import {View,Image} from 'react-native'
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,Fab , Card, CardItem,Thumbnail} from 'native-base';
-import {ImageBackground,StatusBar,StyleSheet,ScrollView} from 'react-native'
+import { Container,Icon, Header, Title , Button, Left, Right, Body, Text } from 'native-base';
+import {TouchableOpacity,View,Image,StatusBar,StyleSheet,ScrollView} from 'react-native'
 import {H3} from 'native-base'
 import {AuthService} from '../../services/auth'
 
@@ -15,117 +14,144 @@ export class Home extends React.Component {
           bloodtype: params.bloodtype || "?",
           auth_service: new AuthService()
         };
-        
     }      
     render() {
         const self = this;
-        return (   
+        return (
+
+          <Container>
+          <StatusBar style = {styles.statusBar} barStyle = "light-content"/>
+ 
+          <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
+              <Left style = {{flex: 1}}>
+                  <Button transparent>
+                      <Icon name='menu' />
+                  </Button>
+              </Left>
             
-        
-      <Container>
+              <Body style = {styles.title}>
+                  <Title> HOME </Title>
+              </Body>
+            
+              <Right style = {{flex: 1}}>
+                  <Button transparent>
+                  <Icon name='search' />
+                  </Button>
+              </Right>
+          </Header>
 
-        <ImageBackground style={styles.container}
-        source={require('../../doc.jpg')}>
-
-          <StatusBar
-          backgroundColor={'transparent'}
-          barStyle="light-content"
-          translucent
-        />
-        <Header style={{backgroundColor:'transparent'}} noShadow={true} androidStatusBarColor={'transparent'}/>
-        </ImageBackground>
-        <View style={{flex:0.75,backgroundColor:'#f5f5f5'}}>
-        
-          <Text style={{margin:11,color:'#212121',fontFamily:'foundation'}}>         
-           welcome , {this.state.username}!</Text>
           <ScrollView>
-         <Card>
-            <CardItem>
-              <Left>
-                <Thumbnail source={require('../../report.png')} />
-                <Body>
-                  <Text>Guidlines</Text>
-                  <Text note>Guidlines is a good start before your first donation</Text>
-                </Body>
-              </Left>
-            </CardItem>
-          </Card>
+          <View style={styles.container}>
+          <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Profile',{username: this.state.username,email: this.state.email,bloodtype:this.state.bloodtype})}}>
+            <Image 
+            source={require('../../images/home/i-received-icon.png')} 
+            style={styles.ImageIconStyle} 
+            />
+            <Text style={styles.textbutton}>
+              MY PROFILE
+            </Text> 
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Image 
+            source={require('../../images/home/12_blood_2.png')} 
+            style={styles.ImageIconStyle} 
+            />
+            <Text style={styles.textbutton}>
+              DONATE BLOOD
+            </Text> 
+          </TouchableOpacity>
+          </View>
 
+          <View style={styles.container}>
+          <TouchableOpacity style={styles.button}>
+            <Image 
+            source={require('../../images/home/can-i-give-blood-icon-homepage.png')} 
+            style={styles.ImageIconStyle} 
+            />
+            <Text style={styles.textbutton}>
+              BLOOD DONATION
+            </Text> 
+            <Text style={styles.textbutton}>
+              GUIDELINES
+            </Text> 
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Image 
+            source={require('../../images/home/Health_Tests-512.png')} 
+            style={styles.ImageIconStyle} 
+            />
+            <Text style={styles.textbutton}>
+              BLOOD FACTS
+            </Text> 
+          </TouchableOpacity>
+          </View>
 
-          <Card>
-            <CardItem  button onPress={() => {this.props.navigation.navigate('Search')}}>
-              <Left>
-                <Thumbnail source={require('../../heart.png')} />
-                <Body>
-                  <Text>Search and Donate</Text>
-                  <Text note>search for hospitals nearby and their needs(blood types needed)</Text>
-                </Body>
-              </Left>
-            </CardItem>
-          </Card>
-
-
-
-          <Card >
-            <CardItem button onPress={() => {this.props.navigation.navigate('Profile',{username: this.state.username,email: this.state.email,bloodtype:this.state.bloodtype})}}>
-              <Left>
-                <Thumbnail source={require('../../prof.png')} />
-                <Body>
-                  <Text>My Profile</Text>
-                  <Text note>show/edit your profile details</Text>
-                </Body>
-              </Left>
-            </CardItem>
-          </Card>
-
-
-         <Card>
-            <CardItem>
-              <Left>
-                <Thumbnail source={require('../../hos.png')} />
-                <Body>
-                  <Text>I'm a hospital owner/authoritive</Text>
-                  <Text note>you can create a hospital entity and add others to manage it you</Text>
-                </Body>
-              </Left>
-            </CardItem>
-          </Card>
+          <View style={styles.container}>
+          <TouchableOpacity style={styles.button}>
+            <Image 
+            source={require('../../images/home/hospital.png')} 
+            style={styles.ImageIconStyle} 
+            />
+            <Text style={styles.textbutton}>
+              MY HOSPITAL
+            </Text> 
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Search')}}>
+            <Image 
+            source={require('../../images/home/search.png')} 
+            style={styles.ImageIconStyle} 
+            />
+            <Text style={styles.textbutton}>
+              SEARCH
+            </Text> 
+          </TouchableOpacity>
+          </View>
           </ScrollView>
-
-
-          <Fab
-            active={this.state.active}
-            direction="up"
-            containerStyle={{marginTop:-25 ,elevation:3}}
-            style={{ backgroundColor: '#1976D2' }}
-            position="topRight"
-            onPress={() => this.setState({ active: !this.state.active })}>
-            <Thumbnail  source={require('../../blood_icon.png')}></Thumbnail> 
-            <Button style={{ backgroundColor: '#34A34F' }}>
-              <Icon name="logo-whatsapp" />
-            </Button>
-            <Button style={{ backgroundColor: '#3B5998' }}>
-              <Icon name="logo-facebook" />
-            </Button>
-            <Button disabled style={{ backgroundColor: '#DD5144' }}>
-              <Icon name="mail" />
-            </Button>
-          </Fab>
-
-
-
-        
-        </View>
-
-      </Container>
-
+        </Container>
         )
-
     }
-    
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: .25,
-  }
+  container:{
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  header: {
+    backgroundColor: '#F44336',
+    height: 50
+  },
+  statusBar: {
+    backgroundColor: '#D32F2F'
+  },
+  icon: {
+    color: "#fff",
+    fontSize: 20
+  },
+  textbutton: {
+    color: '#F44336',
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  title: {
+    flex: 1,  
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  button: {
+    flex: 1,
+    borderColor: 'black',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '35%',
+    height: 210
+  },
+  ImageIconStyle: {
+    padding: 10,
+    margin: 5,
+    height: 50,
+    width: 50,
+    resizeMode : 'stretch',
+ },
 })
