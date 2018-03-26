@@ -9,6 +9,10 @@ export class EditProfile extends React.Component
     constructor(props)
     {
         super(props);
+
+        const { params } = this.props.navigation.state;
+
+        /*
         this.state = {
             selectedState: "Cairo",
             selectedGender: "Male",
@@ -18,15 +22,28 @@ export class EditProfile extends React.Component
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
             genders: ["Male", "Female"],
             age: ["17", "18", "19", "20", "21"]  //dafuq! 
-           //age: [17, 18] why this is not working?
         };
-        
-        //And this one as well?
-        /*
-        for(i="19";i<"70";i++){
-            this.state.age.push(i);
-        }
         */
+
+       this.state = {
+        username: params.username,
+        name: params.name,
+        email: params.email,
+        age: params.age,
+        governorate: params.governorate,
+        city: params.city,
+        bloodType: params.bloodType,
+        gender: params.gender,
+        selectedState: 0,
+        selectedGender: 0,
+        selectedBloodType: 0,
+        selectedAge: 0,
+        bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-", "Unkown"],
+        states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
+        genders: ["Male", "Female"],
+        ages: ["17", "18", "19", "20", "21"]  //dafuq! 
+    };
+        
     }
 
     onStateValueChange(value) {
@@ -53,6 +70,27 @@ export class EditProfile extends React.Component
         });
     }
 
+    getGovernorateIndex(){
+        var idx = this.state.states.indexOf(this.state.governorate);
+        return idx;
+    }
+
+    getBloodTypeIndex(){
+        var idx = this.state.bloodTypes.indexOf(this.state.bloodType);
+        return idx;
+    }
+
+    getAgeIndex(){
+        var idx = this.state.ages.indexOf(this.state.age);
+        return idx;
+    }
+
+    getGenderIndex(){
+        var idx = this.state.genders.indexOf(this.state.gender);
+        return idx;
+    }
+
+
     render(){
         return(
             <Container>
@@ -61,7 +99,7 @@ export class EditProfile extends React.Component
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon name='arrow-back' />
+                            <Icon onPress={() => this.props.navigation.navigate('Profile')} name='arrow-back' />
                         </Button>
                     </Left>
 
@@ -71,7 +109,7 @@ export class EditProfile extends React.Component
                 
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                        <Icon name='md-checkmark' />
+                            <Icon onPress={() => this.props.navigation.navigate('Profile')} name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>
@@ -81,33 +119,34 @@ export class EditProfile extends React.Component
                         <Text style = {styles.inputFieldLabels}> Username</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder="Username"
+                            placeholder= {this.state.username}
                             placeholderTextColor = "#757575"
-                            selectionColor="#fff"
+                            selectionColor="#212121"
                         />
 
                         <Text style = {styles.inputFieldLabels}> Name (Optional)</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder="Name"
+                            placeholder= {this.state.name}
                             placeholderTextColor = "#757575"
-                            selectionColor="#fff"
+                            selectionColor="#212121"
                             autoCapitalize={'sentences'}
                         />
 
                         <Text style = {styles.inputFieldLabels}> City</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder="City"
+                            placeholder= {this.state.city}
                             placeholderTextColor = "#757575"
-                            selectionColor="#fff"
+                            selectionColor="#212121"
+                            autoCapitalize={'sentences'}
                         />
 
                         <Text style = {styles.inputFieldLabels}> State</Text>
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
-                            selectedValue={this.state.selectedState}
+                            selectedValue={this.getGovernorateIndex()}
                             onValueChange={this.onStateValueChange.bind(this)}
                             style = {styles.StatePicker}
                             >
@@ -120,7 +159,7 @@ export class EditProfile extends React.Component
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
-                            selectedValue={this.state.selectedBloodType}
+                            selectedValue={this.getBloodTypeIndex()}
                             onValueChange={this.onBloodTypeValueChange.bind(this)}
                             style = {styles.StatePicker}
                             >
@@ -133,11 +172,11 @@ export class EditProfile extends React.Component
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
-                            selectedValue={this.state.selectedAge}
+                            selectedValue={this.getAgeIndex()}
                             onValueChange={this.onAgeValueChange.bind(this)}
                             style = {styles.StatePicker}
                             >
-                            {this.state.age.map((item, index) => {
+                            {this.state.ages.map((item, index) => {
                                 return (<Item style = {styles.StatePickerItem} label={item} value={index} key={index}/>) 
                             })}
                         </Picker>
@@ -146,7 +185,7 @@ export class EditProfile extends React.Component
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
-                            selectedValue={this.state.selectedGender}
+                            selectedValue={this.getGenderIndex()}
                             onValueChange={this.onGenderValueChange.bind(this)}
                             style = {styles.StatePicker}
                             >

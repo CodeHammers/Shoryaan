@@ -6,7 +6,39 @@ import {H3,Input,Toast,Item,Label,Picker} from 'native-base'
 
 export class Profile extends React.Component
 {
-    //Add props and state
+    
+    constructor(props)
+    {
+        super(props);
+
+        const { params } = this.props.navigation.state;
+
+        this.state = {
+            username: "Sayed Alesawy",
+            name: "Sayed Kotb Sayed Kotb",
+            email: "sayed@shoryaan.com",
+            age: "20",
+            governorate: "Giza",
+            city: "Nozha",
+            gender: "Male",
+            bloodType: "A+",
+            nextDonation: "2"
+        }
+    }
+    
+    convertBloodTypeSign(){
+        var bloodType = this.state.bloodType;
+        if(bloodType[bloodType.length - 1] == '+'){
+            return "+ve";
+        }else{
+            return "-ve";
+        }
+    }
+
+    convertBloodType(){
+        var bloodType = this.state.bloodType;
+        return bloodType.slice(0,-1);
+    }
 
     render(){
         return(
@@ -26,7 +58,7 @@ export class Profile extends React.Component
                    
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                        <Icon name='md-create' />
+                        <Icon onPress={() => this.props.navigation.navigate('EditProfile', this.state)} name='md-create' />
                         </Button>
                     </Right>
                 </Header>
@@ -34,13 +66,11 @@ export class Profile extends React.Component
                 <View style = {styles.section}>
                     <Thumbnail style = {{width: 70, height: 70}} round source={require('../../images/profile/pp.png')} />
                 
-                    <Text style = {styles.usernameText}> 
-                        Sayed Alesawy
-                    </Text>
+                    <Text style = {styles.usernameText}> {this.state.username} </Text>
                         
                     <Text style={{color:'white', paddingTop: 5}}>  
                         <Icon name = 'pin' style = {styles.icon} />
-                        {" "}Cairo, Egypt
+                        {" "}{this.state.governorate}, Egypt
                     </Text>
                 </View>
 
@@ -49,12 +79,12 @@ export class Profile extends React.Component
                 <View style = {styles.bloodBar}>
                     <View style = {styles.bloodBarNested}>
                         <View style={{flexDirection: 'row', alignContent: 'flex-start'}}>
-                            <Text style={{fontSize: 40, fontWeight: 'bold', lineHeight: 40, color: '#D32F2F', paddingLeft:25}}>A</Text>
-                            <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F'}}>+ve</Text>
+                            <Text style={{fontSize: 40, fontWeight: 'bold', lineHeight: 40, color: '#D32F2F', paddingLeft:25}}>{this.convertBloodType()}</Text>
+                            <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F'}}>{this.convertBloodTypeSign()}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row', alignContent: 'flex-end'}}>
-                            <Text style={{fontSize: 40, fontWeight: 'bold', lineHeight: 40, color: '#D32F2F'}}>2</Text>
+                            <Text style={{fontSize: 40, fontWeight: 'bold', lineHeight: 40, color: '#D32F2F'}}>{this.state.nextDonation}</Text>
                             <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F', paddingRight: 15}}>months</Text>
                         </View>
                     </View>
@@ -76,38 +106,38 @@ export class Profile extends React.Component
                     <View style = {styles.mainList}>
                         <List>
                             <ListItem>
-                                <Text style = {{fontSize: 25, color:'#212121'}}>Username:{" "}</Text>
-                                <Text style = {{fontSize: 20, color:'#757575'}}>Sayed Alesawy</Text>
+                                <Text style = {styles.listItemLabel}>Username:{" "}</Text>
+                                <Text style = {styles.listItemData}>{this.state.username}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {{fontSize: 25, color:'#212121'}}>Name:{" "}</Text>
-                                <Text style = {{fontSize: 20, color:'#757575'}}>Sayed Kotb Sayed Kotb</Text>
+                                <Text style = {styles.listItemLabel}>Name:{" "}</Text>
+                                <Text style = {styles.listItemData}>{this.state.name}</Text>
                             </ListItem>
                             
                             <ListItem>
-                                <Text style = {{fontSize: 25, color:'#212121'}}>E-mail:{" "}</Text>
-                                <Text style = {{fontSize: 20, color:'#757575'}}>sayed@shoryaan.com</Text>
+                                <Text style = {styles.listItemLabel}>E-mail:{" "}</Text>
+                                <Text style = {styles.listItemData}>{this.state.email}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {{fontSize: 25, color:'#212121'}}>Age:{" "}</Text>
-                                <Text style = {{fontSize: 20, color:'#757575'}}>20</Text>
+                                <Text style = {styles.listItemLabel}>Age:{" "}</Text>
+                                <Text style = {styles.listItemData}>{this.state.age}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {{fontSize: 25, color:'#212121'}}>State:{" "}</Text>
-                                <Text style = {{fontSize: 20, color:'#757575'}}>Cairo</Text>
+                                <Text style = {styles.listItemLabel}>State:{" "}</Text>
+                                <Text style = {styles.listItemData}>{this.state.governorate}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {{fontSize: 25, color:'#212121'}}>City:{" "}</Text>
-                                <Text style = {{fontSize: 20, color:'#757575'}}>Nozha</Text>
+                                <Text style = {styles.listItemLabel}>City:{" "}</Text>
+                                <Text style = {styles.listItemData}>{this.state.city}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {{fontSize: 25, color:'#212121'}}>Gender:{" "}</Text>
-                                <Text style = {{fontSize: 20, color:'#757575'}}>Male</Text>
+                                <Text style = {styles.listItemLabel}>Gender:{" "}</Text>
+                                <Text style = {styles.listItemData}>{this.state.gender}</Text>
                             </ListItem>
 
                         </List>
@@ -147,8 +177,14 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
 
-    listItem:{
+    listItemLabel:{
+        fontSize: 25, 
+        color:'#212121'
+    },
 
+    listItemData:{
+        fontSize: 20, 
+        color:'#757575'
     },
 
     bloodBar:{
