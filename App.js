@@ -6,6 +6,7 @@ import {Login} from './components/login/login'
 import {Home} from './components/home/home'
 import {Profile} from './components/profile/profile'
 import {Search} from './components/search/search'
+import {EditProfile} from './components/profile/editProfile'
 
 import {StackNavigator} from 'react-navigation'
 import { Root } from "native-base";
@@ -25,6 +26,9 @@ const RootStack = StackNavigator({
   Profile:{
     screen: Profile
   },
+  EditProfile:{
+    screen: EditProfile
+  },
   Search:{
     screen: Search
   }
@@ -34,7 +38,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'Profile',
+  initialRouteName: 'EditProfile',
 },
 );
 
