@@ -1,282 +1,188 @@
-import React from 'react';
+import React from 'react'
 import {View,Image} from 'react-native'
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,Fab , Card, CardItem,Thumbnail} from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,Fab , Card, CardItem,Thumbnail,List,ListItem} from 'native-base';
 import {ImageBackground,StatusBar,StyleSheet,AsyncStorage,ScrollView} from 'react-native'
 import {H3,Input,Toast,Item,Label,Picker} from 'native-base'
-import {AuthService} from '../../services/auth'
 
+export class Profile extends React.Component
+{
+    //Add props and state
 
-export class Profile extends React.Component {
-    constructor(props) {
-        super(props);
-        const { params } = this.props.navigation.state;
-        this.state = {
-          username:params.username || "unknown",
-          email:params.email || "unknown",
-          bloodtype: params.bloodtype || "?",
-          native_username: params.username || "unknown",
-          native_bloodtype: params.bloodtype || "?",
-          current_password:"",
-          new_password: "",
-          edit_username:false,
-          edit_password:false,
-          edit_bloodtype:false,
-          access_token: null,
-          auth_service: new AuthService()
-        };
-        this.checkStoredToken()
-    } 
-
-    checkStoredToken(){
-        AsyncStorage.getItem("access_token").then((value) => {
-          if(value!=undefined){
-            this.setState({access_token:value})
-          }
-        
-      }).done();
-      }
-    
-
-    edit_username(){
-        if(!this.state.edit_username)
-            return;
-
-        body = JSON.stringify({
-            username: this.state.username,
-            bloodType: this.state.bloodtype,
-            password: "protected",
-            access_token: this.state.access_token
-            })
-        this.state.auth_service.post(body,'/auth/edit')
-        .then((response)=>{
-            if(response.status!=200){
-                this.setState({username:this.state.native_username})
-                this.showToast("Invalid update","ok")
-            }
-            else{
-                this.setState({native_username:this.state.username})
-                this.showToast("update sucess","ok")
-            }
-        })
-    }
-
-    edit_bloodtype(){
-        if(!this.state.edit_bloodtype)
-        return;
-
-        body = JSON.stringify({
-            username: this.state.username,
-            bloodtype: this.state.bloodtype,
-            password: "protected",
-            access_token: this.state.access_token
-            })
-        this.state.auth_service.post(body,'/auth/edit')
-        .then((response)=>{
-            if(response.status!=200){
-                this.setState({bloodtype:this.state.native_bloodtype})
-                this.showToast("Invalid update","ok")
-            }
-            else{
-                this.setState({native_bloodtype:this.state.bloodtype})
-                this.showToast("update sucess","ok")
-            }
-        })
-    }
-
-    edit_password(){
-        if(!this.state.edit_password)
-            return;
-    
-        body = JSON.stringify({
-            password: this.state.current_password,
-            reset_password: this.state.new_password,
-            access_token: this.state.access_token 
-            })
-        this.state.auth_service.post(body,'/auth/resetpassword')
-        .then((response)=>{
-            if(response.status!=200){
-                this.setState({bloodtype:this.state.native_bloodtype})
-                this.showToast("Invalid update","ok")
-            }
-            else{
-                this.setState({native_bloodtype:this.state.bloodtype})
-                this.showToast("update sucess","ok")
-            }
-        })
-
-    }
-
-    /**
-     * create Toast pattern to avoid repeating code                                     
-     * **********************************************************
-     */
-    showToast(msg,btn){
-        Toast.show({
-        text: msg,
-        position: 'bottom',
-        buttonText: btn,
-        duration: 5000,
-        style: {
-            backgroundColor: "#212121",
-            opacity:0.76
-        }
-        })
-    }
-
-
-   /**
-   * keeps track of blood type current value                                       
-   * **********************************************************
-   */
-    onBloodTypeChanged(value) {
-        this.setState({
-        bloodtype: value
-        });
-    }
-    
-    render() {
-        const self = this;
-        return (   
-            
-        
+    render(){
+        return(
             <Container>
-                <View style={styles.container} >
-        
-                <StatusBar
-                backgroundColor={'transparent'}
-                barStyle="light-content"
-                translucent
-                />
-                <Header style={{backgroundColor:'transparent'}} noShadow={true} androidStatusBarColor={'transparent'}/>
+                <StatusBar style = {styles.statusBar} barStyle = "light-content"/>
 
-                 <Thumbnail round source={require('../../prof.png')} />
-                    <Text style={{color:'white'}}> {this.state.native_username}</Text>
-                    <Text style={{color:'white'}}>
-                    
-                    <Icon name='pin' style={{color:'white'}} />
-                    Cairo,Egypt
+                <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
+                    <Left style = {{flex: 1}}>
+                        <Button transparent>
+                            <Icon name='menu' />
+                        </Button>
+                    </Left>
+
+                    <Body style = {styles.title}>
+                       <Title> PROFILE </Title>
+                    </Body>
+                   
+                    <Right style = {{flex: 1}}>
+                        <Button transparent>
+                        <Icon name='md-create' />
+                        </Button>
+                    </Right>
+                </Header>
+
+                <View style = {styles.section}>
+                    <Thumbnail style = {{width: 70, height: 70}} round source={require('../../images/profile/pp.png')} />
+                
+                    <Text style = {styles.usernameText}> 
+                        Sayed Alesawy
                     </Text>
-
+                        
+                    <Text style={{color:'white', paddingTop: 5}}>  
+                        <Icon name = 'pin' style = {styles.icon} />
+                        {" "}Cairo, Egypt
+                    </Text>
                 </View>
-                <ScrollView>
-                <View style={{flex:0.55,backgroundColor:'#f5f5f5'}}>
-                    <Card>
-                        <CardItem>
-                        <Left>
-                            <Body>
-                            <Text>E-mail</Text>
-                            <Item>
-                                 <Input disabled={true} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder={this.state.email} />
-                            </Item>
-                            </Body>
-                        </Left>
-              
-                        </CardItem>
-                    </Card>
-                    <Card>
-                        <CardItem>
-                        <Left>
-                            <Body>
-                            <Text>User Name</Text>
-                            <Item  success={this.state.edit_username}>
-                                 <Input  disabled={!this.state.edit_username} style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  
-                                 placeholder={this.state.username} 
-                                 onChangeText={(text) => this.setState({username: text})}
-                                 />
-                            </Item>
-                            </Body>
-                        </Left>
-                        <Button transparent Right onPress={()=>{this.setState({edit_username:!this.state.edit_username});this.edit_username()}} >
-                            <Text>{ !this.state.edit_username?'Edit':'Done'}</Text>
-                        </Button>
-                        </CardItem>
-                    </Card>
-          
-                    <Card>
-                        <CardItem>
-                        <Left>
-                            <Body>
-                            <Text>Blood Type</Text>
-                            <Picker padder
-                            enabled ={this.state.edit_bloodtype}
-                                mode="dropdown"
-                                note={false}
-                                selectedValue={this.state.bloodtype}
-                                onValueChange={this.onBloodTypeChanged.bind(this)}
-                            >
-                                 <Item label='O+'  style={{fontFamily:'Foundation'}} value='O+' />
-                                <Item label="O-"  style={{fontFamily:'Foundation'}} value="O-" />
-                                <Item label="AB"  style={{fontFamily:'Foundation'}} value="A+" />
-                                <Item label="A-"  style={{fontFamily:'Foundation'}} value="A-" />
-                                <Item label="B+"  style={{fontFamily:'Foundation'}} value="B+" />
-                                <Item label="B-"  style={{fontFamily:'Foundation'}} value="B-" />
-                                <Item label="AB+"  style={{fontFamily:'Foundation'}} value="AB+" />
-                                <Item label="AB-"  style={{fontFamily:'Foundation'}} value="AB-" />
 
-                                <Item label="?"  style={{fontFamily:'Foundation'}} value="?" />
+                <View style={{ borderBottomColor: '#BDBDBD', borderBottomWidth: 3 }}/>
 
-                            </Picker>
+                <View style = {styles.bloodBar}>
+                    <View style = {styles.bloodBarNested}>
+                        <View style={{flexDirection: 'row', alignContent: 'flex-start'}}>
+                            <Text style={{fontSize: 40, fontWeight: 'bold', lineHeight: 40, color: '#D32F2F', paddingLeft:25}}>A</Text>
+                            <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F'}}>+ve</Text>
+                        </View>
+
+                        <View style={{flexDirection: 'row', alignContent: 'flex-end'}}>
+                            <Text style={{fontSize: 40, fontWeight: 'bold', lineHeight: 40, color: '#D32F2F'}}>2</Text>
+                            <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F', paddingRight: 15}}>months</Text>
+                        </View>
+                    </View>
                     
-                            </Body>
-                        </Left>
-                        <Button transparent Right >
-                            <Text onPress={()=>{this.setState({edit_bloodtype:!this.state.edit_bloodtype});this.edit_bloodtype()}}>
-                            { !this.state.edit_bloodtype?'Edit':'Done'}
-                            </Text>
-                        </Button>
-                        </CardItem>
-                    </Card>
+                    <View style = {styles.bloodBarSub}>
+                        <View style={{flexDirection: 'row', alignContent: 'flex-start'}}>
+                            <Text style={{fontSize: 18, color: '#757575'}}>Blood Type</Text>
+                        </View>
 
-                    <Card>
-                        <CardItem>
-                        <Left>
-                            <Body>
-                            <Text>Password</Text>
-                            <Text note>Protected </Text>
-                            {
-                                this.state.edit_password &&(
-                                    <View>
-                                    <Item success={true}>
-                                        <Input  style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder='Old Password'
-                                            onChangeText={(text) => this.setState({current_password: text})}
-                                            secureTextEntry={true}
-                                        />
-                                    </Item>
-                                    <Item success={true}>
-                                        <Input style={{color:'#888',fontSize:14}}  placeholderTextColor='#999'  placeholder='New Password' 
-                                            onChangeText={(text) => this.setState({new_password: text})}
-                                            secureTextEntry={true}
-                                        />
-                                    </Item>
-                                    </View>
-                                )
-                            }
-                            </Body>
-                        </Left>
-                        <Button transparent Right 
-                        onPress={()=>{this.setState({edit_password:!this.state.edit_password});this.edit_password()}}>
-                            <Text>
-                            { !this.state.edit_password?'Edit':'Done'}
-                            </Text>
-                        </Button>
-                        </CardItem>
-                    </Card>
-
+                        <View style={{flexDirection: 'row', alignContent: 'flex-end'}}>
+                        <Text style={{fontSize: 18, color: '#757575'}}>Next donation</Text>
+                        </View>
+                    </View>
                 </View>
+                
+                <View style={{ borderBottomColor: '#BDBDBD', borderBottomWidth: 2 }}/>
+
+                <ScrollView>
+                    <View style = {styles.mainList}>
+                        <List>
+                            <ListItem>
+                                <Text style = {{fontSize: 25, color:'#212121'}}>Username:{" "}</Text>
+                                <Text style = {{fontSize: 20, color:'#757575'}}>Sayed Alesawy</Text>
+                            </ListItem>
+
+                            <ListItem>
+                                <Text style = {{fontSize: 25, color:'#212121'}}>Name:{" "}</Text>
+                                <Text style = {{fontSize: 20, color:'#757575'}}>Sayed Kotb Sayed Kotb</Text>
+                            </ListItem>
+                            
+                            <ListItem>
+                                <Text style = {{fontSize: 25, color:'#212121'}}>E-mail:{" "}</Text>
+                                <Text style = {{fontSize: 20, color:'#757575'}}>sayed@shoryaan.com</Text>
+                            </ListItem>
+
+                            <ListItem>
+                                <Text style = {{fontSize: 25, color:'#212121'}}>Age:{" "}</Text>
+                                <Text style = {{fontSize: 20, color:'#757575'}}>20</Text>
+                            </ListItem>
+
+                            <ListItem>
+                                <Text style = {{fontSize: 25, color:'#212121'}}>State:{" "}</Text>
+                                <Text style = {{fontSize: 20, color:'#757575'}}>Cairo</Text>
+                            </ListItem>
+
+                            <ListItem>
+                                <Text style = {{fontSize: 25, color:'#212121'}}>City:{" "}</Text>
+                                <Text style = {{fontSize: 20, color:'#757575'}}>Nozha</Text>
+                            </ListItem>
+
+                            <ListItem>
+                                <Text style = {{fontSize: 25, color:'#212121'}}>Gender:{" "}</Text>
+                                <Text style = {{fontSize: 20, color:'#757575'}}>Male</Text>
+                            </ListItem>
+
+                        </List>
+                    </View>
                 </ScrollView>
+                
             </Container>
-
         )
-
     }
-    
 }
 
-
 const styles = StyleSheet.create({
-  container: {
-    flex: .45,
-    backgroundColor:'#555',
-    alignItems: 'center'
-  }
+    statusBar:{
+        backgroundColor: '#D32F2F'
+    },
+
+    header:{
+        backgroundColor: '#F44336',
+        height: 50
+    },
+
+    title:{
+        flex: 1,  
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+
+    usernameText:{
+        color:'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingTop: 5
+    },
+
+    icon:{
+        color: 'white',
+        fontSize: 20
+    },
+
+    listItem:{
+
+    },
+
+    bloodBar:{
+        flexDirection: 'column',
+        backgroundColor:'#FFFF',
+        height: 80
+    },
+
+    bloodBarNested:{
+        flex: 1, 
+        flexDirection: 'row', 
+        paddingTop: 15, 
+        paddingLeft: 10, 
+        paddingRight: 10, 
+        paddingBottom: 5,
+        justifyContent: 'space-between'
+    },
+
+    bloodBarSub:{
+        height: 30,
+        flexDirection: 'row', 
+        paddingLeft: 10, 
+        paddingRight: 10, 
+        paddingBottom: 5,
+        justifyContent: 'space-between'
+    },
+
+    section: {
+      height: 140,
+      backgroundColor:'#F44336',
+      alignItems: 'center',
+    },
+
+    mainList:{
+        backgroundColor:'#FFFFFF'
+    }
 })

@@ -34,7 +34,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'Login',
+  initialRouteName: 'Profile',
 },
 );
 
