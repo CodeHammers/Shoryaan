@@ -4,9 +4,9 @@ export  class AuthService{
     //for google avds use 10.0.2.2
     //BASE_URL ='http://10.0.2.2:1337';
     //for genymotion 
-    //BASE_URL ='http://10.0.3.2:1337';
+    BASE_URL ='http://10.0.3.2:1337';
     //production url
-    BASE_URL = 'https://kareememad.herokuapp.com'
+    //BASE_URL = 'https://kareememad.herokuapp.com'
     post(body,route){
         return  fetch(this.BASE_URL+route
         ,{
@@ -35,9 +35,8 @@ export  class AuthService{
     handleToken(response){
         if(response.access_token == undefined)
             return false;
-        AsyncStorage.setItem("access_token", response.access_token);
         AsyncStorage.setItem("refresh_token", response.refresh_token);
-        return true;
+        return AsyncStorage.setItem("access_token", response.access_token);
     }
     
 

@@ -22,9 +22,9 @@ export class Home extends React.Component {
         return (
 
           <Container>
-          <StatusBar style = {styles.statusBar} barStyle = "light-content"/>
+          <StatusBar translucent={false} style = {styles.statusBar} barStyle = "light-content"/>
  
-          <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
+          <Header style = {styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
               <Left style = {{flex: 1}}>
                   <Button transparent>
                       <Icon name='menu' />

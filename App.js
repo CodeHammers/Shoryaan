@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Platform
 } from 'react-native';
-import {Login} from './components/login/login'
+import {Landing} from './components/login/landing'
 import {Home} from './components/home/home'
 import {Profile} from './components/profile/profile'
 import {Search} from './components/search/search'
@@ -17,8 +17,8 @@ import { Root } from "native-base";
 ################################################################################
 */
 const RootStack = StackNavigator({
-  Login: {
-    screen: Login,
+  Landing: {
+    screen: Landing,
   },
   Home:{
     screen: Home
@@ -38,7 +38,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'Profile',
+  initialRouteName: 'Landing',
 },
 );
 

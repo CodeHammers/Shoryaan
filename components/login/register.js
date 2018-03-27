@@ -7,30 +7,49 @@ import {
 import {AuthService} from '../../services/auth'
 
 
-export class Login extends React.Component {
+export class Register extends React.Component {
   constructor(props) {
     super(props);
     const navigate = this.props.nv
     const self = this.props.self
     this.state = {
       password: '',
+      username:'',
       email:'',
       show_loader:false,
       access_token: null,
       valid_pass: undefined,
+      valid_username: undefined,
       valid_email: undefined,
       valid_state: 0,
       auth_service: new AuthService(),
       navigate: navigate,
       self: self
     };
+    
+    
   }
 
-
-
-
-
-
+  validate_username(un=false){
+    el =  un || this.state.username
+    el = el.length
+    if(el<3){
+      this.setState({valid_state:2}) ;
+      this.setState({valid_username:false});  
+    }
+    else{
+      
+      if(this.state.valid_state == 2){
+        this.setState({valid_state:0})
+        if(this.state.valid_pass!=undefined)
+          this.validate_password()
+        if(this.state.valid_email!=undefined)
+          this.validate_email()
+      }
+      this.setState({valid_username:true});
+    }
+    //return (el >=2 || this.setState({valid_username:false}) ) && this.setState({valid_username:true})
+  }
   validate_password(pass=false){
     
     pl = pass || this.state.password
@@ -44,6 +63,8 @@ export class Login extends React.Component {
           
       if(this.state.valid_state == 3){
         this.setState({valid_state:0})
+        if(this.state.valid_username!=undefined)
+          this.validate_username()
         if(this.state.valid_email!=undefined)
           this.validate_email()
       }
@@ -64,7 +85,8 @@ export class Login extends React.Component {
           
       if(this.state.valid_state == 1){
         this.setState({valid_state:0})
- 
+        if(this.state.valid_username!=undefined)
+          this.validate_username()
         if(this.state.valid_pass!=undefined)
           this.validate_password()
       }
@@ -79,98 +101,60 @@ export class Login extends React.Component {
 
 
 
-  /**
-   * sends a post request to /auth/me to check             
-   * validity of stored token                                                                                     
-   * **********************************************************
-   */
-  validateToken(no_toast){
-    this.setState({show_loader:true})
-    body =  JSON.stringify({
-      access_token: this.state.access_token
-    })
-    this.state.auth_service.post(body,'/auth/me')
-      //.then((response) =>{ return response.json()})
-      .then((response) => {
-        if(response.status!=200){
-          this.setState({show_loader:false})
-          //invalid token
-        }
-        else{
-          response = response.json()
-          .then((res_json)=>{
 
-           this.state.navigate(this.state.self,res_json)
-            
-            this.setState({show_loader:false})
-
-
-            }
-          )
-          //valid token
-          if(no_toast!=true)
-            this.showToast('Already logged in! moving you to home','Good')
   
-        }
-      })
-      .catch((error) => {
-        this.setState({show_loader:false})
-        alert("Cannot Connect to Server")
-        console.error(error);
-      });
-
-  }
   /**
-   * sends a post request to /auth/login with               
-   * user data to check if user exists/authenticated                     
-   * if authenticated,stores token recieved for             
-   * future communication with server on user's behalf                                         
+   * sends a post request to /auth/signup with             
+   * user data to create a new account if user does not                   
+   * exist,if created,stores token recieved for           
+   * future communication with server on user's behalf                                        
    * **********************************************************
    */
-  login() {
-    if( true!=this.state.valid_pass || this.state.valid_email!=true){
+
+  register(){
+    if(true!=this.state.valid_email || true!=this.state.valid_pass || this.state.valid_username!=true){
       this.showToast("Errors Detected in form ","I'll check")
       this.setState({show_loader:false})
       return;
     }
-    body =  JSON.stringify({
+    body = JSON.stringify({
       email: this.state.email,
+      username: this.state.username,
+      bloodtype: this.state.selected2,
       password: this.state.password,
     })
-    this.state.auth_service.post(body,'/auth/login')
-      .then((response) =>{ 
-        if(response.status!=200)
-          return null;
+
+    this.state.auth_service.post(body,'/auth/signup')
+      .then((response) => {
+        if(response.status!=200){
+         return null;
+        }
         
-        return response.json()})
+        return response.json()
+      })
       .then((response) => {
         if(response==null){
-          this.showToast("invalid credentials","Okay")
+          this.showToast("User Exists","Hmmm")
           this.setState({show_loader:false})
           return ;
         }
+        if(this.state.auth_service.handleToken(response)){
+          this.showToast("Registered Successfully","Great")
+          this.state.navigate(this.state.self,this.state)
 
-        ht_res = this.state.auth_service.handleToken(response)
-        if(ht_res == false)
-          this.showToast(response.message||"something went wrong,try again","Okay")
+        }
         else{
-          ht_res.then(
-            (res)=>{
-              this.setState({access_token:response.access_token})
-              this.showToast('Logged in Successfully','Great')
-              this.validateToken(true)
-            }
-          )
-
+          this.showToast(response.message||"something went wrong,try again","Okay")
         }
         this.setState({show_loader:false})
       })
       .catch((error) => {
-        alert("Could not connect to server")
+        alert("Cannot Connect to Server")
         this.setState({show_loader:false})
       });
-  }
 
+
+  }
    /**
    * create Toast pattern to avoid repeating code                                     
    * **********************************************************
@@ -193,13 +177,29 @@ export class Login extends React.Component {
     const self = this;
     return (
  
- <View style={{alignItems:'center',alignContent:'space-between'}}>
+    
+       <View style={{alignItems:'center',alignContent:'space-between'}}>
    
-  
                 <Form style={{marginBottom:15}}>
-
-              
-              <Item style={{width:'100%'}}>
+                    <Item style={{width:'100%'}}>
+                      <Icon style={{color:'red'}}   active name='person' />
+                      <Input    placeholder='username'
+                      onChangeText={(text) => {this.setState({username: text});this.validate_username(text)} }
+                      />
+                      {this.state.valid_username ==true&&
+                        (
+                          <Icon style={{color:'green'}}  name='checkmark-circle' />
+                        )
+                      }
+                      {this.state.valid_username==false &&
+                        (
+                          <Icon style={{color:'red'}}  name='close-circle' />
+                        )
+                      }
+                    </Item>
+                              
+                
+                        <Item style={{width:'100%'}}>
                         <Icon style={{color:'red'}}   active name='mail' />
                         <Input  placeholder='email'
                         onChangeText={(text) =>{ this.setState({email: text});this.validate_email(text)}}
@@ -217,11 +217,12 @@ export class Login extends React.Component {
                         )
                       }
                       </Item>
-
+                    
+                  
 
                   
                     <Item style={{width:'100%'}}>
-                      <Icon style={{color:'red'}}    name='key' />
+                      <Icon style={{color:'red'}}   active name='key' />
                       <Input   
                       secureTextEntry={true} placeholder='password'
                       onChangeText={(text) => {this.setState({password: text});this.validate_password(text)}  }
@@ -237,42 +238,52 @@ export class Login extends React.Component {
                         )
                       }
                     </Item>
+  
+
+
+
                 </Form>
 
              <View>
-             {this.state.valid_state==1 && (
+               {this.state.valid_state==1 && (
                   <Badge   style={{backgroundColor:'#F44336',opacity:.8}}>
                   <Text  style={{color:'white'}} note>Email is malformed
                   </Text>
                 </Badge>
                )}
-
+               {this.state.valid_state==2 && (
+                  <Badge   style={{backgroundColor:'#F44336',opacity:.8}}>
+                  <Text  style={{color:'white'}} note>username: min 3 characters and no special ones
+                  </Text>
+                </Badge>
+               )}
               {this.state.valid_state==3 && (
                   <Badge   style={{backgroundColor:'#F44336',opacity:.8}}>
                   <Text  style={{color:'white'}} note>password too short: min 8 characters
                   </Text>
                 </Badge>
                )}
+           
               
               </View>
                 <Button
                  style={{marginTop:21,marginBottom:21,backgroundColor:'#F44336'}}
                  block rounded  primary disabled={this.state.show_loader} iconLeft
-                 onPress={ (dull)=>{ this.setState({show_loader:true});this.login()} }
+                 onPress={ (dull)=>{ this.setState({show_loader:true});this.register()} }
 
                 >
 
                 {this.state.show_loader && (
-                 <ActivityIndicator size="large" color="#fff" />
+                 <ActivityIndicator size="large" color="#0000ff" />
                 )            
                 }
                 {
                     !this.state.show_loader    &&
-                    <Icon name= 'person' />
+                    <Icon name= 'md-create' />
                 }
                 {
                     !this.state.show_loader &&
-                    <Text >Login </Text>
+                    <Text >Register </Text>
                 }
          
                 </Button>

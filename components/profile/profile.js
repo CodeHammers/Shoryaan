@@ -43,7 +43,7 @@ export class Profile extends React.Component
     render(){
         return(
             <Container>
-                <StatusBar style = {styles.statusBar} barStyle = "light-content"/>
+                <StatusBar translucent={false}  style = {styles.statusBar} barStyle = "light-content"/>
 
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
