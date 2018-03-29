@@ -12,18 +12,18 @@ export class Profile extends React.Component
         super(props);
 
         const { params } = this.props.navigation.state;
-        if(params!=undefined || params == null)
-        this.state = {
-  
 
-          username:params.username || "unknown",
-          email:params.email || "unknown",
-          governorate: "Cairo",
-          city: "Nozha",
-          name: "",
-          bloodType: params.bloodtype || "A+",
-          nextDonation: "2",
-          gender: params.gender || "Male"
+        if(params!=undefined || params == null)
+            this.state = {
+            username:params.username || "unknown",
+            email:params.email || "unknown",
+            governorate: params.governorate || "Cairo",
+            city: params.city || "Nozha",
+            name: params.name || "",
+            bloodType: params.bloodType || "A+",
+            nextDonation: "2",
+            gender: params.gender || "Male",
+            dateOfBirth: params.dateOfBirth || ""
         };
 
     }
@@ -56,7 +56,7 @@ export class Profile extends React.Component
 
     render(){
         return(
-            <Container>
+            <Container style = {styles.mainScreen}>
                 <StatusBar translucent={false}  style = {styles.statusBar} barStyle = "light-content"/>
 
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
@@ -124,13 +124,15 @@ export class Profile extends React.Component
                                 <Text note>{this.state.username}</Text>
                             </ListItem>
 
-          
                             <ListItem>
                                 <Text >E-mail:{" "}</Text>
                                 <Text note>{this.state.email}</Text>
                             </ListItem>
 
-                     
+                            <ListItem>
+                                <Text >Name:{" "}</Text>
+                                <Text note>{this.state.name}</Text>
+                            </ListItem>
 
                             <ListItem>
                                 <Text >State:{" "}</Text>
@@ -147,6 +149,11 @@ export class Profile extends React.Component
                                 <Text note>{this.state.gender}</Text>
                             </ListItem>
 
+                            <ListItem>
+                                <Text >Date of birth:{" "}</Text>
+                                <Text note>{this.state.dateOfBirth}</Text>
+                            </ListItem>
+
                         </List>
                     </View>
                 </ScrollView>
@@ -157,6 +164,10 @@ export class Profile extends React.Component
 }
 
 const styles = StyleSheet.create({
+    mainScreen:{
+        backgroundColor: '#FFFF'
+    },
+
     statusBar:{
         backgroundColor: '#D32F2F'
     },

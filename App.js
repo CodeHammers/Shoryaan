@@ -7,7 +7,7 @@ import {Search} from './components/search/search'
 import {EditProfile} from './components/profile/editProfile'
 import {HospitalPublicProfile} from './components/hospital/publicProfile'
 import {CreateHospital} from './components/hospital/createHospital'
-import {PrivateProfileInfo} from './components/hospital/privateProfileInfo'
+//import {PrivateProfileInfo} from './components/hospital/privateProfileInfo'
 
 import {StackNavigator} from 'react-navigation'
 import { Root } from "native-base";
@@ -38,9 +38,6 @@ const RootStack = StackNavigator({
   }, 
   CreateHospital:{
     screen: CreateHospital
-  },
-  PrivateProfileInfo:{
-    screen: PrivateProfileInfo
   }
 },
 {
@@ -48,7 +45,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'PrivateProfileInfo',
+  initialRouteName: 'Landing',
 },
 );
 

@@ -4,6 +4,8 @@ import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Rig
 import {ImageBackground,StatusBar,StyleSheet,AsyncStorage,ScrollView,TextInput} from 'react-native'
 import {H3,Input,Toast,Item,Label,Picker} from 'native-base'
 
+import DatePicker from 'react-native-datepicker'
+
 import {AuthService} from '../../services/auth'
 
 
@@ -29,15 +31,17 @@ export class EditProfile extends React.Component
             city: params.city,
             bloodType: params.bloodType,
             gender: params.gender || "Male",
+            dateOfBirth: "2018-03-29",
+
             bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-","?"],
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
             genders: ["Male", "Female"],
+
             access_token: '',
             auth_service: new AuthService()
         };
-        this.checkStoredToken()
 
-        
+        this.checkStoredToken()
     }
 
     checkStoredToken(){
@@ -50,11 +54,11 @@ export class EditProfile extends React.Component
 
     editProfile(){
         body = JSON.stringify({
-            username: this.state.username,
-            bloodtype: this.state.bloodType,
-            password: "protected",
-            gender: this.state.gender,
-            access_token: this.state.access_token
+                username: this.state.username,
+                bloodtype: this.state.bloodType,
+                password: "protected",
+                gender: this.state.gender,
+                access_token: this.state.access_token
             })
         this.state.auth_service.post(body,'/auth/edit')
         .then((response)=>{
@@ -63,9 +67,9 @@ export class EditProfile extends React.Component
                 this.showToast("Invalid update","ok")
             }
             else{
-                this.setState({native_bloodtype:this.state.bloodtype})
                 this.showToast("update sucess","ok")
-                this.props.navigation.goBack()
+                this.props.navigation.navigate('Profile', {username: this.state.username, governorate: this.state.governorate,
+                    city: this.state.city, name: this.state.name, bloodType: this.state.bloodType, gender: this.state.gender, dateOfBirth: this.state.dateOfBirth})
             }
         })
       
@@ -91,21 +95,21 @@ export class EditProfile extends React.Component
 
     showToast(msg,btn){
         Toast.show({
-        text: msg,
-        position: 'bottom',
-        buttonText: btn,
-        duration: 5000,
-        style: {
-            backgroundColor: "#212121",
-            opacity:0.76
-        }
+            text: msg,
+            position: 'bottom',
+            buttonText: btn,
+            duration: 5000,
+            style: {
+                backgroundColor: "#212121",
+                opacity:0.76
+            }
         })
     }
 
 
     render(){
         return(
-            <Container>
+            <Container style = {styles.mainScreen}>
                 <StatusBar style = {styles.statusBar} barStyle = "light-content"/>
 
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
@@ -121,7 +125,7 @@ export class EditProfile extends React.Component
                 
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={() => {this.editProfile()}  } name='md-checkmark' />
+                            <Icon onPress={() => {this.editProfile()}} name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>
@@ -131,16 +135,25 @@ export class EditProfile extends React.Component
                         <Text style = {styles.inputFieldLabels}> Username</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= {this.state.username}
+                            defaultValue = {this.state.username}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             onChangeText={(text) =>{ this.setState({username: text});}}
                         />
 
+                        <Text style = {styles.inputFieldLabels}> Name</Text>
+                        <TextInput style={styles.inputBox} 
+                            underlineColorAndroid='rgba(0,0,0,0)' 
+                            defaultValue= {this.state.name}
+                            placeholderTextColor = "#757575"
+                            selectionColor="#212121"
+                            onChangeText={(text) =>{ this.setState({name: text});}}
+                        />
+
                         <Text style = {styles.inputFieldLabels}> City</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= {this.state.city}
+                            defaultValue= {this.state.city}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize={'sentences'}
@@ -185,6 +198,36 @@ export class EditProfile extends React.Component
                                 return (<Item style = {styles.StatePickerItem} label={item} value={item} key={index}/>) 
                             })}
                         </Picker> 
+
+                        <Text style = {styles.inputFieldLabels}> Date of birth</Text>
+                        <DatePicker
+                            style={{width: 125}}
+                            date={this.state.dateOfBirth}
+                            mode="date"
+                            placeholder="select date"
+                            format="YYYY-MM-DD"
+                            minDate="1940-01-01"
+                            maxDate="2000-12-31"
+                            confirmBtnText="Confirm"
+                            cancelBtnText="Cancel"
+                            showIcon = {false}
+                            customStyles={{
+                                dateInput: {
+                                  borderColor: '#FFFF',
+                                  borderRadius: 5,
+                                  borderWidth: 2,
+                                  marginVertical: 5,
+                                  width: 20
+                                },
+                                dateText:{
+                                    fontSize: 15,
+                                    paddingLeft: 10
+                                }
+                            }}
+                            onDateChange={(date) => {this.setState({dateOfBirth: date})}}
+                        />
+
+                        <View/>
                     </View>
                 </ScrollView>
             </Container>
@@ -193,6 +236,10 @@ export class EditProfile extends React.Component
 } 
 
 const styles = StyleSheet.create({
+    mainScreen:{
+        backgroundColor: '#FFFF'
+    },
+
     statusBar:{
         backgroundColor: '#D32F2F'
     },
