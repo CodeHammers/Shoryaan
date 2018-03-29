@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import {
-  Platform
-} from 'react-native';
+import { Platform } from 'react-native';
 import {Landing} from './components/login/landing'
 import {Home} from './components/home/home'
 import {Profile} from './components/profile/profile'
 import {Search} from './components/search/search'
 import {EditProfile} from './components/profile/editProfile'
+import {HospitalPublicProfile} from './components/hospital/publicProfile'
 
 import {StackNavigator} from 'react-navigation'
 import { Root } from "native-base";
@@ -31,6 +30,9 @@ const RootStack = StackNavigator({
   },
   Search:{
     screen: Search
+  }, 
+  HospitalPublicProfile:{
+    screen: HospitalPublicProfile
   }
 },
 {
@@ -38,7 +40,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'Profile',
+  initialRouteName: 'Landing',
 },
 );
 
