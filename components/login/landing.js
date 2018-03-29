@@ -4,6 +4,8 @@ import {
     Container, Header, Content, Form, Item, Input, sLabel ,Label,Icon,Button,Text,Card, CardItem,  Footer, FooterTab, Picker,Toast,Thumbnail,Badge} 
     from 'native-base';
 
+import FBSDK ,{LoginManager} from 'react-native-fbsdk'
+
 import {Register} from './register'
 import {Login} from './login'
 import {AuthService} from '../../services/auth'
@@ -17,6 +19,7 @@ export class Landing extends React.Component {
       auth_service: new AuthService(this)
     };
     this.state.auth_service.checkStoredToken() 
+  
   }
 
 
@@ -77,7 +80,12 @@ export class Landing extends React.Component {
                         <View style={styles.row_view}>
                         <Button
                             style={styles.top_down_margin}
-                            primary disabled={this.state.show_loader} iconLeft>                       
+                            primary disabled={this.state.show_loader} iconLeft
+                            onPress={()=>{  LoginManager.logInWithReadPermissions(['public_profile']).then(
+                                (res)=>{this.showToast("how","hell")},
+                                (error)=>{}
+                            )}}
+                            >                       
                                 <Icon name='logo-facebook' />
                                 <Text > Facebook </Text>
                             </Button>
