@@ -12,88 +12,39 @@ export class EditProfile extends React.Component
 
         const { params } = this.props.navigation.state;
 
-        /*
         this.state = {
-            selectedState: "Cairo",
-            selectedGender: "Male",
-            selectedBloodType: "A+",
-            selectedAge: "17",
+            username: params.username,
+            name: params.name,
+            email: params.email,
+            age: params.age,
+            governorate: params.governorate,
+            city: params.city,
+            bloodType: params.bloodType,
+            gender: params.gender,
             bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-", "Unkown"],
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-            genders: ["Male", "Female"],
-            age: ["17", "18", "19", "20", "21"]  //dafuq! 
+            genders: ["Male", "Female"]
         };
-        */
-
-       this.state = {
-        username: params.username,
-        name: params.name,
-        email: params.email,
-        age: params.age,
-        governorate: params.governorate,
-        city: params.city,
-        bloodType: params.bloodType,
-        gender: params.gender,
-        selectedState: 0,
-        selectedGender: 0,
-        selectedBloodType: 0,
-        selectedAge: 0,
-        bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-", "Unkown"],
-        states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-        genders: ["Male", "Female"],
-        ages: ["17", "18", "19", "20", "21"]  //dafuq! 
-    };
         
     }
 
     onStateValueChange(value) {
         this.setState({
-            selectedState: value
+            governorate: value
         });
     }
 
     onGenderValueChange(value) {
         this.setState({
-            selectedGender: value
+            gender: value
         });
     }
 
     onBloodTypeValueChange(value) {
         this.setState({
-            selectedBloodType: value
+            bloodType: value
         });
     }
-
-    onAgeValueChange(value) {
-        this.setState({
-            selectedAge: value
-        });
-    }
-
-    getGovernorateIndex(){
-        var idx = this.state.states.indexOf(this.state.governorate);
-        if(idx == -1) return 0;
-        else return idx;
-    }
-
-    getBloodTypeIndex(){
-        var idx = this.state.bloodTypes.indexOf(this.state.bloodType);
-        if(idx == -1) return 0;
-        else return idx;
-    }
-
-    getAgeIndex(){
-        var idx = this.state.ages.indexOf(this.state.age);
-        if(idx == -1) return 0;
-        else return idx;
-    }
-
-    getGenderIndex(){
-        var idx = this.state.genders.indexOf(this.state.gender);
-        if(idx == -1) return 0;
-        else return idx;
-    }
-
 
     render(){
         return(
@@ -137,6 +88,14 @@ export class EditProfile extends React.Component
                             autoCapitalize={'sentences'}
                         />
 
+                        <Text style = {styles.inputFieldLabels}> Age </Text>
+                        <TextInput style={styles.inputBox} 
+                            underlineColorAndroid='rgba(0,0,0,0)' 
+                            placeholder= {this.state.age}
+                            placeholderTextColor = "#757575"
+                            selectionColor="#212121"
+                        />
+
                         <Text style = {styles.inputFieldLabels}> City</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
@@ -150,12 +109,12 @@ export class EditProfile extends React.Component
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
-                            selectedValue={this.getGovernorateIndex()}
+                            selectedValue={this.state.governorate}
                             onValueChange={this.onStateValueChange.bind(this)}
                             style = {styles.StatePicker}
                             >
                             {this.state.states.map((item, index) => {
-                                return (<Item style = {styles.StatePickerItem} label={item} value={index} key={index}/>) 
+                                return (<Item style = {styles.StatePickerItem} label={item} value={item} key={index}/>) 
                             })}
                         </Picker>
                         
@@ -163,38 +122,25 @@ export class EditProfile extends React.Component
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
-                            selectedValue={this.getBloodTypeIndex()}
+                            selectedValue={this.state.bloodType}
                             onValueChange={this.onBloodTypeValueChange.bind(this)}
                             style = {styles.StatePicker}
                             >
                             {this.state.bloodTypes.map((item, index) => {
-                                return (<Item style = {styles.StatePickerItem} label={item} value={index} key={index}/>) 
+                                return (<Item style = {styles.StatePickerItem} label={item} value={item} key={index}/>) 
                             })}
                         </Picker>
                         
-                        <Text style = {styles.inputFieldLabels}> Age</Text>
-                        <Picker
-                            iosHeader="Select one"
-                            mode="dropdown"
-                            selectedValue={this.getAgeIndex()}
-                            onValueChange={this.onAgeValueChange.bind(this)}
-                            style = {styles.StatePicker}
-                            >
-                            {this.state.ages.map((item, index) => {
-                                return (<Item style = {styles.StatePickerItem} label={item} value={index} key={index}/>) 
-                            })}
-                        </Picker>
-
                         <Text style = {styles.inputFieldLabels}> Gender</Text>
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
-                            selectedValue={this.getGenderIndex()}
+                            selectedValue={this.state.gender}
                             onValueChange={this.onGenderValueChange.bind(this)}
                             style = {styles.StatePicker}
                             >
                             {this.state.genders.map((item, index) => {
-                                return (<Item style = {styles.StatePickerItem} label={item} value={index} key={index}/>) 
+                                return (<Item style = {styles.StatePickerItem} label={item} value={item} key={index}/>) 
                             })}
                         </Picker> 
                     </View>

@@ -38,7 +38,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'Landing',
+  initialRouteName: 'Profile',
 },
 );
 
