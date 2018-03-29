@@ -12,18 +12,20 @@ export class Profile extends React.Component
         super(props);
 
         const { params } = this.props.navigation.state;
-
+        if(params!=undefined || params == null)
         this.state = {
-            username: "Sayed Alesawy",
-            name: "Sayed Kotb Sayed Kotb",
-            email: "sayed@shoryaan.com",
-            age: "20",
-            governorate: "Cairo",
-            city: "Nozha",
-            gender: "Male",
-            bloodType: "A+",
-            nextDonation: "2"
-        }
+  
+
+          username:params.username || "unknown",
+          email:params.email || "unknown",
+          governorate: "Cairo",
+          city: "Nozha",
+          name: "",
+          bloodType: params.bloodtype || "A+",
+          nextDonation: "2",
+          gender: params.gender || "Male"
+        };
+
     }
     
     convertBloodTypeSign(){
@@ -38,6 +40,18 @@ export class Profile extends React.Component
     convertBloodType(){
         var bloodType = this.state.bloodType;
         return bloodType.slice(0,-1);
+    }
+    showToast(msg,btn){
+        Toast.show({
+        text: msg,
+        position: 'bottom',
+        buttonText: btn,
+        duration: 5000,
+        style: {
+            backgroundColor: "#212121",
+            opacity:0.76
+        }
+        })
     }
 
     render(){
@@ -64,7 +78,7 @@ export class Profile extends React.Component
                 </Header>
 
                 <View style = {styles.section}>
-                    <Thumbnail style = {{width: 70, height: 70}} round source={require('../../images/profile/pp.png')} />
+                    <Thumbnail style = {{width: 70, height: 70}} round source={require('../../prof.png')} />
                 
                     <Text style = {styles.usernameText}> {this.state.username} </Text>
                         
@@ -106,38 +120,31 @@ export class Profile extends React.Component
                     <View style = {styles.mainList}>
                         <List>
                             <ListItem>
-                                <Text style = {styles.listItemLabel}>Username:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.username}</Text>
+                                <Text >Username:{" "}</Text>
+                                <Text note>{this.state.username}</Text>
+                            </ListItem>
+
+          
+                            <ListItem>
+                                <Text >E-mail:{" "}</Text>
+                                <Text note>{this.state.email}</Text>
+                            </ListItem>
+
+                     
+
+                            <ListItem>
+                                <Text >State:{" "}</Text>
+                                <Text note>{this.state.governorate}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {styles.listItemLabel}>Name:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.name}</Text>
-                            </ListItem>
-                            
-                            <ListItem>
-                                <Text style = {styles.listItemLabel}>E-mail:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.email}</Text>
+                                <Text >City:{" "}</Text>
+                                <Text note>{this.state.city}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {styles.listItemLabel}>Age:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.age}</Text>
-                            </ListItem>
-
-                            <ListItem>
-                                <Text style = {styles.listItemLabel}>State:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.governorate}</Text>
-                            </ListItem>
-
-                            <ListItem>
-                                <Text style = {styles.listItemLabel}>City:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.city}</Text>
-                            </ListItem>
-
-                            <ListItem>
-                                <Text style = {styles.listItemLabel}>Gender:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.gender}</Text>
+                                <Text >Gender:{" "}</Text>
+                                <Text note>{this.state.gender}</Text>
                             </ListItem>
 
                         </List>

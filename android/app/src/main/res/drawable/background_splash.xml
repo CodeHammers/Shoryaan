@@ -7,7 +7,7 @@
     <item android:left="200dp" android:right="200dp">
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/logo_name"
             />
 
     </item>

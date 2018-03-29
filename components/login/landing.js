@@ -61,7 +61,8 @@ export class Landing extends React.Component {
             this.props.navigation.navigate('Home', {
               username: res_json.username,
               email: res_json.email,
-              bloodtype: res_json.bloodtype
+              bloodtype: res_json.bloodtype,
+              gender: res_json.gender
               
             })
             this.setState({show_loader:false})

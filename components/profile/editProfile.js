@@ -4,6 +4,9 @@ import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Rig
 import {ImageBackground,StatusBar,StyleSheet,AsyncStorage,ScrollView,TextInput} from 'react-native'
 import {H3,Input,Toast,Item,Label,Picker} from 'native-base'
 
+import {AuthService} from '../../services/auth'
+
+
 export class EditProfile extends React.Component
 {
     constructor(props)
@@ -13,6 +16,11 @@ export class EditProfile extends React.Component
         const { params } = this.props.navigation.state;
 
         this.state = {
+            un_saved: params.username || "unknown",
+            email_saved: params.email || "unknown",
+            bt_saved: params.bloodtype || "A+",
+            gender_saved: params.gender || "Male",
+
             username: params.username,
             name: params.name,
             email: params.email,
@@ -20,12 +28,47 @@ export class EditProfile extends React.Component
             governorate: params.governorate,
             city: params.city,
             bloodType: params.bloodType,
-            gender: params.gender,
-            bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-", "Unkown"],
+            gender: params.gender || "Male",
+            bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-","?"],
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-            genders: ["Male", "Female"]
+            genders: ["Male", "Female"],
+            access_token: '',
+            auth_service: new AuthService()
         };
+        this.checkStoredToken()
+
         
+    }
+
+    checkStoredToken(){
+        AsyncStorage.getItem("access_token").then((value) => {
+          if(value!=undefined){
+            this.setState({access_token:value})
+          }
+        }).done();
+    }
+
+    editProfile(){
+        body = JSON.stringify({
+            username: this.state.username,
+            bloodtype: this.state.bloodType,
+            password: "protected",
+            gender: this.state.gender,
+            access_token: this.state.access_token
+            })
+        this.state.auth_service.post(body,'/auth/edit')
+        .then((response)=>{
+            if(response.status!=200){
+                this.setState({bloodtype:this.state.bt_saved,username:this.state.un_saved,gender:this.state.gender_saved})
+                this.showToast("Invalid update","ok")
+            }
+            else{
+                this.setState({native_bloodtype:this.state.bloodtype})
+                this.showToast("update sucess","ok")
+                this.props.navigation.goBack()
+            }
+        })
+      
     }
 
     onStateValueChange(value) {
@@ -46,6 +89,20 @@ export class EditProfile extends React.Component
         });
     }
 
+    showToast(msg,btn){
+        Toast.show({
+        text: msg,
+        position: 'bottom',
+        buttonText: btn,
+        duration: 5000,
+        style: {
+            backgroundColor: "#212121",
+            opacity:0.76
+        }
+        })
+    }
+
+
     render(){
         return(
             <Container>
@@ -54,7 +111,7 @@ export class EditProfile extends React.Component
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={() => this.props.navigation.navigate('Profile')} name='arrow-back' />
+                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
                         </Button>
                     </Left>
 
@@ -64,7 +121,7 @@ export class EditProfile extends React.Component
                 
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={() => this.props.navigation.navigate('Profile')} name='md-checkmark' />
+                            <Icon onPress={() => {this.editProfile()}  } name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>
@@ -77,24 +134,12 @@ export class EditProfile extends React.Component
                             placeholder= {this.state.username}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
+                            onChangeText={(text) =>{ this.setState({username: text});}}
                         />
 
-                        <Text style = {styles.inputFieldLabels}> Name (Optional)</Text>
-                        <TextInput style={styles.inputBox} 
-                            underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= {this.state.name}
-                            placeholderTextColor = "#757575"
-                            selectionColor="#212121"
-                            autoCapitalize={'sentences'}
-                        />
+       
 
-                        <Text style = {styles.inputFieldLabels}> Age </Text>
-                        <TextInput style={styles.inputBox} 
-                            underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= {this.state.age}
-                            placeholderTextColor = "#757575"
-                            selectionColor="#212121"
-                        />
+           
 
                         <Text style = {styles.inputFieldLabels}> City</Text>
                         <TextInput style={styles.inputBox} 
@@ -103,6 +148,7 @@ export class EditProfile extends React.Component
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize={'sentences'}
+                            onChangeText={(text) =>{ this.setState({city: text});}}
                         />
 
                         <Text style = {styles.inputFieldLabels}> State</Text>
