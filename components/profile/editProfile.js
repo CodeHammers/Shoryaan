@@ -137,10 +137,6 @@ export class EditProfile extends React.Component
                             onChangeText={(text) =>{ this.setState({username: text});}}
                         />
 
-       
-
-           
-
                         <Text style = {styles.inputFieldLabels}> City</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
