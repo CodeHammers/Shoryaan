@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container,Icon, Header, Title , Button, Left, Right, Body, Text } from 'native-base';
+import { Container,Icon, Header, Title , Button, Left, Right, Body, Text,Toast } from 'native-base';
 import {TouchableOpacity,View,Image,StatusBar,StyleSheet,ScrollView} from 'react-native'
 import {H3} from 'native-base'
 import {AuthService} from '../../services/auth'
@@ -13,10 +13,12 @@ export class Home extends React.Component {
           username:params.username || "unknown",
           email:params.email || "unknown",
           bloodtype: params.bloodtype || "?",
+          gender: params.gender ||  "Male",
           auth_service: new AuthService()
         };
+
     }      
-    
+
     render() {
         const self = this;
         return (
@@ -44,7 +46,7 @@ export class Home extends React.Component {
 
           <ScrollView>
           <View style={styles.container}>
-          <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Profile',{username: this.state.username,email: this.state.email,bloodtype:this.state.bloodtype})}}>
+          <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Profile',{gender: this.state.gender,username: this.state.username,email: this.state.email,bloodtype:this.state.bloodtype})}}>
             <Image 
             source={require('../../images/home/i-received-icon.png')} 
             style={styles.ImageIconStyle} 
