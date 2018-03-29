@@ -14,75 +14,12 @@ export class Landing extends React.Component {
     super(props);
     this.state = {
       register_or_login_view: false,
-      auth_service: new AuthService()
+      auth_service: new AuthService(this)
     };
-    this.checkStoredToken() 
-  }
-
-  /**
-   * Checks if user has a stored token                     
-   * if so passes it to validate token                                                                          
-   * **********************************************************
-   */
-
-  checkStoredToken(){
-    
-    AsyncStorage.getItem("access_token").then((value) => {
-      if(value!=undefined){
-        this.setState({access_token:value})
-        this.validateToken()
-      }
-    
-  }).done();
+    this.state.auth_service.checkStoredToken() 
   }
 
 
-  /**
-   * sends a post request to /auth/me to check             
-   * validity of stored token                                                                                     
-   * **********************************************************
-   */
-  validateToken(no_toast){
-    this.setState({show_loader:true})
-    body =  JSON.stringify({
-      access_token: this.state.access_token
-    })
-    this.state.auth_service.post(body,'/auth/me')
-      //.then((response) =>{ return response.json()})
-      .then((response) => {
-        if(response.status!=200){
-          this.setState({show_loader:false})
-          //invalid token
-        }
-        else{
-          response = response.json()
-          .then((res_json)=>{
-       
-            this.props.navigation.navigate('Home', {
-              username: res_json.username,
-              email: res_json.email,
-              bloodtype: res_json.bloodtype,
-              gender: res_json.gender
-              
-            })
-            this.setState({show_loader:false})
-
-
-            }
-          )
-          //valid token
-          if(no_toast!=true)
-            this.showToast('Already logged in! moving you to home','Good')
-  
-        }
-      })
-      .catch((error) => {
-        this.setState({show_loader:false})
-        alert("Cannot Connect to Server")
-        console.error(error);
-      });
-
-  }
    /**
    * create Toast pattern to avoid repeating code                                     
    * **********************************************************

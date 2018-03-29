@@ -22,7 +22,7 @@ export class Register extends React.Component {
       valid_username: undefined,
       valid_email: undefined,
       valid_state: 0,
-      auth_service: new AuthService(),
+      auth_service: new AuthService(this),
       navigate: navigate,
       self: self
     };
@@ -112,48 +112,7 @@ export class Register extends React.Component {
    */
 
   register(){
-    if(true!=this.state.valid_email || true!=this.state.valid_pass || this.state.valid_username!=true){
-      this.showToast("Errors Detected in form ","I'll check")
-      this.setState({show_loader:false})
-      return;
-    }
-    body = JSON.stringify({
-      email: this.state.email,
-      username: this.state.username,
-      bloodtype: this.state.selected2,
-      password: this.state.password,
-    })
-
-    this.state.auth_service.post(body,'/auth/signup')
-      .then((response) => {
-        if(response.status!=200){
-         return null;
-        }
-        
-        return response.json()
-      })
-      .then((response) => {
-        if(response==null){
-          this.showToast("User Exists","Hmmm")
-          this.setState({show_loader:false})
-          return ;
-        }
-        if(this.state.auth_service.handleToken(response)){
-          this.showToast("Registered Successfully","Great")
-          this.state.navigate(this.state.self,this.state)
-
-        }
-        else{
-          this.showToast(response.message||"something went wrong,try again","Okay")
-        }
-        this.setState({show_loader:false})
-      })
-      .catch((error) => {
-        alert("Cannot Connect to Server")
-        this.setState({show_loader:false})
-      });
-
-
+    this.state.auth_service.register()
   }
    /**
    * create Toast pattern to avoid repeating code                                     
@@ -274,7 +233,7 @@ export class Register extends React.Component {
                 >
 
                 {this.state.show_loader && (
-                 <ActivityIndicator size="large" color="#0000ff" />
+                 <ActivityIndicator size="large" color="#fff" />
                 )            
                 }
                 {

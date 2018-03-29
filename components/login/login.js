@@ -20,7 +20,7 @@ export class Login extends React.Component {
       valid_pass: undefined,
       valid_email: undefined,
       valid_state: 0,
-      auth_service: new AuthService(),
+      auth_service: new AuthService(this),
       navigate: navigate,
       self: self
     };
@@ -79,96 +79,11 @@ export class Login extends React.Component {
 
 
 
-  /**
-   * sends a post request to /auth/me to check             
-   * validity of stored token                                                                                     
-   * **********************************************************
-   */
-  validateToken(no_toast){
-    this.setState({show_loader:true})
-    body =  JSON.stringify({
-      access_token: this.state.access_token
-    })
-    this.state.auth_service.post(body,'/auth/me')
-      //.then((response) =>{ return response.json()})
-      .then((response) => {
-        if(response.status!=200){
-          this.setState({show_loader:false})
-          //invalid token
-        }
-        else{
-          response = response.json()
-          .then((res_json)=>{
-
-           this.state.navigate(this.state.self,res_json)
-            
-            this.setState({show_loader:false})
 
 
-            }
-          )
-          //valid token
-          if(no_toast!=true)
-            this.showToast('Already logged in! moving you to home','Good')
-  
-        }
-      })
-      .catch((error) => {
-        this.setState({show_loader:false})
-        alert("Cannot Connect to Server")
-        console.error(error);
-      });
-
-  }
-  /**
-   * sends a post request to /auth/login with               
-   * user data to check if user exists/authenticated                     
-   * if authenticated,stores token recieved for             
-   * future communication with server on user's behalf                                         
-   * **********************************************************
-   */
   login() {
-    if( true!=this.state.valid_pass || this.state.valid_email!=true){
-      this.showToast("Errors Detected in form ","I'll check")
-      this.setState({show_loader:false})
-      return;
-    }
-    body =  JSON.stringify({
-      email: this.state.email,
-      password: this.state.password,
-    })
-    this.state.auth_service.post(body,'/auth/login')
-      .then((response) =>{ 
-        if(response.status!=200)
-          return null;
-        
-        return response.json()})
-      .then((response) => {
-        if(response==null){
-          this.showToast("invalid credentials","Okay")
-          this.setState({show_loader:false})
-          return ;
-        }
-
-        ht_res = this.state.auth_service.handleToken(response)
-        if(ht_res == false)
-          this.showToast(response.message||"something went wrong,try again","Okay")
-        else{
-          ht_res.then(
-            (res)=>{
-              this.setState({access_token:response.access_token})
-              this.showToast('Logged in Successfully','Great')
-              this.validateToken(true)
-            }
-          )
-
-        }
-        this.setState({show_loader:false})
-      })
-      .catch((error) => {
-        alert("Could not connect to server")
-        this.setState({show_loader:false})
-      });
+    this.state.auth_service.login()
+  
   }
 
    /**
@@ -193,7 +108,7 @@ export class Login extends React.Component {
     const self = this;
     return (
  
- <View style={{alignItems:'center',alignContent:'space-between'}}>
+        <View style={{alignItems:'center',alignContent:'space-between'}}>
    
   
                 <Form style={{marginBottom:15}}>
