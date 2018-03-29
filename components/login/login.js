@@ -5,7 +5,7 @@ import {
     from 'native-base';
 
 import {AuthService} from '../../services/auth'
-
+import {ValidateService} from '../../services/validate'
 
 export class Login extends React.Component {
   constructor(props) {
@@ -21,66 +21,21 @@ export class Login extends React.Component {
       valid_email: undefined,
       valid_state: 0,
       auth_service: new AuthService(this),
+      v_service: new ValidateService(this),
       navigate: navigate,
       self: self
     };
   }
 
 
-
-
-
-
   validate_password(pass=false){
-    
-    pl = pass || this.state.password
-    pl = pl.length
-    if(pl<8){
-      this.setState({valid_state:3}) ;
-      this.setState({valid_pass:false});  
-      
-    }
-    else{
-          
-      if(this.state.valid_state == 3){
-        this.setState({valid_state:0})
-        if(this.state.valid_email!=undefined)
-          this.validate_email()
-      }
-      this.setState({valid_pass:true});
-    }
+    this.state.v_service.validate_password(pass)
   }
 
 
   validate_email(em){
-
-    email = em || this.state.email
-    if(!this.validateEmail(this.state.email)){
-      this.setState({valid_state:1}) ;
-      this.setState({valid_email:false});  
-      
-    }
-    else{
-          
-      if(this.state.valid_state == 1){
-        this.setState({valid_state:0})
- 
-        if(this.state.valid_pass!=undefined)
-          this.validate_password()
-      }
-      this.setState({valid_email:true});
-    }
-
+    this.state.v_service.validate_email(em)
   }
-  validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
-
-
-
-
-
   login() {
     this.state.auth_service.login()
   
