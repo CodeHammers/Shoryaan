@@ -5,7 +5,7 @@ import {
     from 'native-base';
 
 import {AuthService} from '../../services/auth'
-
+import {ValidateService} from '../../services/validate'
 
 export class Login extends React.Component {
   constructor(props) {
@@ -20,155 +20,25 @@ export class Login extends React.Component {
       valid_pass: undefined,
       valid_email: undefined,
       valid_state: 0,
-      auth_service: new AuthService(),
+      auth_service: new AuthService(this),
+      v_service: new ValidateService(this),
       navigate: navigate,
       self: self
     };
   }
 
 
-
-
-
-
   validate_password(pass=false){
-    
-    pl = pass || this.state.password
-    pl = pl.length
-    if(pl<8){
-      this.setState({valid_state:3}) ;
-      this.setState({valid_pass:false});  
-      
-    }
-    else{
-          
-      if(this.state.valid_state == 3){
-        this.setState({valid_state:0})
-        if(this.state.valid_email!=undefined)
-          this.validate_email()
-      }
-      this.setState({valid_pass:true});
-    }
+    this.state.v_service.validate_password(pass)
   }
 
 
   validate_email(em){
-
-    email = em || this.state.email
-    if(!this.validateEmail(this.state.email)){
-      this.setState({valid_state:1}) ;
-      this.setState({valid_email:false});  
-      
-    }
-    else{
-          
-      if(this.state.valid_state == 1){
-        this.setState({valid_state:0})
- 
-        if(this.state.valid_pass!=undefined)
-          this.validate_password()
-      }
-      this.setState({valid_email:true});
-    }
-
+    this.state.v_service.validate_email(em)
   }
-  validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
-
-
-
-  /**
-   * sends a post request to /auth/me to check             
-   * validity of stored token                                                                                     
-   * **********************************************************
-   */
-  validateToken(no_toast){
-    this.setState({show_loader:true})
-    body =  JSON.stringify({
-      access_token: this.state.access_token
-    })
-    this.state.auth_service.post(body,'/auth/me')
-      //.then((response) =>{ return response.json()})
-      .then((response) => {
-        if(response.status!=200){
-          this.setState({show_loader:false})
-          //invalid token
-        }
-        else{
-          response = response.json()
-          .then((res_json)=>{
-
-           this.state.navigate(this.state.self,res_json)
-            
-            this.setState({show_loader:false})
-
-
-            }
-          )
-          //valid token
-          if(no_toast!=true)
-            this.showToast('Already logged in! moving you to home','Good')
-  
-        }
-      })
-      .catch((error) => {
-        this.setState({show_loader:false})
-        alert("Cannot Connect to Server")
-        console.error(error);
-      });
-
-  }
-  /**
-   * sends a post request to /auth/login with               
-   * user data to check if user exists/authenticated                     
-   * if authenticated,stores token recieved for             
-   * future communication with server on user's behalf                                         
-   * **********************************************************
-   */
   login() {
-    if( true!=this.state.valid_pass || this.state.valid_email!=true){
-      this.showToast("Errors Detected in form ","I'll check")
-      this.setState({show_loader:false})
-      return;
-    }
-    body =  JSON.stringify({
-      email: this.state.email,
-      password: this.state.password,
-    })
-    this.state.auth_service.post(body,'/auth/login')
-      .then((response) =>{ 
-        if(response.status!=200)
-          return null;
-        
-        return response.json()})
-      .then((response) => {
-        if(response==null){
-          this.showToast("invalid credentials","Okay")
-          this.setState({show_loader:false})
-          return ;
-        }
-
-        ht_res = this.state.auth_service.handleToken(response)
-        if(ht_res == false)
-          this.showToast(response.message||"something went wrong,try again","Okay")
-        else{
-          ht_res.then(
-            (res)=>{
-              this.setState({access_token:response.access_token})
-              this.showToast('Logged in Successfully','Great')
-              this.validateToken(true)
-            }
-          )
-
-        }
-        this.setState({show_loader:false})
-      })
-      .catch((error) => {
-        alert("Could not connect to server")
-        this.setState({show_loader:false})
-      });
+    this.state.auth_service.login()
+  
   }
 
    /**
@@ -193,7 +63,7 @@ export class Login extends React.Component {
     const self = this;
     return (
  
- <View style={{alignItems:'center',alignContent:'space-between'}}>
+        <View style={{alignItems:'center',alignContent:'space-between'}}>
    
   
                 <Form style={{marginBottom:15}}>

@@ -39,6 +39,12 @@ const RootStack = StackNavigator({
   CreateHospital:{
     screen: CreateHospital
   }
+  /*
+  //error message: PrivateProfileInfo should be a react componenet,
+  PrivateProfileInfo:{
+    screen: PrivateProfileInfo
+  }
+  */
 },
 {
   headerMode: 'none',

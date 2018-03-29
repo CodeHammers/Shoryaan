@@ -5,6 +5,7 @@ import {
     from 'native-base';
 
 import {AuthService} from '../../services/auth'
+import {ValidateService} from '../../services/validate'
 
 
 export class Register extends React.Component {
@@ -22,7 +23,8 @@ export class Register extends React.Component {
       valid_username: undefined,
       valid_email: undefined,
       valid_state: 0,
-      auth_service: new AuthService(),
+      auth_service: new AuthService(this),
+      v_service: new ValidateService(this),
       navigate: navigate,
       self: self
     };
@@ -31,78 +33,15 @@ export class Register extends React.Component {
   }
 
   validate_username(un=false){
-    el =  un || this.state.username
-    el = el.length
-    if(el<3){
-      this.setState({valid_state:2}) ;
-      this.setState({valid_username:false});  
-    }
-    else{
-      
-      if(this.state.valid_state == 2){
-        this.setState({valid_state:0})
-        if(this.state.valid_pass!=undefined)
-          this.validate_password()
-        if(this.state.valid_email!=undefined)
-          this.validate_email()
-      }
-      this.setState({valid_username:true});
-    }
-    //return (el >=2 || this.setState({valid_username:false}) ) && this.setState({valid_username:true})
+    this.state.v_service.validate_username(un)
   }
   validate_password(pass=false){
-    
-    pl = pass || this.state.password
-    pl = pl.length
-    if(pl<8){
-      this.setState({valid_state:3}) ;
-      this.setState({valid_pass:false});  
-      
-    }
-    else{
-          
-      if(this.state.valid_state == 3){
-        this.setState({valid_state:0})
-        if(this.state.valid_username!=undefined)
-          this.validate_username()
-        if(this.state.valid_email!=undefined)
-          this.validate_email()
-      }
-      this.setState({valid_pass:true});
-    }
+    this.state.v_service.validate_password(pass)
   }
-
-
   validate_email(em){
-
-    email = em || this.state.email
-    if(!this.validateEmail(this.state.email)){
-      this.setState({valid_state:1}) ;
-      this.setState({valid_email:false});  
-      
-    }
-    else{
-          
-      if(this.state.valid_state == 1){
-        this.setState({valid_state:0})
-        if(this.state.valid_username!=undefined)
-          this.validate_username()
-        if(this.state.valid_pass!=undefined)
-          this.validate_password()
-      }
-      this.setState({valid_email:true});
-    }
-
-  }
-  validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    this.state.v_service.validate_email(em)
   }
 
-
-
-
-  
   /**
    * sends a post request to /auth/signup with             
    * user data to create a new account if user does not                   
@@ -112,48 +51,7 @@ export class Register extends React.Component {
    */
 
   register(){
-    if(true!=this.state.valid_email || true!=this.state.valid_pass || this.state.valid_username!=true){
-      this.showToast("Errors Detected in form ","I'll check")
-      this.setState({show_loader:false})
-      return;
-    }
-    body = JSON.stringify({
-      email: this.state.email,
-      username: this.state.username,
-      bloodtype: this.state.selected2,
-      password: this.state.password,
-    })
-
-    this.state.auth_service.post(body,'/auth/signup')
-      .then((response) => {
-        if(response.status!=200){
-         return null;
-        }
-        
-        return response.json()
-      })
-      .then((response) => {
-        if(response==null){
-          this.showToast("User Exists","Hmmm")
-          this.setState({show_loader:false})
-          return ;
-        }
-        if(this.state.auth_service.handleToken(response)){
-          this.showToast("Registered Successfully","Great")
-          this.state.navigate(this.state.self,this.state)
-
-        }
-        else{
-          this.showToast(response.message||"something went wrong,try again","Okay")
-        }
-        this.setState({show_loader:false})
-      })
-      .catch((error) => {
-        alert("Cannot Connect to Server")
-        this.setState({show_loader:false})
-      });
-
-
+    this.state.auth_service.register()
   }
    /**
    * create Toast pattern to avoid repeating code                                     
@@ -274,7 +172,7 @@ export class Register extends React.Component {
                 >
 
                 {this.state.show_loader && (
-                 <ActivityIndicator size="large" color="#0000ff" />
+                 <ActivityIndicator size="large" color="#fff" />
                 )            
                 }
                 {
