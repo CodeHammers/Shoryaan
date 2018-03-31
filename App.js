@@ -62,7 +62,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'PrivateProfileInfo',
+  initialRouteName: 'Landing',
 },
 );
 
