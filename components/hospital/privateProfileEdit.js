@@ -1,22 +1,31 @@
 import React from 'react'
 import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Picker, Item} from 'native-base'
-import {StatusBar,StyleSheet, ScrollView, View, TextInput} from 'react-native'
+import {StatusBar, StyleSheet, ScrollView, View, TextInput} from 'react-native'
 
-export class CreateHospital extends React.Component
+export class EditHospitalPrivateProfile extends React.Component
 {
     constructor(props)
     {
         super(props);
 
+        const {params} = this.props.navigation.state;
+
         this.state = {
-            name: "",
-            state: "",
-            district: "",
-            address: "",
-            phone: "",
-            email: "",
-            isVerified: false,
-            status: "",
+            nameSaved: params.name,
+            stateSaved: params.state,
+            districtSaved: params.district,
+            addressSaved: params.address,
+            phoneSaved: params.phone,
+            statusSaved: params.status,
+
+            name: params.name,
+            state: params.state,
+            district: params.district,
+            address: params.address,
+            phone: params.phone,
+            email: params.email,
+            status: params.status,
+
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
             statusOptions: ["Public", "Private"]
         }
@@ -35,20 +44,17 @@ export class CreateHospital extends React.Component
     }
 
     render(){
-        return (
-            <Container>
-
-                <StatusBar translucent={false}  style = {styles.statusBar} barStyle = "light-content"/>
-
+        return(
+            <Container style = {styles.form}>
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon name='menu' />
+                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
                         </Button>
                     </Left>
 
                     <Body style = {styles.title}>
-                    <Title> CREATE </Title>
+                    <Title> EDIT </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>
@@ -65,7 +71,7 @@ export class CreateHospital extends React.Component
                         <Text style = {styles.inputFieldLabels}> Hospital's name</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "Hospital's official name"
+                            defaultValue= {this.state.name}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize={'sentences'}
@@ -88,7 +94,7 @@ export class CreateHospital extends React.Component
                         <Text style = {styles.inputFieldLabels}> District</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "i.e. Helioplis"
+                            defaultValue= {this.state.district}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             onChangeText={(text) =>{this.setState({district: text});}}
@@ -97,7 +103,7 @@ export class CreateHospital extends React.Component
                         <Text style = {styles.inputFieldLabels}> Address</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "i.e building number, St. name off St. name"
+                            defaultValue= {this.state.address}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize = {'sentences'}
@@ -107,7 +113,7 @@ export class CreateHospital extends React.Component
                         <Text style = {styles.inputFieldLabels}> Phone</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "[City code] + [8 numbers]"
+                            defaultValue= {this.state.phone}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             keyboardType = 'numeric'
@@ -117,7 +123,7 @@ export class CreateHospital extends React.Component
                         <Text style = {styles.inputFieldLabels}> E-mail</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "ie. queens@gmail.com"
+                            defaultValue= {this.state.email}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             keyboardType = 'email-address'
