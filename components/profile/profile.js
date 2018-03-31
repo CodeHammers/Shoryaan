@@ -18,7 +18,7 @@ export class Profile extends React.Component
             username:params.username || "unknown",
             email:params.email || "unknown",
             governorate: params.governorate || "Cairo",
-            city: params.city || "Nozha",
+            city: params.city || "",
             name: params.name || "",
             bloodType: params.bloodType || "A+",
             nextDonation: "2",
