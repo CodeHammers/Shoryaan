@@ -4,6 +4,7 @@ import {Landing} from './components/login/landing'
 import {Home} from './components/home/home'
 import {Profile} from './components/profile/profile'
 import {Search} from './components/search/search'
+import {InitialSearch} from './components/search/initialsearch'
 import {EditProfile} from './components/profile/editProfile'
 import {HospitalPublicProfile} from './components/hospital/publicProfile'
 import {CreateHospital} from './components/hospital/createHospital'
@@ -32,7 +33,10 @@ const RootStack = StackNavigator({
   },
   Search:{
     screen: Search
-  }, 
+  },
+  InitialSearch:{
+    screen: InitialSearch
+  },  
   HospitalPublicProfile:{
     screen: HospitalPublicProfile
   }, 
@@ -81,8 +85,6 @@ const instructions = Platform.select({
   android: 'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu',
 });
-
-
 type Props = {};
 export default class App extends Component<Props> {
   render() {
@@ -101,7 +103,6 @@ export default class App extends Component<Props> {
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

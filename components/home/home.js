@@ -45,71 +45,71 @@ export class Home extends React.Component {
           </Header>
 
           <ScrollView>
-          <View style={styles.container}>
-          <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Profile',{gender: this.state.gender,username: this.state.username,email: this.state.email,bloodtype:this.state.bloodtype})}}>
-            <Image 
-            source={require('../../images/home/i-received-icon.png')} 
-            style={styles.ImageIconStyle} 
-            />
-            <Text style={styles.textbutton}>
-              MY PROFILE
-            </Text> 
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Image 
-            source={require('../../images/home/12_blood_2.png')} 
-            style={styles.ImageIconStyle} 
-            />
-            <Text style={styles.textbutton}>
-              DONATE BLOOD
-            </Text> 
-          </TouchableOpacity>
-          </View>
+            <View style={styles.container}>
+            <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Profile',{gender: this.state.gender,username: this.state.username,email: this.state.email,bloodtype:this.state.bloodtype})}}>
+              <Image 
+              source={require('../../images/home/i-received-icon.png')} 
+              style={styles.ImageIconStyle} 
+              />
+              <Text style={styles.textbutton}>
+                MY PROFILE
+              </Text> 
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+              <Image 
+              source={require('../../images/home/12_blood_2.png')} 
+              style={styles.ImageIconStyle} 
+              />
+              <Text style={styles.textbutton}>
+                DONATE BLOOD
+              </Text> 
+            </TouchableOpacity>
+            </View>
 
-          <View style={styles.container}>
-          <TouchableOpacity style={styles.button}>
-            <Image 
-            source={require('../../images/home/can-i-give-blood-icon-homepage.png')} 
-            style={styles.ImageIconStyle} 
-            />
-            <Text style={styles.textbutton}>
-              BLOOD DONATION
-            </Text> 
-            <Text style={styles.textbutton}>
-              GUIDELINES
-            </Text> 
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Image 
-            source={require('../../images/home/Health_Tests-512.png')} 
-            style={styles.ImageIconStyle} 
-            />
-            <Text style={styles.textbutton}>
-              BLOOD FACTS
-            </Text> 
-          </TouchableOpacity>
-          </View>
+            <View style={styles.container}>
+              <TouchableOpacity style={styles.button}>
+                <Image 
+                source={require('../../images/home/can-i-give-blood-icon-homepage.png')} 
+                style={styles.ImageIconStyle} 
+                />
+                <Text style={styles.textbutton}>
+                  BLOOD DONATION
+                </Text> 
+                <Text style={styles.textbutton}>
+                  GUIDELINES
+                </Text> 
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button}>
+                <Image 
+                source={require('../../images/home/Health_Tests-512.png')} 
+                style={styles.ImageIconStyle} 
+                />
+                <Text style={styles.textbutton}>
+                  BLOOD FACTS
+                </Text> 
+              </TouchableOpacity>
+            </View>
 
-          <View style={styles.container}>
-          <TouchableOpacity style={styles.button}>
-            <Image 
-            source={require('../../images/home/hospital.png')} 
-            style={styles.ImageIconStyle} 
-            />
-            <Text style={styles.textbutton}>
-              MY HOSPITAL
-            </Text> 
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Search')}}>
-            <Image 
-            source={require('../../images/home/search.png')} 
-            style={styles.ImageIconStyle} 
-            />
-            <Text style={styles.textbutton}>
-              SEARCH
-            </Text> 
-          </TouchableOpacity>
-          </View>
+            <View style={styles.container}>
+              <TouchableOpacity style={styles.button}>
+                  <Image 
+                  source={require('../../images/home/hospital.png')} 
+                  style={styles.ImageIconStyle} 
+                  />
+                  <Text style={styles.textbutton}>
+                    MY HOSPITAL
+                  </Text> 
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('InitialSearch')}}>
+                  <Image 
+                  source={require('../../images/home/search.png')} 
+                  style={styles.ImageIconStyle} 
+                  />
+                  <Text style={styles.textbutton}>
+                    SEARCH
+                  </Text> 
+              </TouchableOpacity>
+            </View>
           </ScrollView>
         </Container>
         )
@@ -121,27 +121,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+
   header: {
     backgroundColor: '#F44336',
     height: 50
   },
+
   statusBar: {
     backgroundColor: '#D32F2F'
   },
-  icon: {
-    color: "#fff",
-    fontSize: 20
-  },
+
   textbutton: {
     color: '#F44336',
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold'
   },
+
   title: {
     flex: 1,  
     justifyContent: 'center', 
     alignItems: 'center'
   },
+
   button: {
     flex: 1,
     borderColor: 'black',
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
     width: '35%',
     height: 210
   },
+
   ImageIconStyle: {
     padding: 10,
     margin: 5,

@@ -1,49 +1,128 @@
-import React, { Component } from 'react';
-import { Container, Header, Left, Body, Right, Button, Icon, Segment, Content, Text,Input,Item } from 'native-base';
-import {ImageBackground,StatusBar,StyleSheet,View,} from 'react-native'
+import React from 'react';
+import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker } from 'native-base';
+import {Modal, TouchableHighlight, TouchableOpacity, View, StatusBar, StyleSheet, TextInput} from 'react-native';
 
-export  class Search extends Component {
-  render() {
-    return (
-      <Container>
-        <StatusBar
-          backgroundColor={'#C2185B'}
-          barStyle="light-content"
-          translucent={false}
-        />
-        <Header searchBar rounded androidStatusBarColor={'#C2185B'} backgroundColor={'#E91E63'} style={{backgroundColor:'#E91E63'}}>
-    
-        <Left>
-            <Button transparent>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Segment style={{backgroundColor:'transparent'}}>
-              <Button first active><Text>search</Text></Button>
-              <Button last ><Text>Map</Text></Button>
-            </Segment>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name="search" />
-            </Button>
-          </Right>
+export class Search extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            checked: false,
+            states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
+            status: ["Private", "Puplic"],
+            selectedState: "",
+            selectesStatus: ""
+        };
+    }
 
-        </Header>
+    onStateValueChange(value) {
+        this.setState({
+            selectedState: value
+        });
+    }
+
+    onStatusValueChange(value) {
+        this.setState({
+            selectedStatus: value
+        });
+    }
+
+    render() {
+        const content = this.state.checked
+        ? 
         <View>
-
-          <Item>
-            <Icon name="ios-search" />
-            <Input placeholder="Search" />
-            <Icon name="ios-people" />
-          </Item>
-          <Button transparent>
-            <Text>Search</Text>
-          </Button>
-
+            <Text style = {styles.inputFieldLabels}> State</Text>
+            <Picker
+                iosHeader="Select one"
+                mode="dropdown"
+                selectedValue={this.state.selectedState}
+                onValueChange={this.onStateValueChange.bind(this)}
+                style = {styles.StatePicker}
+                >
+                {this.state.states.map((item, index) => {
+                    return (<Item style = {styles.StatePickerItem} label={item} value={item} key={index}/>) 
+                })}
+            </Picker>
+            <Text style = {styles.inputFieldLabels}> Status</Text>
+            <Picker
+                iosHeader="Select one"
+                mode="dropdown"
+                selectedValue={this.state.selectedStatus}
+                onValueChange={this.onStatusValueChange.bind(this)}
+                style = {styles.StatePicker}
+                >
+                {this.state.status.map((item, index) => {
+                    return (<Item style = {styles.StatePickerItem} label={item} value={item} key={index}/>) 
+                })}
+            </Picker>
         </View>
-      </Container>
-    );
-  }
+        : null;
+
+        return (
+        <Container>
+            <StatusBar translucent={false} style = {styles.statusBar} barStyle = "light-content"/>
+
+            <Header searchBar style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
+                <Item rounded>
+                    <Icon name="ios-search" />
+                    <Input placeholder="Search" />
+                </Item>
+                <Button transparent>
+                    <Text>Search</Text>
+                </Button>
+            </Header>
+
+            <ListItem>
+                <CheckBox 
+                checked={this.state.checked}
+                onPress={() => this.setState({ checked: !this.state.checked })} />
+                <Body>
+                    <Text>Use Filter</Text>
+                </Body>
+            </ListItem>
+            
+            { content }
+            
+            <View style={{width: 200, alignItems: 'center', alignSelf: 'center'}}>
+            <Button style={styles.searchButton} block rounded>
+                <Text>Search</Text>
+            </Button>
+            </View>
+
+        </Container>
+        );
+    }
 }
+
+const styles = StyleSheet.create({
+    header: {
+      backgroundColor: '#F44336',
+      height: 70,
+      paddingTop: 10
+    },
+
+    statusBar: {
+        backgroundColor: '#D32F2F'
+    },
+
+    inputFieldLabels:{
+        paddingTop:5,
+        paddingLeft:10,
+        fontSize: 20
+    },
+
+    StatePicker:{
+        flexDirection: 'row',
+        marginHorizontal: 25,
+    },
+
+    StatePickerItem:{
+        fontSize: 16,
+        color: '#757575'
+    },
+
+    searchButton:{
+        marginTop:21, 
+        marginBottom:21, 
+        backgroundColor:'#F44336'
+    }
+})
