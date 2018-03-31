@@ -72,7 +72,6 @@ export class EditProfile extends React.Component
                     city: this.state.city, name: this.state.name, bloodType: this.state.bloodType, gender: this.state.gender, dateOfBirth: this.state.dateOfBirth})
             }
         })
-      
     }
 
     onStateValueChange(value) {
@@ -226,6 +225,10 @@ export class EditProfile extends React.Component
                             }}
                             onDateChange={(date) => {this.setState({dateOfBirth: date})}}
                         />
+
+                        <Button>
+                            <Icon onPress={() => {this.props.navigation.navigate('ChangeUserPassword')}} name='md-checkmark' />
+                        </Button>
 
                         <View/>
                     </View>
