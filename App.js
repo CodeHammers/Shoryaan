@@ -8,7 +8,8 @@ import {InitialSearch} from './components/search/initialsearch'
 import {EditProfile} from './components/profile/editProfile'
 import {HospitalPublicProfile} from './components/hospital/publicProfile'
 import {CreateHospital} from './components/hospital/createHospital'
-//import {PrivateProfileInfo} from './components/hospital/privateProfileInfo'
+import {PrivateProfileInfo} from './components/hospital/privateProfileInfo'
+import {EditHospitalPrivateProfile} from './components/hospital/privateProfileEdit'
 
 import {StackNavigator} from 'react-navigation'
 import { Root } from "native-base";
@@ -42,6 +43,12 @@ const RootStack = StackNavigator({
   }, 
   CreateHospital:{
     screen: CreateHospital
+  },
+  PrivateProfileInfo:{
+    screen: PrivateProfileInfo
+  },
+  EditHospitalPrivateProfile:{
+    screen: EditHospitalPrivateProfile
   }
   /*
   //error message: PrivateProfileInfo should be a react componenet,
@@ -55,7 +62,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'Landing',
+  initialRouteName: 'PrivateProfileInfo',
 },
 );
 
