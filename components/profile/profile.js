@@ -53,6 +53,19 @@ export class Profile extends React.Component
         }
         })
     }
+    navgiateToEdit(){
+        this.props.navigation.navigate('EditProfile', {
+            username:this.state.username,
+            email:this.state.email ,
+            governorate: this.state.governorate ,
+            city: this.state.city ,
+            name: this.state.name,
+            bloodType: this.state.bloodType,
+            gender: this.state.gender ,
+            dateOfBirth: this.state.dateOfBirth ,
+            self: this
+        })
+    }
 
     render(){
         return(
@@ -72,7 +85,7 @@ export class Profile extends React.Component
                    
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                        <Icon onPress={() => this.props.navigation.navigate('EditProfile', this.state)} name='md-create' />
+                        <Icon onPress={() => this.navgiateToEdit()} name='md-create' />
                         </Button>
                     </Right>
                 </Header>
