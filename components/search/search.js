@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker } from 'native-base';
-import {Modal, TouchableHighlight, TouchableOpacity, View, StatusBar, StyleSheet, TextInput} from 'react-native';
+import {Modal, TouchableHighlight, TouchableOpacity, View, StatusBar, StyleSheet, TextInput,ScrollView} from 'react-native';
 
 export class Search extends React.Component {
     constructor (props) {
@@ -58,18 +58,9 @@ export class Search extends React.Component {
         : null;
 
         return (
-        <Container>
-            <StatusBar translucent={false} style = {styles.statusBar} barStyle = "light-content"/>
+        <View style={{backgroundColor:'#f5f5f5'}}>
 
-            <Header searchBar style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
-                <Item rounded>
-                    <Icon name="ios-search" />
-                    <Input placeholder="Search" />
-                </Item>
-                <Button transparent>
-                    <Text>Search</Text>
-                </Button>
-            </Header>
+
 
             <ListItem>
                 <CheckBox 
@@ -83,12 +74,12 @@ export class Search extends React.Component {
             { content }
             
             <View style={{width: 200, alignItems: 'center', alignSelf: 'center'}}>
-            <Button style={styles.searchButton} block rounded>
+            <Button style={styles.searchButton} block rounded >
                 <Text>Search</Text>
             </Button>
             </View>
 
-        </Container>
+        </View>
         );
     }
 }
