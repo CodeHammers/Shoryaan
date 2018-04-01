@@ -7,16 +7,17 @@ export class PrivateProfileInfo extends React.Component
     constructor(props){
         super(props);
 
-        //TODO: get hospital's data from the search view
+        const { params } = this.props.navigation.state;
+
         this.state = {
-            name: "Queen's Hospital",
-            state: "Cairo",
-            district: "Heliopolis",
-            address: "4 Sheikh Nour Eldin, off Thawra St.",
-            phone: "0224186334",
-            email: "N/A",
-            isVerified: true,
-            status: "Private"
+            name: params.name,
+            state: params.state,
+            district: params.district,
+            address: params.address,
+            phone: params.phone,
+            email: params.email,
+            isVerified: params.isVerified,
+            status: params.status
         }
     }   
 

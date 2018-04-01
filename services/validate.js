@@ -6,6 +6,7 @@ export  class ValidateService{
     constructor(self){
         this.SELF =self;
     }
+    
   /**
    * validates password 
    * criteria: min length 8

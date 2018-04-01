@@ -18,6 +18,7 @@ export class Home extends React.Component {
           email:params.email || "unknown",
           bloodtype: params.bloodtype || "?",
           gender: params.gender ||  "Male",
+          manager: params.hospitalManager,
           auth_service: new AuthService()
         };
 
@@ -95,7 +96,14 @@ export class Home extends React.Component {
             </View>
 
             <View style={styles.container}>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress = {()=>{
+                if(this.state.manager){
+                  this.props.navigation.navigate('PrivateProfileInfo');
+                }
+                else{
+                  this.props.navigation.navigate('CreateHospital');
+                }
+              }}>
                   <Image 
                   source={require('../../images/home/hospital.png')} 
                   style={styles.ImageIconStyle} 
