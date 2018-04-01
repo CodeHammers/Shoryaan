@@ -1,6 +1,9 @@
 import React from 'react'
-import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Picker, Item} from 'native-base'
-import {StatusBar,StyleSheet, ScrollView, View, TextInput} from 'react-native'
+import {Container, Header, Title, Content, Button, Left, Right, Body, Toast, Icon, Text, Picker, Item} from 'native-base'
+import {StatusBar,StyleSheet, AsyncStorage, ScrollView, View, TextInput} from 'react-native'
+
+import {AuthService} from '../../services/auth'
+import {ValidateService} from '../../services/validate'
 
 export class CreateHospital extends React.Component
 {
@@ -10,16 +13,38 @@ export class CreateHospital extends React.Component
 
         this.state = {
             name: "",
-            state: "",
+            state: "Cairo",
             district: "",
             address: "",
             phone: "",
             email: "",
+            locationLongitude: 22.5,
+            locationLatitude: 22.5,
+            valid_email: undefined,
             isVerified: false,
-            status: "",
+            status: "Public",
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-            statusOptions: ["Public", "Private"]
+            statusOptions: ["Public", "Private"],
+
+            access_token: "",
+
+            auth_service: new AuthService(this),
+            validator: new ValidateService(this)
         }
+
+        this.checkStoredToken();        
+    }
+
+    checkStoredToken(){
+        AsyncStorage.getItem("access_token").then((value) => {
+            if(value!=undefined){
+                this.setState({access_token:value})
+            }
+        }).done();
+    }
+
+    validateEmail(email){
+        this.state.validator.validate_email(email)
     }
 
     onStateValueChange(value) {
@@ -34,6 +59,58 @@ export class CreateHospital extends React.Component
         });
     }
 
+    showToast(msg,btn){
+        Toast.show({
+            text: msg,
+            position: 'bottom',
+            buttonText: btn,
+            duration: 5000,
+            style: {
+                backgroundColor: "#212121",
+                opacity:0.76
+            }
+        })
+    }
+
+    createHospital(){
+        body = JSON.stringify({
+            name: this.state.name,
+            state: this.state.state,
+            email: this.state.email,
+            phone: this.state.phone,
+            address: this.state.address,
+            status: this.state.status,
+            locationLongitude: this.state.locationLongitude,
+            locationLatitude: this.state.locationLatitude,
+            isVerified: this.state.isVerified
+        })
+        this.state.auth_service.post(body,'/hospital/create')
+        .then((response)=>{
+            if(response.status!=200){
+                this.showToast("Creation failed", "ok");
+                response.json().then(
+                    (res_json)=>{
+                        alert(res_json.invalidAttributes)
+                    }
+                )
+            }
+            else{
+                this.showToast("Creation succeeded", "ok");
+                this.props.navigation.navigate('PrivateProfileInfo', 
+                {
+                    name: this.state.name,
+                    state: this.state.state,
+                    email: this.state.email,
+                    phone: this.state.phone,
+                    address: this.state.address,
+                    status: this.state.status,
+                    district: this.state.district,
+                    isVerified: this.state.isVerified
+                });
+            }
+        })
+    }
+
     render(){
         return (
             <Container>
@@ -43,7 +120,7 @@ export class CreateHospital extends React.Component
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon name='menu' />
+                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
                         </Button>
                     </Left>
 
@@ -53,7 +130,7 @@ export class CreateHospital extends React.Component
                 
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon name='md-checkmark' />
+                            <Icon onPress={()=> this.createHospital()} name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>
@@ -113,16 +190,28 @@ export class CreateHospital extends React.Component
                             keyboardType = 'numeric'
                             onChangeText={(text) =>{this.setState({phone: text});}}
                         />
-
+                        
                         <Text style = {styles.inputFieldLabels}> E-mail</Text>
-                        <TextInput style={styles.inputBox} 
-                            underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "ie. queens@gmail.com"
-                            placeholderTextColor = "#757575"
-                            selectionColor="#212121"
-                            keyboardType = 'email-address'
-                            onChangeText={(text) =>{this.setState({email: text});}}
-                        />
+                        <Item style={{width:'100%', borderBottomColor: '#FFFF'}}>
+                            <TextInput style={styles.inputBox} 
+                                underlineColorAndroid='rgba(0,0,0,0)' 
+                                placeholder= "ie. queens@gmail.com"
+                                placeholderTextColor = "#757575"
+                                selectionColor="#212121"
+                                keyboardType = 'email-address'
+                                onChangeText={(text) =>{this.setState({email: text}); this.validateEmail(text);}}
+                            />
+                            {this.state.valid_email == true &&
+                                (
+                                    <Icon style={{color:'green'}}  name='checkmark-circle'/>
+                                )
+                            }
+                            {this.state.valid_email == false &&
+                                (
+                                    <Icon style={{color:'red'}}  name='close-circle'/>
+                                )
+                            }
+                        </Item>
 
                         <Text style = {styles.inputFieldLabels}> Status</Text>
                         <Picker
@@ -167,6 +256,7 @@ const styles = StyleSheet.create({
     },
 
     inputBox: {
+        flex:1,
         flexDirection: 'row',
         backgroundColor:'#ffffff',
         borderRadius: 15,
