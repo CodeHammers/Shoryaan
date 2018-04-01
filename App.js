@@ -72,11 +72,16 @@ const RootStack = StackNavigator({
   },
   initialRouteName: 'Intro',
 },
-);
+)
 
-export const Drawer = DrawerNavigator({
-  Home: { screen: Home },
-});
+const Drawer = DrawerNavigator({
+  Home: { 
+    screen: Home 
+  },
+  InitialSearch: {
+    screen: InitialSearch
+  }
+})
 
 /*
 ################################################################################

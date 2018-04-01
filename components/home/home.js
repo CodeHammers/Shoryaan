@@ -5,6 +5,10 @@ import {H3} from 'native-base'
 import {AuthService} from '../../services/auth'
 
 export class Home extends React.Component {
+
+  static navigationOptions = {
+    title: 'Home',
+  };
   
     constructor(props) {
         super(props);
@@ -17,7 +21,7 @@ export class Home extends React.Component {
           auth_service: new AuthService()
         };
 
-    }      
+    }
 
     render() {
         const self = this;
@@ -28,11 +32,11 @@ export class Home extends React.Component {
  
           <Header style = {styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
               <Left style = {{flex: 1}}>
-                  <Button transparent>
-                      <Icon onPress={() => this.props.navigation.navigate('DrawerOpen')} name='menu' />
+                  <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
+                      <Icon name='menu' />
                   </Button>
               </Left>
-            
+              
               <Body style = {styles.title}>
                   <Title> HOME </Title>
               </Body>

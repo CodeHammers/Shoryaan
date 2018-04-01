@@ -1,6 +1,7 @@
 import React from 'react';
-import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker } from 'native-base';
+import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker, Content, List } from 'native-base';
 import { TouchableOpacity, ScrollView, View, StatusBar, StyleSheet } from 'react-native';
+import {AuthService} from '../../services/auth'
 
 export class Search extends React.Component {
     constructor (props) {
@@ -11,7 +12,8 @@ export class Search extends React.Component {
             status: ["Private", "Puplic"],
             selectedState: "",
             selectesStatus: "",
-            searchText: ""
+            searchText: "",
+            auth_service: new AuthService
         };
         this.arrayholder = [] ;
     }
@@ -29,15 +31,16 @@ export class Search extends React.Component {
                 name: this.state.searchText
             })
         }
-        this.state.auth_service.post(body,'/hospital/search')
-        .then((response)=>{
-            if(response.status!=200){
-                this.showToast("No Result Found","ok")
+
+        this.state.auth_service.get('/hospital/index')
+        .then((response)=>{response.json().then(
+            (data)=>{
+              alert("hello")
+              this.setState({arrayholder:data})
             }
-            else{
-                this.arrayholder = response;
-            }
-        })
+          )
+        }
+      )
     }
 
     onStateValueChange(value) {
@@ -58,7 +61,23 @@ export class Search extends React.Component {
         });
     }
 
+    showToast(msg,btn){
+        Toast.show({
+            text: msg,
+            position: 'bottom',
+            buttonText: btn,
+            duration: 5000,
+            style: {
+                backgroundColor: "#212121",
+                opacity:0.76
+            }
+        })
+    }
+
     render() {
+   //     for(var i = 0; i < 15; i++){
+  //          this.arrayholder.push({'name': 'Apple', 'address' : '$6'});
+  //          }
         const content = this.state.checked
         ? 
         <View>
@@ -120,18 +139,13 @@ export class Search extends React.Component {
             </Button>
             </View>
 
-            <View>
-                <Content>
-                    <List dataArray={this.arrayholder} renderRow={(arrayholder) =>
-                        <ListItem>
-                            <Text>{arrayholder.name}</Text>
-                            <Text note>{arrayholder.address}</Text>
-                        </ListItem>
-                        }>
-                    </List> 
-                </Content>
-            </View>
-
+            <List dataArray={this.arrayholder} renderRow={(arrayholder) =>
+                <ListItem>
+                    <Text>{arrayholder.name}</Text>
+                    <Text note>{arrayholder.address}</Text>
+                </ListItem>
+                }>
+            </List> 
         </View>
         );
     }
