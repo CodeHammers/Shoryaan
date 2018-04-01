@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker } from 'native-base';
-import {Modal, TouchableHighlight, TouchableOpacity, View, StatusBar, StyleSheet, TextInput} from 'react-native';
+import { TouchableOpacity, ScrollView, View, StatusBar, StyleSheet } from 'react-native';
 
 export class Search extends React.Component {
     constructor (props) {
@@ -10,8 +10,34 @@ export class Search extends React.Component {
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
             status: ["Private", "Puplic"],
             selectedState: "",
-            selectesStatus: ""
+            selectesStatus: "",
+            searchText: ""
         };
+        this.arrayholder = [] ;
+    }
+
+    Search(){
+        if(this.state.checked){
+            body = JSON.stringify({
+                    name: this.state.searchText,
+                    state: this.state.selectedState,
+                    status: this.state.selectesStatus
+                })
+        }
+        else{
+            body = JSON.stringify({
+                name: this.state.searchText
+            })
+        }
+        this.state.auth_service.post(body,'/hospital/search')
+        .then((response)=>{
+            if(response.status!=200){
+                this.showToast("No Result Found","ok")
+            }
+            else{
+                this.arrayholder = response;
+            }
+        })
     }
 
     onStateValueChange(value) {
@@ -23,6 +49,12 @@ export class Search extends React.Component {
     onStatusValueChange(value) {
         this.setState({
             selectedStatus: value
+        });
+    }
+
+    setSearchText(value){
+        this.setState({
+            searchText: value
         });
     }
 
@@ -58,8 +90,8 @@ export class Search extends React.Component {
         : null;
 
         return (
-        <Container>
-            <StatusBar translucent={false} style = {styles.statusBar} barStyle = "light-content"/>
+        <View style={{backgroundColor:'#f5f5f5'}}>
+
 
             <Header searchBar style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
                 <Item rounded>
@@ -67,7 +99,7 @@ export class Search extends React.Component {
                     <Input placeholder="Search" />
                 </Item>
                 <Button transparent>
-                    <Text>Search</Text>
+                    <Text onChange={this.setSearchText.bind(this)} >Search</Text>
                 </Button>
             </Header>
 
@@ -83,15 +115,32 @@ export class Search extends React.Component {
             { content }
             
             <View style={{width: 200, alignItems: 'center', alignSelf: 'center'}}>
-            <Button style={styles.searchButton} block rounded>
+            <Button style={styles.searchButton} block rounded onPress={() => {this.Search()}}>
                 <Text>Search</Text>
             </Button>
             </View>
 
-        </Container>
+            <View>
+                <Content>
+                    <List dataArray={this.arrayholder} renderRow={(arrayholder) =>
+                        <ListItem>
+                            <Text>{arrayholder.name}</Text>
+                            <Text note>{arrayholder.address}</Text>
+                        </ListItem>
+                        }>
+                    </List> 
+                </Content>
+            </View>
+
+        </View>
         );
     }
 }
+
+//add onPress in search result
+//check search function
+//check array
+//check filter
 
 const styles = StyleSheet.create({
     header: {
