@@ -32,6 +32,7 @@ export class EditProfile extends React.Component
             bloodType: params.bloodType,
             gender: params.gender || "Male",
             dateOfBirth: "2018-03-29",
+            self: params.self,
 
             bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-","?"],
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
@@ -68,11 +69,16 @@ export class EditProfile extends React.Component
             }
             else{
                 this.showToast("update sucess","ok")
-                this.props.navigation.navigate('Profile', {username: this.state.username, governorate: this.state.governorate,
-                    city: this.state.city, name: this.state.name, bloodType: this.state.bloodType, gender: this.state.gender, dateOfBirth: this.state.dateOfBirth})
+                //this.props.navigation.navigate('Profile', {username: this.state.username, governorate: this.state.governorate,
+                  //  city: this.state.city, name: this.state.name, bloodType: this.state.bloodType, gender: this.state.gender, dateOfBirth: this.state.dateOfBirth})
+                this.state.self.setState(
+                    {username: this.state.username, governorate: this.state.governorate,
+                      city: this.state.city, name: this.state.name, bloodType: this.state.bloodType, gender: this.state.gender,
+                       dateOfBirth: this.state.dateOfBirth}   
+                )
+                this.props.navigation.goBack()
             }
         })
-      
     }
 
     onStateValueChange(value) {
@@ -226,6 +232,10 @@ export class EditProfile extends React.Component
                             }}
                             onDateChange={(date) => {this.setState({dateOfBirth: date})}}
                         />
+
+                        <Button>
+                            <Icon onPress={() => {this.props.navigation.navigate('ChangeUserPassword')}} name='md-checkmark' />
+                        </Button>
 
                         <View/>
                     </View>

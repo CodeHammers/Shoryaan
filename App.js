@@ -10,6 +10,8 @@ import {HospitalPublicProfile} from './components/hospital/publicProfile'
 import {CreateHospital} from './components/hospital/createHospital'
 import {PrivateProfileInfo} from './components/hospital/privateProfileInfo'
 import {EditHospitalPrivateProfile} from './components/hospital/privateProfileEdit'
+import {ChangeUserPassword} from './components/profile/changePassword'
+import {Intro} from './components/intro/intro'
 
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
 import { Root } from "native-base";
@@ -23,6 +25,9 @@ const RootStack = StackNavigator({
   Landing: {
     screen: Landing,
   },
+  Intro: {
+    screen: Intro
+  },
   Home:{
     screen: Home
   },
@@ -31,6 +36,9 @@ const RootStack = StackNavigator({
   },
   EditProfile:{
     screen: EditProfile
+  },
+  ChangeUserPassword:{
+    screen: ChangeUserPassword
   },
   Search:{
     screen: Search
@@ -62,7 +70,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'Landing',
+  initialRouteName: 'Intro',
 },
 );
 

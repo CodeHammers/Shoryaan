@@ -4,7 +4,7 @@ import {
     Container, Header, Content, Form, Item, Input, sLabel ,Label,Icon,Button,Text,Card, CardItem,  Footer, FooterTab, Picker,Toast,Thumbnail,Badge} 
     from 'native-base';
 
-import FBSDK ,{LoginManager} from 'react-native-fbsdk'
+import FBSDK ,{LoginManager,AccessToken} from 'react-native-fbsdk'
 
 import {Register} from './register'
 import {Login} from './login'
@@ -40,14 +40,63 @@ export class Landing extends React.Component {
     })
   }
 
+  /**
+   * 
+   */
+  loginWithFacebook(){
+    LoginManager.logInWithReadPermissions(['public_profile','email'])
+    .then(
+        (res)=>{
+            if(res.isCancelled)
+                return
+            //alert('Login success with permissions: ' +res.grantedPermissions.toString());
+             //alert(res.grantedPermissions())
+            
+            AccessToken.getCurrentAccessToken().then(
+                (data) => {
+                    
+                    //alert(data.accessToken.toString())
+                    body =  JSON.stringify({access_token:data.accessToken.toString()})
+                    this.state.auth_service.post(body,'/auth/login_facebook')
+                    .then(
+                        (response)=>{
+                            if(response.status ==200){
+                                response.json().then(
+                                    (res_json)=>{
+                                        this.state.auth_service.handleToken(res_json)
+                                        this.props.navigation.navigate('Home',res_json.user)
+                                    }
+                                )
+                            }
+                            else{
+
+                            }
+                            //alert("success")
+                        }
+                        ,(error)=>{
+                            //alert(error.message)
+                        }
+                    )
+                
+                }
+            )
+          
+    },
+        (error)=>{}
+    )
+  }
+
 
   render() {
     const self = this;
     function nv(s,res_json) {
         s.props.navigation.navigate('Home', {
-            bloodtype: res_json.bloodtype,
             username: res_json.username,
             email: res_json.email,
+            bloodtype: res_json.bloodtype,
+            gender: res_json.gender,
+            id: res_json.id,
+            hospitalManager: res_json.hospitalManager
           })
     }   
 
@@ -81,10 +130,7 @@ export class Landing extends React.Component {
                         <Button
                             style={styles.top_down_margin}
                             primary disabled={this.state.show_loader} iconLeft
-                            onPress={()=>{  LoginManager.logInWithReadPermissions(['public_profile']).then(
-                                (res)=>{this.showToast("how","hell")},
-                                (error)=>{}
-                            )}}
+                            onPress={()=>{this.loginWithFacebook()}}
                             >                       
                                 <Icon name='logo-facebook' />
                                 <Text > Facebook </Text>

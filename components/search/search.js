@@ -90,8 +90,8 @@ export class Search extends React.Component {
         : null;
 
         return (
-        <Container>
-            <StatusBar translucent={false} style = {styles.statusBar} barStyle = "light-content"/>
+        <View style={{backgroundColor:'#f5f5f5'}}>
+
 
             <Header searchBar style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
                 <Item rounded>
@@ -132,7 +132,7 @@ export class Search extends React.Component {
                 </Content>
             </View>
 
-        </Container>
+        </View>
         );
     }
 }
