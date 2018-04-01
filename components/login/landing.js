@@ -91,9 +91,12 @@ export class Landing extends React.Component {
     const self = this;
     function nv(s,res_json) {
         s.props.navigation.navigate('Home', {
-            bloodtype: res_json.bloodtype,
             username: res_json.username,
             email: res_json.email,
+            bloodtype: res_json.bloodtype,
+            gender: res_json.gender,
+            id: res_json.id,
+            hospitalManager: res_json.hospitalManager
           })
     }   
 
