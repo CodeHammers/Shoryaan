@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker, Content, List } from 'native-base';
+import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker, Content, List ,Left,Right,Thumbnail} from 'native-base';
 import { TouchableOpacity, ScrollView, View, StatusBar, StyleSheet } from 'react-native';
 import {AuthService} from '../../services/auth'
 
@@ -109,6 +109,8 @@ export class Search extends React.Component {
         : null;
 
         return (
+            <ScrollView>
+
         <View style={{backgroundColor:'#f5f5f5'}}>
 
 
@@ -138,15 +140,25 @@ export class Search extends React.Component {
                 <Text>Search</Text>
             </Button>
             </View>
-
             <List dataArray={this.state.arrayholder} renderRow={(arrayholder) =>
-                <ListItem>
-                    <Text>{arrayholder.name}</Text>
-                    <Text note>{arrayholder.address}</Text>
+                <ListItem avatar>
+                    <Left>
+                        <Thumbnail source={require('../../hos.png')} />
+                    </Left>
+                    <Body>
+                        <Text>{arrayholder.name}</Text>
+                        <Text note>{arrayholder.address}</Text>
+                    </Body>
+                    <Right>
+                        <Text note>{arrayholder.status}</Text>
+                    </Right>
                 </ListItem>
+                
                 }>
             </List> 
         </View>
+        </ScrollView>
+
         );
     }
 }
