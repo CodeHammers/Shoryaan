@@ -11,7 +11,7 @@ import {CreateHospital} from './components/hospital/createHospital'
 import {PrivateProfileInfo} from './components/hospital/privateProfileInfo'
 import {EditHospitalPrivateProfile} from './components/hospital/privateProfileEdit'
 
-import {StackNavigator} from 'react-navigation'
+import { StackNavigator, DrawerNavigator } from 'react-navigation'
 import { Root } from "native-base";
 
 /*
@@ -62,10 +62,13 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'PrivateProfileInfo',
+  initialRouteName: 'Landing',
 },
 );
 
+export const Drawer = DrawerNavigator({
+  Home: { screen: Home },
+});
 
 /*
 ################################################################################
