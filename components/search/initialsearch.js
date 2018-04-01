@@ -18,19 +18,20 @@ export  class InitialSearch extends Component {
       hospitals:[],
       auth_service: new AuthService
     }
-    this.state.hospitals.push({state:"cairo",status:"private",name:"Al orman"})
+    //this.state.hospitals.push({state:"cairo",status:"private",name:"Al orman"})
  
     this.startSearch()
 
   }
   startSearch(){
+    //this.state.hospitals = []
     //alert("here I")
-    this.state.hospitals.push({state:"cairo",status:"private",name:"Al orman"})
+    //this.state.hospitals.push({state:"cairo",status:"private",name:"Al orman"})
     this.state.auth_service.get('/hospital/index').then(
       (res)=>{
         res.json().then(
           (data)=>{
-            alert("hello")
+            //alert("hello")
             this.setState({hospitals:data})
           }
         )

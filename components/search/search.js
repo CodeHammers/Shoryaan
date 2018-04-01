@@ -9,33 +9,33 @@ export class Search extends React.Component {
         this.state = {
             checked: false,
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-            status: ["Private", "Puplic"],
-            selectedState: "",
-            selectesStatus: "",
+            status: ["Private", "Public"],
+            selectedState: "Cairo",
+            selectedStatus: "Private",
             searchText: "",
-            auth_service: new AuthService
+            auth_service: new AuthService,
+            arrayholder:[]
         };
-        this.arrayholder = [] ;
+        //this.arrayholder = [] ;
     }
 
     Search(){
+        arrayholder =[]
+        seg = '/hospital/index'
         if(this.state.checked){
-            body = JSON.stringify({
-                    name: this.state.searchText,
-                    state: this.state.selectedState,
-                    status: this.state.selectesStatus
-                })
+             seg +=  '?name='+this.state.searchText +'&state='+this.state.selectedState +'&status='+this.state.selectedStatus   
+            
         }
         else{
-            body = JSON.stringify({
-                name: this.state.searchText
-            })
+            
+            seg +=  '?name='+this.state.searchText 
         }
+        //alert(seg)
 
-        this.state.auth_service.get('/hospital/index')
+        this.state.auth_service.get(seg)
         .then((response)=>{response.json().then(
             (data)=>{
-              alert("hello")
+              //alert("hello")
               this.setState({arrayholder:data})
             }
           )
@@ -112,10 +112,10 @@ export class Search extends React.Component {
         <View style={{backgroundColor:'#f5f5f5'}}>
 
 
-            <Header searchBar style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
+            <Header searchBar  style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
                 <Item rounded>
                     <Icon name="ios-search" />
-                    <Input placeholder="Search" />
+                    <Input onChangeText={(text)=>{this.setState({searchText: text });}} placeholder="Search" />
                 </Item>
                 <Button transparent>
                     <Text onChange={this.setSearchText.bind(this)} >Search</Text>
@@ -139,7 +139,7 @@ export class Search extends React.Component {
             </Button>
             </View>
 
-            <List dataArray={this.arrayholder} renderRow={(arrayholder) =>
+            <List dataArray={this.state.arrayholder} renderRow={(arrayholder) =>
                 <ListItem>
                     <Text>{arrayholder.name}</Text>
                     <Text note>{arrayholder.address}</Text>
