@@ -104,7 +104,7 @@ export class Home extends React.Component {
                 }
               }}>
                   <Image 
-                  source={require('../../images/home/hospital.png')} 
+                  source={require('../../images/home/hos.png')} 
                   style={styles.ImageIconStyle} 
                   />
                   <Text style={styles.textbutton}>

@@ -8,8 +8,8 @@ export class Search extends React.Component {
         super(props);
         this.state = {
             checked: false,
-            states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-            status: ["Private", "Public"],
+            states: ["","Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
+            status: ["","Private", "Public"],
             selectedState: "Cairo",
             selectedStatus: "Private",
             searchText: "",
@@ -21,13 +21,22 @@ export class Search extends React.Component {
     Search(){
         url = '/hospital/index'
         if(this.state.checked){
-             url = url + '?name=' + this.state.searchText + '&state=' + this.state.selectedState + '&status=' + this.state.selectedStatus   
-            
+            if(this.state.selectedState != "" & this.state.selectedStatus == ""){
+                url = url + '?name=' + this.state.searchText + '&state=' + this.state.selectedState
+            }
+            else if(this.state.selectedState == "" & this.state.selectedStatus != ""){
+                url = url + '?name=' + this.state.searchText + '&status=' + this.state.selectedStatus
+            }
+            else if(this.state.selectedState == "" & this.state.selectedStatus == ""){
+                url = url + '?name=' + this.state.searchText    
+            }
+            else{
+                url = url + '?name=' + this.state.searchText + '&state=' + this.state.selectedState + '&status=' + this.state.selectedStatus
+            }
         }
         else{  
             url = url + '?name=' + this.state.searchText 
         }
-        //alert(seg)
 
         alert(url)
 
@@ -129,14 +138,14 @@ export class Search extends React.Component {
                 <List dataArray={this.state.arrayholder} renderRow={(arrayholder) =>
                     <ListItem avatar>
                         <Left>
-                            <Thumbnail source={require('../../logo.jpg')} />
+                            <Thumbnail source={require('../../hos.png')} />
                         </Left>
                         <Body>
-                            <Text>{arrayholder.name}</Text>
-                            <Text note>{arrayholder.address}</Text>
+                            <Text style={styles.listitemname}>{arrayholder.name}</Text>
+                            <Text style={styles.StatePickerItem} note>{arrayholder.address}</Text>
                         </Body>
                         <Right>
-                            <Text note>{arrayholder.status}</Text>
+                            <Text style={styles.StatePickerItem} note>{arrayholder.status}</Text>
                         </Right>
                     </ListItem>
                     }>
@@ -176,6 +185,12 @@ const styles = StyleSheet.create({
     StatePickerItem:{
         fontSize: 16,
         color: '#757575'
+    },
+
+    listitemname:{
+        fontWeight: 'bold',
+        fontSize: 18,
+        color: 'black'
     },
 
     searchButton:{
