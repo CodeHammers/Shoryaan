@@ -6,6 +6,26 @@ import {HospitalPublicProfileInfo} from './hospitalInfo'
 
 export class HospitalPublicProfile extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+
+        const { params } = this.props.navigation.state;
+
+        if(params != undefined || params == null)
+            this.state = {
+                name: params.name,
+                state: params.state,
+                district: params.district,
+                address: params.address,
+                phone: params.phone,
+                email: params.email,
+                isVerified: params.isVerified,
+                status: params.status,
+                valid_email: undefined
+        };
+    }
+
     render(){
         return(
             <Container>
@@ -33,7 +53,7 @@ export class HospitalPublicProfile extends React.Component
                 <Tabs  initialPage={0}>
                     <Tab tabStyle = {styles.inactiveTabStyle} textStyle = {styles.inactiveTabTextStyle} 
                         activeTabStyle = {styles.activeTabStyle} activeTextStyle = {styles.activeTabTextStyle} heading="Profile">
-                        <HospitalPublicProfileInfo/>
+                        <HospitalPublicProfileInfo data = {this.state}/>
                     </Tab>
 
                     <Tab tabStyle = {styles.inactiveTabStyle} textStyle = {styles.inactiveTabTextStyle} 

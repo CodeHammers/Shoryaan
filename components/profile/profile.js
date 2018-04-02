@@ -103,7 +103,7 @@ export class Profile extends React.Component
                         
                     <Text style={{color:'white', paddingTop: 5}}>  
                         <Icon name = 'pin' style = {styles.icon} />
-                        {" "}{this.state.governorate}, Egypt
+                        {" "}{this.state.state}, Egypt
                     </Text>
                 </View>
 
