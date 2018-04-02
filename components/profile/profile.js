@@ -16,13 +16,13 @@ export class Profile extends React.Component
         if(params!=undefined || params == null)
             this.state = {
             username:params.username || "unknown",
-            email:params.email || "unknown",
-            governorate: params.governorate || "Cairo",
+            email: params.email || "unknown",
+            state: params.state || "unkown",
             city: params.city || "",
             name: params.name || "",
-            bloodType: params.bloodType || "A+",
+            bloodType: params.bloodType || "?",
             nextDonation: "2",
-            gender: params.gender || "Male",
+            gender: params.gender || "unknown",
             dateOfBirth: params.dateOfBirth || ""
         };
 
@@ -30,38 +30,44 @@ export class Profile extends React.Component
     
     convertBloodTypeSign(){
         var bloodType = this.state.bloodType;
-        if(bloodType[bloodType.length - 1] == '+'){
-            return "+ve";
-        }else{
-            return "-ve";
+        if(bloodType == '?') return "";
+        else{
+            if(bloodType[bloodType.length - 1] == '+'){
+                return "+ve";
+            }else{
+                return "-ve";
+            }
         }
     }
 
     convertBloodType(){
         var bloodType = this.state.bloodType;
-        return bloodType.slice(0,-1);
+        if(bloodType == '?') return "?"
+        else return bloodType.slice(0,-1);
     }
+
     showToast(msg,btn){
         Toast.show({
-        text: msg,
-        position: 'bottom',
-        buttonText: btn,
-        duration: 5000,
-        style: {
-            backgroundColor: "#212121",
-            opacity:0.76
-        }
+            text: msg,
+            position: 'bottom',
+            buttonText: btn,
+            duration: 5000,
+            style: {
+                backgroundColor: "#212121",
+                opacity:0.76
+            }
         })
     }
+    
     navgiateToEdit(){
         this.props.navigation.navigate('EditProfile', {
             username:this.state.username,
             email:this.state.email ,
-            governorate: this.state.governorate ,
+            state: this.state.state ,
             city: this.state.city ,
             name: this.state.name,
             bloodType: this.state.bloodType,
-            gender: this.state.gender ,
+            gender: this.state.gender,
             dateOfBirth: this.state.dateOfBirth ,
             self: this
         })
@@ -149,7 +155,7 @@ export class Profile extends React.Component
 
                             <ListItem>
                                 <Text >State:{" "}</Text>
-                                <Text note>{this.state.governorate}</Text>
+                                <Text note>{this.state.state}</Text>
                             </ListItem>
 
                             <ListItem>

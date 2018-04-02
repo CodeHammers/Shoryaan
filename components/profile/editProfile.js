@@ -18,20 +18,24 @@ export class EditProfile extends React.Component
         const { params } = this.props.navigation.state;
 
         this.state = {
-            un_saved: params.username || "unknown",
-            email_saved: params.email || "unknown",
-            bt_saved: params.bloodtype || "A+",
-            gender_saved: params.gender || "Male",
+            usernameSaved: params.username || "unknown",
+            emailSaved: params.email || "unknown",
+            bloodTypeSaved: params.bloodType || "?",
+            genderSaved: params.gender || "unknown",
+            nameSaved: params.name || "unkown",
+            citySaved: params.city || "unkown",
+            stateSaved: params.state,
+            dateOfBirthSaved: params.dateOfBirth,
 
             username: params.username,
             name: params.name,
             email: params.email,
             age: params.age,
-            governorate: params.governorate,
+            state: params.state,
             city: params.city,
             bloodType: params.bloodType,
-            gender: params.gender || "Male",
-            dateOfBirth: "2018-03-29",
+            gender: params.gender || "unknown",
+            dateOfBirth: params.dateOfBirth,
             self: params.self,
 
             bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-","?"],
@@ -57,6 +61,10 @@ export class EditProfile extends React.Component
         body = JSON.stringify({
                 username: this.state.username,
                 bloodtype: this.state.bloodType,
+                name: this.state.name,
+                state: this.state.state,
+                city: this.state.city,
+                dateOfBirth: this.state.dateOfBirth,
                 password: "protected",
                 gender: this.state.gender,
                 access_token: this.state.access_token
@@ -64,18 +72,19 @@ export class EditProfile extends React.Component
         this.state.auth_service.post(body,'/auth/edit')
         .then((response)=>{
             if(response.status!=200){
-                this.setState({bloodtype:this.state.bt_saved,username:this.state.un_saved,gender:this.state.gender_saved})
+                this.setState({bloodType:this.state.bloodTypeSaved, username:this.state.usernameSaved, gender:this.state.genderSaved,
+                name: this.state.nameSaved, city: this.state.citySaved, state: this.state.stateSaved, dateOfBirth: this.state.dateOfBirthSaved })
                 this.showToast("Invalid update","ok")
             }
             else{
                 this.showToast("update sucess","ok")
-                //this.props.navigation.navigate('Profile', {username: this.state.username, governorate: this.state.governorate,
-                  //  city: this.state.city, name: this.state.name, bloodType: this.state.bloodType, gender: this.state.gender, dateOfBirth: this.state.dateOfBirth})
+
                 this.state.self.setState(
-                    {username: this.state.username, governorate: this.state.governorate,
+                    {username: this.state.username, state: this.state.state,
                       city: this.state.city, name: this.state.name, bloodType: this.state.bloodType, gender: this.state.gender,
                        dateOfBirth: this.state.dateOfBirth}   
                 )
+
                 this.props.navigation.goBack()
             }
         })
@@ -83,7 +92,7 @@ export class EditProfile extends React.Component
 
     onStateValueChange(value) {
         this.setState({
-            governorate: value
+            state: value
         });
     }
 
@@ -170,7 +179,7 @@ export class EditProfile extends React.Component
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
-                            selectedValue={this.state.governorate}
+                            selectedValue={this.state.state}
                             onValueChange={this.onStateValueChange.bind(this)}
                             style = {styles.StatePicker}
                             >

@@ -1,6 +1,9 @@
 import React from 'react'
 import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Picker, Item} from 'native-base'
-import {StatusBar, StyleSheet, ScrollView, View, TextInput} from 'react-native'
+import {StatusBar, StyleSheet, ScrollView, View, TextInput, AsyncStorage} from 'react-native'
+
+import {AuthService} from '../../services/auth'
+import {ValidateService} from '../../services/validate'
 
 export class EditHospitalPrivateProfile extends React.Component
 {
@@ -17,6 +20,7 @@ export class EditHospitalPrivateProfile extends React.Component
             addressSaved: params.address,
             phoneSaved: params.phone,
             statusSaved: params.status,
+            emailSaved: params.email,
 
             name: params.name,
             state: params.state,
@@ -25,10 +29,30 @@ export class EditHospitalPrivateProfile extends React.Component
             phone: params.phone,
             email: params.email,
             status: params.status,
+            self: params.self,
 
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-            statusOptions: ["Public", "Private"]
+            statusOptions: ["Public", "Private"],
+
+            access_token: "",
+
+            auth_service: new AuthService(this),
+            validator: new ValidateService(this)
         }
+
+        this.checkStoredToken();     
+    }
+
+    checkStoredToken(){
+        AsyncStorage.getItem("access_token").then((value) => {
+            if(value!=undefined){
+                this.setState({access_token:value})
+            }
+        }).done();
+    }
+
+    validateEmail(email){
+        this.state.validator.validate_email(email)
     }
 
     onStateValueChange(value) {
@@ -41,6 +65,39 @@ export class EditHospitalPrivateProfile extends React.Component
         this.setState({
             status: value
         });
+    }
+
+    editProfile(){
+        body = JSON.stringify({
+            name: this.state.name,
+            state: this.state.state,
+            email: this.state.email,
+            phone: this.state.phone,
+            address: this.state.address,
+            status: this.state.status
+        })
+        this.state.auth_service.post(body,'/hospital/update')
+        .then((response)=>{
+            if(response.status!=200){
+                this.setState({name:this.state.nameSaved, state:this.state.stateSaved, email:this.state.emailSaved, 
+                    phone: this.state.phoneSaved, address: this.state.addressSaved, status: this.state.statusSaved})
+                this.showToast("Invalid update","ok");
+            }
+            else{
+                this.showToast("update sucess","ok");
+                this.state.self.setState(
+                    {name: this.state.name,
+                        state: this.state.state,
+                        district: this.state.district,
+                        address: this.state.address,
+                        phone: this.state.phone,
+                        email: this.state.email,
+                        status: this.state.status
+                    }   
+                )
+                this.props.navigation.goBack();
+            }
+        })
     }
 
     render(){
@@ -59,7 +116,7 @@ export class EditHospitalPrivateProfile extends React.Component
                 
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon name='md-checkmark' />
+                            <Icon onPress = {()=> {this.editProfile()}} name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>

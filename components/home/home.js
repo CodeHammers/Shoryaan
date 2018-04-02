@@ -15,10 +15,27 @@ export class Home extends React.Component {
           bloodtype: params.bloodtype || "?",
           gender: params.gender ||  "Male",
           manager: params.hospitalManager,
+          name: params.name,
+          city: params.city,
+          state: params.state,
+          dateOfBirth: params.dateOfBirth,
           auth_service: new AuthService()
         };
 
-    }      
+    }   
+    
+    navigateToProfile(){
+        this.props.navigation.navigate('Profile', {
+          username:this.state.username,
+          email:this.state.email ,
+          state: this.state.state ,
+          city: this.state.city ,
+          name: this.state.name,
+          bloodType: this.state.bloodtype,
+          gender: this.state.gender,
+          dateOfBirth: this.state.dateOfBirth,
+      })
+    }
 
     render() {
         const self = this;
@@ -47,7 +64,7 @@ export class Home extends React.Component {
 
           <ScrollView>
             <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Profile',{gender: this.state.gender,username: this.state.username,email: this.state.email,bloodtype:this.state.bloodtype})}}>
+            <TouchableOpacity style={styles.button} onPress={() => {this.navigateToProfile()}}>
               <Image 
               source={require('../../images/home/i-received-icon.png')} 
               style={styles.ImageIconStyle} 

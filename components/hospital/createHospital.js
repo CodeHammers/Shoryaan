@@ -31,7 +31,7 @@ export class CreateHospital extends React.Component
             auth_service: new AuthService(this),
             validator: new ValidateService(this)
         }
-
+        
         this.checkStoredToken();        
     }
 

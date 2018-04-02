@@ -19,7 +19,21 @@ export class PrivateProfileInfo extends React.Component
             isVerified: params.isVerified,
             status: params.status
         }
-    }   
+    }  
+    
+    navgiateToEdit(){
+        this.props.navigation.navigate('EditHospitalPrivateProfile', {
+            name: this.state.name,
+            state: this.state.state,
+            district: this.state.district,
+            address: this.state.address,
+            phone: this.state.phone,
+            email: this.state.email,
+            isVerified: this.state.isVerified,
+            status: this.state.status,
+            self: this
+        })
+    }
 
     render(){
         return(
@@ -37,7 +51,7 @@ export class PrivateProfileInfo extends React.Component
                 
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={() => this.props.navigation.navigate('EditHospitalPrivateProfile', this.state)} name='md-create' />
+                            <Icon onPress={() => this.navgiateToEdit()} name='md-create' />
                         </Button>
                     </Right>
                 </Header>
