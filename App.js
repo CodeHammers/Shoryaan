@@ -69,7 +69,7 @@ const RootStack = StackNavigator({
   navigationOptions: {
     headerVisible: false,
   },
-  initialRouteName: 'Intro',
+  initialRouteName: 'Landing',
 },
 )
 /*

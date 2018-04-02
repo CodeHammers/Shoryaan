@@ -27,6 +27,7 @@ export class Search extends React.Component {
         else{  
             url = url + '?name=' + this.state.searchText 
         }
+        //alert(seg)
 
         alert(url)
 
