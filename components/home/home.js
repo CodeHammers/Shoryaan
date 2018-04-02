@@ -50,7 +50,7 @@ export class Home extends React.Component {
  
           <Header style = {styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
               <Left style = {{flex: 1}}>
-                  <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
+                  <Button transparent>
                       <Icon name='menu' />
                   </Button>
               </Left>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker, Content, List ,Left,Right,Thumbnail} from 'native-base';
-import { TouchableOpacity, ScrollView, View, StatusBar, StyleSheet } from 'react-native';
+import { TouchableOpacity, ScrollView, View, StatusBar, StyleSheet, Alert } from 'react-native';
 import {AuthService} from '../../services/auth'
 
 export class Search extends React.Component {
@@ -14,7 +14,15 @@ export class Search extends React.Component {
             selectedStatus: "Private",
             searchText: "",
             auth_service: new AuthService,
-            arrayholder:[]
+            arrayholder:[],
+            name: "",
+            state: "",
+            district: "",
+            address: "",
+            phone: "",
+            email: "",
+            isVerified: "",
+            status: "",
         };
     }
 
@@ -59,6 +67,52 @@ export class Search extends React.Component {
         });
     }
 
+    navgiateToHospital(name,state,district,address,phone,email,isVerified,status){
+        this.setState({
+            name: name,
+        })
+
+        this.setState({
+            state: state,
+        })
+
+        this.setState({
+            district: district,
+        })
+
+        this.setState({
+            address: address,
+        })
+
+        this.setState({
+            phone: phone,
+        })
+
+        this.setState({
+            email: email,
+        })
+
+        this.setState({
+            isVerified: isVerified,
+        })
+
+        this.setState({
+            status: status,
+        })
+
+        Alert.alert("name"+this.state.name+"address"+this.state.address+this.state.status+this.state.phone)
+        this.props.self.navigation.navigate('HospitalPublicProfile', {
+            name: "7elwa",
+            state: "Cairo",
+            email: "nice@nice.tes",
+            phone: "125636",
+            address: "7elwteen",
+            status: "Public",
+            isVerified: false,
+            district: "anny"
+        })
+    }
+
     showToast(msg,btn){
         Toast.show({
             text: msg,
@@ -73,6 +127,7 @@ export class Search extends React.Component {
     }
 
     render() {
+        const self = this;
         const content = this.state.checked
         ? 
         <View>
@@ -136,7 +191,7 @@ export class Search extends React.Component {
                 </View>
 
                 <List dataArray={this.state.arrayholder} renderRow={(arrayholder) =>
-                    <ListItem avatar>
+                    <ListItem avatar button={true} onPress={() => {this.navgiateToHospital(arrayholder.name,arrayholder.state,arrayholder.district,arrayholder.address,arrayholder.phone,arrayholder.email,arrayholder.isVerified,arrayholder.status)}}>
                         <Left>
                             <Thumbnail source={require('../../hos.png')} />
                         </Left>

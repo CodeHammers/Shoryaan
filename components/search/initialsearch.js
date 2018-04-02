@@ -67,7 +67,7 @@ export  class InitialSearch extends Component {
         <Tabs  initialPage={0}>
           <Tab tabStyle = {styles.inactiveTabStyle} textStyle = {styles.inactiveTabTextStyle} 
               activeTabStyle = {styles.activeTabStyle} activeTextStyle = {styles.activeTabTextStyle} heading="Search">
-              <Search   />
+              <Search self={this} />
 
           </Tab>
 
