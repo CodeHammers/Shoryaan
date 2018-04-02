@@ -21,7 +21,6 @@ export class Home extends React.Component {
           manager: params.hospitalManager,
           auth_service: new AuthService()
         };
-
     }
 
     render() {

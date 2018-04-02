@@ -12,7 +12,6 @@ import {PrivateProfileInfo} from './components/hospital/privateProfileInfo'
 import {EditHospitalPrivateProfile} from './components/hospital/privateProfileEdit'
 import {ChangeUserPassword} from './components/profile/changePassword'
 import {Intro} from './components/intro/intro'
-
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
 import { Root } from "native-base";
 
@@ -57,7 +56,7 @@ const RootStack = StackNavigator({
   },
   EditHospitalPrivateProfile:{
     screen: EditHospitalPrivateProfile
-  }
+  },
   /*
   //error message: PrivateProfileInfo should be a react componenet,
   PrivateProfileInfo:{
@@ -73,21 +72,23 @@ const RootStack = StackNavigator({
   initialRouteName: 'Intro',
 },
 )
-
-const Drawer = DrawerNavigator({
+/*
+const DrawerStack = DrawerNavigator({
   Home: { 
     screen: Home 
   },
-  InitialSearch: {
-    screen: InitialSearch
-  }
+  InitialSearch: { 
+    screen: InitialSearch 
+  },
 })
+*/
 
 /*
 ################################################################################
 |----------------------Application Root Component------------------------------|
 ################################################################################
 */
+
 export default class App extends React.Component {
 
   render() {

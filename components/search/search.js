@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker, Content, List } from 'native-base';
+import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker, Content, List ,Left,Right,Thumbnail} from 'native-base';
 import { TouchableOpacity, ScrollView, View, StatusBar, StyleSheet } from 'react-native';
 import {AuthService} from '../../services/auth'
 
@@ -9,38 +9,32 @@ export class Search extends React.Component {
         this.state = {
             checked: false,
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-            status: ["Private", "Puplic"],
-            selectedState: "",
-            selectesStatus: "",
+            status: ["Private", "Public"],
+            selectedState: "Cairo",
+            selectedStatus: "Private",
             searchText: "",
-            auth_service: new AuthService
+            auth_service: new AuthService,
+            arrayholder:[]
         };
-        this.arrayholder = [] ;
     }
 
     Search(){
+        url = '/hospital/index'
         if(this.state.checked){
-            body = JSON.stringify({
-                    name: this.state.searchText,
-                    state: this.state.selectedState,
-                    status: this.state.selectesStatus
-                })
+             url = url + '?name=' + this.state.searchText + '&state=' + this.state.selectedState + '&status=' + this.state.selectedStatus   
+            
         }
-        else{
-            body = JSON.stringify({
-                name: this.state.searchText
-            })
+        else{  
+            url = url + '?name=' + this.state.searchText 
         }
 
-        this.state.auth_service.get('/hospital/index')
-        .then((response)=>{response.json().then(
-            (data)=>{
-              alert("hello")
-              this.setState({arrayholder:data})
-            }
-          )
-        }
-      )
+        alert(url)
+
+        this.state.auth_service.get(url)
+        .then((response) => response.json())
+        .then((responseJson) => {
+        this.setState({arrayholder:responseJson})
+        });
     }
 
     onStateValueChange(value) {
@@ -52,12 +46,6 @@ export class Search extends React.Component {
     onStatusValueChange(value) {
         this.setState({
             selectedStatus: value
-        });
-    }
-
-    setSearchText(value){
-        this.setState({
-            searchText: value
         });
     }
 
@@ -75,9 +63,6 @@ export class Search extends React.Component {
     }
 
     render() {
-   //     for(var i = 0; i < 15; i++){
-  //          this.arrayholder.push({'name': 'Apple', 'address' : '$6'});
-  //          }
         const content = this.state.checked
         ? 
         <View>
@@ -109,52 +94,61 @@ export class Search extends React.Component {
         : null;
 
         return (
-        <View style={{backgroundColor:'#f5f5f5'}}>
+        <ScrollView>
 
+            <View style={{backgroundColor:'#f5f5f5'}}>
 
-            <Header searchBar style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
-                <Item rounded>
-                    <Icon name="ios-search" />
-                    <Input placeholder="Search" />
-                </Item>
-                <Button transparent>
-                    <Text onChange={this.setSearchText.bind(this)} >Search</Text>
-                </Button>
-            </Header>
+                <Header searchBar style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
+                    <Item rounded>
+                        <Icon name="ios-search" />
+                        <Input onChangeText={(text) =>{ this.setState({searchText: text})}} placeholder="Search" />
+                    </Item>
+                    <Button transparent>
+                        <Text>Search</Text>
+                    </Button>
+                </Header>
 
-            <ListItem>
-                <CheckBox 
-                checked={this.state.checked}
-                onPress={() => this.setState({ checked: !this.state.checked })} />
-                <Body>
-                    <Text>Use Filter</Text>
-                </Body>
-            </ListItem>
-            
-            { content }
-            
-            <View style={{width: 200, alignItems: 'center', alignSelf: 'center'}}>
-            <Button style={styles.searchButton} block rounded onPress={() => {this.Search()}}>
-                <Text>Search</Text>
-            </Button>
-            </View>
-
-            <List dataArray={this.arrayholder} renderRow={(arrayholder) =>
                 <ListItem>
-                    <Text>{arrayholder.name}</Text>
-                    <Text note>{arrayholder.address}</Text>
+                    <CheckBox 
+                    checked={this.state.checked}
+                    onPress={() => this.setState({ checked: !this.state.checked })} />
+                    <Body>
+                        <Text>Use Filter</Text>
+                    </Body>
                 </ListItem>
-                }>
-            </List> 
-        </View>
+                
+                { content }
+                
+                <View style={{width: 200, alignItems: 'center', alignSelf: 'center'}}>
+                <Button style={styles.searchButton} block rounded onPress={() => {this.Search()}}>
+                    <Text>Search</Text>
+                </Button>
+                </View>
+
+                <List dataArray={this.state.arrayholder} renderRow={(arrayholder) =>
+                    <ListItem avatar>
+                        <Left>
+                            <Thumbnail source={require('../../logo.jpg')} />
+                        </Left>
+                        <Body>
+                            <Text>{arrayholder.name}</Text>
+                            <Text note>{arrayholder.address}</Text>
+                        </Body>
+                        <Right>
+                            <Text note>{arrayholder.status}</Text>
+                        </Right>
+                    </ListItem>
+                    }>
+                </List> 
+
+            </View>
+        </ScrollView>
+
         );
     }
 }
 
 //add onPress in search result
-//check search function
-//check array
-//check filter
 
 const styles = StyleSheet.create({
     header: {

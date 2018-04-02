@@ -12,33 +12,6 @@ export  class InitialSearch extends Component {
     title: 'InitialSearch',
   };
 
-  constructor(props){
-    super(props)
-    this.state = {
-      hospitals:[],
-      auth_service: new AuthService
-    }
-    this.state.hospitals.push({state:"cairo",status:"private",name:"Al orman"})
- 
-    this.startSearch()
-
-  }
-  startSearch(){
-    //alert("here I")
-    this.state.hospitals.push({state:"cairo",status:"private",name:"Al orman"})
-    this.state.auth_service.get('/hospital/index').then(
-      (res)=>{
-        res.json().then(
-          (data)=>{
-            alert("hello")
-            this.setState({hospitals:data})
-          }
-        )
-      }
-    )
-
-  }
-
   render() {
 
 
