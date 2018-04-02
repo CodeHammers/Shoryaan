@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Title, Button, Icon, Tabs, Tab, Item, Input, Text } from 'native-base';
-import { StatusBar, StyleSheet, View, TextInput, ScrollView} from 'react-native'
+import { StatusBar, StyleSheet, View, TextInput, ScrollView } from 'react-native'
 import { Content, List, ListItem, Thumbnail } from 'native-base';
 
 import { Search } from './search'
@@ -8,6 +8,9 @@ import {AuthService} from '../../services/auth'
 
 
 export  class InitialSearch extends Component {
+  static navigationOptions = {
+    title: 'InitialSearch',
+  };
 
   constructor(props){
     super(props)
@@ -15,19 +18,20 @@ export  class InitialSearch extends Component {
       hospitals:[],
       auth_service: new AuthService
     }
-    this.state.hospitals.push({state:"cairo",status:"private",name:"Al orman"})
+    //this.state.hospitals.push({state:"cairo",status:"private",name:"Al orman"})
  
     this.startSearch()
 
   }
   startSearch(){
+    //this.state.hospitals = []
     //alert("here I")
-    this.state.hospitals.push({state:"cairo",status:"private",name:"Al orman"})
+    //this.state.hospitals.push({state:"cairo",status:"private",name:"Al orman"})
     this.state.auth_service.get('/hospital/index').then(
       (res)=>{
         res.json().then(
           (data)=>{
-            alert("hello")
+            //alert("hello")
             this.setState({hospitals:data})
           }
         )
@@ -64,38 +68,6 @@ export  class InitialSearch extends Component {
           <Tab tabStyle = {styles.inactiveTabStyle} textStyle = {styles.inactiveTabTextStyle} 
               activeTabStyle = {styles.activeTabStyle} activeTextStyle = {styles.activeTabTextStyle} heading="Search">
               <Search   />
-              
-
-
-          <ScrollView>
-          <List>
-
-
-            {this.state.hospitals.map((item, index) => {
-                      return (
-                          <ListItem avatar>
-                          <Left>
-                            <Thumbnail source={require('../../logo.jpg')} />
-                          </Left>
-                          <Body>
-                            <Text>{item.name}</Text>
-                            <Text note>{item.state}</Text>
-                          </Body>
-                          <Right>
-                            <Text note>{item.status}</Text>
-                          </Right>
-                        </ListItem>
-                      ) 
-                  })}
-  
-
-
-          </List>
-          </ScrollView>
-
-
-
-
 
           </Tab>
 

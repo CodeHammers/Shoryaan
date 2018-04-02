@@ -8,7 +8,7 @@ export  class AuthService{
     //for genymotion 
     //BASE_URL ='http://10.0.3.2:1337';
     //production url
-    //BASE_URL = 'https://shoryaan-api.herokuapp.com'
+    BASE_URL = 'https://shoryaan-api.herokuapp.com'
     SELF=null
     constructor(self){
         this.SELF = self

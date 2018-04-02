@@ -1,43 +1,50 @@
 import React from 'react';
-import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker } from 'native-base';
+import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker, Content, List ,Left,Right,Thumbnail} from 'native-base';
 import { TouchableOpacity, ScrollView, View, StatusBar, StyleSheet } from 'react-native';
+import {AuthService} from '../../services/auth'
 
 export class Search extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
             checked: false,
-            states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-            status: ["Private", "Puplic"],
-            selectedState: "",
-            selectesStatus: "",
-            searchText: ""
+            states: ["","Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
+            status: ["","Private", "Public"],
+            selectedState: "Cairo",
+            selectedStatus: "Private",
+            searchText: "",
+            auth_service: new AuthService,
+            arrayholder:[]
         };
-        this.arrayholder = [] ;
     }
 
     Search(){
+        url = '/hospital/index'
         if(this.state.checked){
-            body = JSON.stringify({
-                    name: this.state.searchText,
-                    state: this.state.selectedState,
-                    status: this.state.selectesStatus
-                })
-        }
-        else{
-            body = JSON.stringify({
-                name: this.state.searchText
-            })
-        }
-        this.state.auth_service.post(body,'/hospital/search')
-        .then((response)=>{
-            if(response.status!=200){
-                this.showToast("No Result Found","ok")
+            if(this.state.selectedState != "" & this.state.selectedStatus == ""){
+                url = url + '?name=' + this.state.searchText + '&state=' + this.state.selectedState
+            }
+            else if(this.state.selectedState == "" & this.state.selectedStatus != ""){
+                url = url + '?name=' + this.state.searchText + '&status=' + this.state.selectedStatus
+            }
+            else if(this.state.selectedState == "" & this.state.selectedStatus == ""){
+                url = url + '?name=' + this.state.searchText    
             }
             else{
-                this.arrayholder = response;
+                url = url + '?name=' + this.state.searchText + '&state=' + this.state.selectedState + '&status=' + this.state.selectedStatus
             }
-        })
+        }
+        else{  
+            url = url + '?name=' + this.state.searchText 
+        }
+
+        alert(url)
+
+        this.state.auth_service.get(url)
+        .then((response) => response.json())
+        .then((responseJson) => {
+        this.setState({arrayholder:responseJson})
+        });
     }
 
     onStateValueChange(value) {
@@ -52,10 +59,17 @@ export class Search extends React.Component {
         });
     }
 
-    setSearchText(value){
-        this.setState({
-            searchText: value
-        });
+    showToast(msg,btn){
+        Toast.show({
+            text: msg,
+            position: 'bottom',
+            buttonText: btn,
+            duration: 5000,
+            style: {
+                backgroundColor: "#212121",
+                opacity:0.76
+            }
+        })
     }
 
     render() {
@@ -90,57 +104,61 @@ export class Search extends React.Component {
         : null;
 
         return (
-        <View style={{backgroundColor:'#f5f5f5'}}>
+        <ScrollView>
 
+            <View style={{backgroundColor:'#f5f5f5'}}>
 
-            <Header searchBar style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
-                <Item rounded>
-                    <Icon name="ios-search" />
-                    <Input placeholder="Search" />
-                </Item>
-                <Button transparent>
-                    <Text onChange={this.setSearchText.bind(this)} >Search</Text>
+                <Header searchBar style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
+                    <Item rounded>
+                        <Icon name="ios-search" />
+                        <Input onChangeText={(text) =>{ this.setState({searchText: text})}} placeholder="Search" />
+                    </Item>
+                    <Button transparent>
+                        <Text>Search</Text>
+                    </Button>
+                </Header>
+
+                <ListItem>
+                    <CheckBox 
+                    checked={this.state.checked}
+                    onPress={() => this.setState({ checked: !this.state.checked })} />
+                    <Body>
+                        <Text>Use Filter</Text>
+                    </Body>
+                </ListItem>
+                
+                { content }
+                
+                <View style={{width: 200, alignItems: 'center', alignSelf: 'center'}}>
+                <Button style={styles.searchButton} block rounded onPress={() => {this.Search()}}>
+                    <Text>Search</Text>
                 </Button>
-            </Header>
+                </View>
 
-            <ListItem>
-                <CheckBox 
-                checked={this.state.checked}
-                onPress={() => this.setState({ checked: !this.state.checked })} />
-                <Body>
-                    <Text>Use Filter</Text>
-                </Body>
-            </ListItem>
-            
-            { content }
-            
-            <View style={{width: 200, alignItems: 'center', alignSelf: 'center'}}>
-            <Button style={styles.searchButton} block rounded onPress={() => {this.Search()}}>
-                <Text>Search</Text>
-            </Button>
+                <List dataArray={this.state.arrayholder} renderRow={(arrayholder) =>
+                    <ListItem avatar>
+                        <Left>
+                            <Thumbnail source={require('../../hos.png')} />
+                        </Left>
+                        <Body>
+                            <Text style={styles.listitemname}>{arrayholder.name}</Text>
+                            <Text style={styles.StatePickerItem} note>{arrayholder.address}</Text>
+                        </Body>
+                        <Right>
+                            <Text style={styles.StatePickerItem} note>{arrayholder.status}</Text>
+                        </Right>
+                    </ListItem>
+                    }>
+                </List> 
+
             </View>
+        </ScrollView>
 
-            <View>
-                <Content>
-                    <List dataArray={this.arrayholder} renderRow={(arrayholder) =>
-                        <ListItem>
-                            <Text>{arrayholder.name}</Text>
-                            <Text note>{arrayholder.address}</Text>
-                        </ListItem>
-                        }>
-                    </List> 
-                </Content>
-            </View>
-
-        </View>
         );
     }
 }
 
 //add onPress in search result
-//check search function
-//check array
-//check filter
 
 const styles = StyleSheet.create({
     header: {
@@ -167,6 +185,12 @@ const styles = StyleSheet.create({
     StatePickerItem:{
         fontSize: 16,
         color: '#757575'
+    },
+
+    listitemname:{
+        fontWeight: 'bold',
+        fontSize: 18,
+        color: 'black'
     },
 
     searchButton:{
