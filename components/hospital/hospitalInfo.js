@@ -7,7 +7,7 @@ export class HospitalPublicProfileInfo extends React.Component
     constructor(props){
         super(props);
 
-        const { params } = this.props.data;
+        const params  = this.props.data;
 
         if(params != undefined || params == null)
             this.state = {
