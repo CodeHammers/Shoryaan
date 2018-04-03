@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, ListItem, Picker, Content, List ,Left,Right,Thumbnail} from 'native-base';
-import { TouchableOpacity, ScrollView, View, StatusBar, StyleSheet, Alert } from 'react-native';
+import { TouchableOpacity, ScrollView, View, StatusBar, StyleSheet, Alert,ActivityIndicator } from 'react-native';
 import {AuthService} from '../../services/auth'
 
 export class Search extends React.Component {
@@ -11,7 +11,7 @@ export class Search extends React.Component {
         this.state = {
             checked: false,
             states: ["","Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-            status: ["","Private", "Public"],
+            statuss: ["","Private", "Public"],
             selectedState: "Cairo",
             selectedStatus: "Private",
             searchText: "",
@@ -25,28 +25,30 @@ export class Search extends React.Component {
             email: "",
             isVerified: "",
             status: "",
-            self: self
+            self: self,
+            loading: false
         };
     }
 
-    Search(){
+    Search(text){
+        this.setState({loading:true})
         url = '/hospital/index'
         if(this.state.checked){
             if(this.state.selectedState != "" & this.state.selectedStatus == ""){
-                url = url + '?name=' + this.state.searchText + '&state=' + this.state.selectedState
+                url = url + '?name=' +text+ '&state=' + this.state.selectedState
             }
             else if(this.state.selectedState == "" & this.state.selectedStatus != ""){
-                url = url + '?name=' + this.state.searchText + '&status=' + this.state.selectedStatus
+                url = url + '?name=' +text+ '&status=' + this.state.selectedStatus
             }
             else if(this.state.selectedState == "" & this.state.selectedStatus == ""){
-                url = url + '?name=' + this.state.searchText    
+                url = url + '?name=' +text   
             }
             else{
-                url = url + '?name=' + this.state.searchText + '&state=' + this.state.selectedState + '&status=' + this.state.selectedStatus
+                url = url + '?name=' +text+ '&state=' + this.state.selectedState + '&status=' + this.state.selectedStatus
             }
         }
         else{  
-            url = url + '?name=' + this.state.searchText 
+            url = url + '?name=' +text
         }
 
         //alert(url)
@@ -54,6 +56,8 @@ export class Search extends React.Component {
         this.state.auth_service.get(url)
         .then((response) => response.json())
         .then((responseJson) => {
+            this.setState({loading:false})
+
         this.setState({arrayholder:responseJson})
         });
     }
@@ -134,7 +138,7 @@ export class Search extends React.Component {
                 onValueChange={this.onStatusValueChange.bind(this)}
                 style = {styles.StatePicker}
                 >
-                {this.state.status.map((item, index) => {
+                {this.state.statuss.map((item, index) => {
                     return (<Item style = {styles.StatePickerItem} label={item} value={item} key={index}/>) 
                 })}
             </Picker>
@@ -149,7 +153,7 @@ export class Search extends React.Component {
                 <Header searchBar style={styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
                     <Item rounded>
                         <Icon name="ios-search" />
-                        <Input onChangeText={(text) =>{ this.setState({searchText: text})}} placeholder="Search" />
+                        <Input onChangeText={(text) =>{ this.setState({searchText: text});this.Search(text)}} placeholder="Search" />
                     </Item>
                     <Button transparent>
                         <Text>Search</Text>
@@ -168,11 +172,13 @@ export class Search extends React.Component {
                 { content }
                 
                 <View style={{width: 200, alignItems: 'center', alignSelf: 'center'}}>
-                <Button style={styles.searchButton} block rounded onPress={() => {this.Search()}}>
-                    <Text>Search</Text>
-                </Button>
+           
                 </View>
+                {
+                    this.state.loading &&
+                     <ActivityIndicator/>
 
+                }
                 <List dataArray={this.state.arrayholder} renderRow={(arrayholder) =>
                     <ListItem avatar button={true} onPress={() => {this.navgiateToHospital(arrayholder.name,arrayholder.state,arrayholder.district,arrayholder.address,arrayholder.phone,arrayholder.email,arrayholder.isVerified,arrayholder.status)}}>
                         <Left>
