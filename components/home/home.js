@@ -1,8 +1,14 @@
 import React from 'react';
-import { Container,Icon, Header, Title , Button, Left, Right, Body, Text,Toast } from 'native-base';
+import { Container,Icon, Header, Title , Button, Left, Right, Body, Text,Toast, ActionSheet } from 'native-base';
 import {TouchableOpacity,View,Image,StatusBar,StyleSheet,ScrollView} from 'react-native'
 import {H3} from 'native-base'
 import {AuthService} from '../../services/auth'
+
+var BUTTONS = [
+  { text: "Change password", icon: "american-football", iconColor: "#2c8ef4" },
+  { text: "Language options", icon: "analytics", iconColor: "#f42ced" },
+  { text: "Log out", icon: "aperture", iconColor: "#ea943b" }
+];
 
 export class Home extends React.Component {
 
@@ -23,7 +29,9 @@ export class Home extends React.Component {
           city: params.city,
           state: params.state,
           dateOfBirth: params.dateOfBirth,
-          auth_service: new AuthService()
+          auth_service: new AuthService(),
+
+          clicked: {}
         };
 
     }   
@@ -41,6 +49,23 @@ export class Home extends React.Component {
       })
     }
 
+    showUserSettings(){
+      ActionSheet.show(
+        {
+          options: BUTTONS,
+          title: "User Settings"
+        },
+        buttonIndex => {
+          if(buttonIndex != undefined || buttonIndex != null){
+            if(BUTTONS[buttonIndex].text == "Change password"){
+              this.props.navigation.navigate('ChangeUserPassword');
+            }
+          }
+        }
+      )
+    }
+
+
     render() {
         const self = this;
         return (
@@ -51,7 +76,7 @@ export class Home extends React.Component {
           <Header style = {styles.header} noShadow =  {true}  androidStatusBarColor={'#D32F2F'}>
               <Left style = {{flex: 1}}>
                   <Button transparent>
-                      <Icon name='menu' />
+                      <Icon name='search' onPress={() => this.props.navigation.navigate('InitialSearch')}/>
                   </Button>
               </Left>
               
@@ -61,7 +86,7 @@ export class Home extends React.Component {
             
               <Right style = {{flex: 1}}>
                   <Button transparent>
-                  <Icon name='search' />
+                    <Icon name='md-settings' onPress={() => this.showUserSettings()}/>
                   </Button>
               </Right>
           </Header>

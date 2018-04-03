@@ -241,11 +241,7 @@ export class EditProfile extends React.Component
                             }}
                             onDateChange={(date) => {this.setState({dateOfBirth: date})}}
                         />
-
-                        <Button>
-                            <Icon onPress={() => {this.props.navigation.navigate('ChangeUserPassword')}} name='md-checkmark' />
-                        </Button>
-
+                        
                         <View/>
                     </View>
                 </ScrollView>

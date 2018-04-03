@@ -41,7 +41,7 @@ export class PrivateProfileInfo extends React.Component
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon name='menu' />
+                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
                         </Button>
                     </Left>
 

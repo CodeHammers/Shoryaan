@@ -21,7 +21,7 @@ export class Profile extends React.Component
             city: params.city || "",
             name: params.name || "",
             bloodType: params.bloodType || "?",
-            nextDonation: "2",
+            nextDonation: "60",
             gender: params.gender || "unknown",
             dateOfBirth: params.dateOfBirth || ""
         };
@@ -81,7 +81,7 @@ export class Profile extends React.Component
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon name='menu' />
+                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
                         </Button>
                     </Left>
 
@@ -118,7 +118,7 @@ export class Profile extends React.Component
 
                         <View style={{flexDirection: 'row', alignContent: 'flex-end'}}>
                             <Text style={{fontSize: 40, fontWeight: 'bold', lineHeight: 40, color: '#D32F2F'}}>{this.state.nextDonation}</Text>
-                            <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F', paddingRight: 15}}>months</Text>
+                            <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F', paddingRight: 15}}>days</Text>
                         </View>
                     </View>
                     

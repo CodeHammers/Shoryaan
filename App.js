@@ -12,6 +12,7 @@ import {PrivateProfileInfo} from './components/hospital/privateProfileInfo'
 import {EditHospitalPrivateProfile} from './components/hospital/privateProfileEdit'
 import {ChangeUserPassword} from './components/profile/changePassword'
 import {Intro} from './components/intro/intro'
+
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
 import { Root } from "native-base";
 

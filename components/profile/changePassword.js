@@ -46,23 +46,38 @@ export class ChangeUserPassword extends React.Component
         })
     }
 
+    checkForm(){
+        if(this.newPassword == this.confirmedPassword) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     editPassword(){
-        body = JSON.stringify({
-                password: this.state.oldPassword,
-                reset_password: this.state.newPassword,
-                access_token: this.state.access_token
+        var correct = this.checkForm();
+        if(correct == true){
+            body = JSON.stringify({
+                    password: this.state.oldPassword,
+                    reset_password: this.state.newPassword,
+                    access_token: this.state.access_token
+                })
+            this.state.auth_service.post(body,'/auth/resetpassword')
+            .then((response)=>{
+                if(response.status!=200){
+                    this.setState({oldPassword:"", newPassword: "", confirmedPassword: ""});
+                    this.showToast("Invalid update", "ok");
+                }
+                else{
+                    this.showToast("update succeeded", "ok");
+                    this.props.navigation.goBack();
+                }
             })
-        this.state.auth_service.post(body,'/auth/resetpassword')
-        .then((response)=>{
-            if(response.status!=200){
-                this.setState({oldPassword:"", newPassword: "", confirmedPassword: ""});
-                this.showToast("Invalid update", "ok");
-            }
-            else{
-                this.showToast("update succeeded", "ok");
-                //this.props.navigation.navigate('EditProfile');
-            }
-        })
+        }
+        else{
+            this.showToast("New and confirmed passwords differ", "ok");
+        }
     }
 
     render(){
