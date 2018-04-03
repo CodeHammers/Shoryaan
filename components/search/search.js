@@ -6,6 +6,8 @@ import {AuthService} from '../../services/auth'
 export class Search extends React.Component {
     constructor (props) {
         super(props);
+        const self = this.props.self
+
         this.state = {
             checked: false,
             states: ["","Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
@@ -23,6 +25,7 @@ export class Search extends React.Component {
             email: "",
             isVerified: "",
             status: "",
+            self: self
         };
     }
 
@@ -46,7 +49,7 @@ export class Search extends React.Component {
             url = url + '?name=' + this.state.searchText 
         }
 
-        alert(url)
+        //alert(url)
 
         this.state.auth_service.get(url)
         .then((response) => response.json())
@@ -70,46 +73,26 @@ export class Search extends React.Component {
     navgiateToHospital(name,state,district,address,phone,email,isVerified,status){
         this.setState({
             name: name,
-        })
-
-        this.setState({
             state: state,
-        })
-
-        this.setState({
             district: district,
-        })
-
-        this.setState({
             address: address,
-        })
-
-        this.setState({
             phone: phone,
-        })
-
-        this.setState({
             email: email,
-        })
-
-        this.setState({
             isVerified: isVerified,
-        })
-
-        this.setState({
             status: status,
+
         })
 
-        Alert.alert("name"+this.state.name+"address"+this.state.address+this.state.status+this.state.phone)
-        this.props.self.navigation.navigate('HospitalPublicProfile', {
-            name: "7elwa",
-            state: "Cairo",
-            email: "nice@nice.tes",
-            phone: "125636",
-            address: "7elwteen",
-            status: "Public",
-            isVerified: false,
-            district: "anny"
+        //Alert.alert("name"+this.state.name+"address"+this.state.address+this.state.status+this.state.phone)
+        this.state.self.props.navigation.navigate('HospitalPublicProfile', {
+            name: name,
+            state: state,
+            email: email,
+            phone: phone,
+            address: address,
+            status: status,
+            isVerified: isVerified,
+            district: district
         })
     }
 
