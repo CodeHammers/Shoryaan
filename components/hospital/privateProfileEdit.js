@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Picker, Item} from 'native-base'
+import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Picker, Item, Toast} from 'native-base'
 import {StatusBar, StyleSheet, ScrollView, View, TextInput, AsyncStorage} from 'react-native'
 
 import {AuthService} from '../../services/auth'
@@ -67,6 +67,19 @@ export class EditHospitalPrivateProfile extends React.Component
         });
     }
 
+    showToast(msg,btn){
+        Toast.show({
+            text: msg,
+            position: 'bottom',
+            buttonText: btn,
+            duration: 5000,
+            style: {
+                backgroundColor: "#212121",
+                opacity:0.76
+            }
+        })
+    }
+
     editProfile(){
         body = JSON.stringify({
             name: this.state.name,
@@ -74,13 +87,14 @@ export class EditHospitalPrivateProfile extends React.Component
             email: this.state.email,
             phone: this.state.phone,
             address: this.state.address,
+            district: this.state.district,
             status: this.state.status
         })
         this.state.auth_service.post(body,'/hospital/update')
         .then((response)=>{
             if(response.status!=200){
                 this.setState({name:this.state.nameSaved, state:this.state.stateSaved, email:this.state.emailSaved, 
-                    phone: this.state.phoneSaved, address: this.state.addressSaved, status: this.state.statusSaved})
+                    phone: this.state.phoneSaved, address: this.state.addressSaved, status: this.state.statusSaved, district: this.state.districtSaved})
                 this.showToast("Invalid update","ok");
             }
             else{

@@ -82,7 +82,8 @@ export class CreateHospital extends React.Component
             status: this.state.status,
             locationLongitude: this.state.locationLongitude,
             locationLatitude: this.state.locationLatitude,
-            isVerified: this.state.isVerified
+            isVerified: this.state.isVerified,
+            access_token: this.state.access_token
         })
         this.state.auth_service.post(body,'/hospital/create')
         .then((response)=>{

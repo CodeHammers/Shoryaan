@@ -1,25 +1,81 @@
 import React from 'react'
-import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon} from 'native-base';
-import {StyleSheet, View, ScrollView, StatusBar} from 'react-native'
+import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon, Toast, Thumbnail} from 'native-base';
+import {StyleSheet, View, ScrollView, StatusBar, AsyncStorage} from 'react-native'
+
+import {AuthService} from '../../services/auth'
 
 export class PrivateProfileInfo extends React.Component
 {
     constructor(props){
         super(props);
 
-        const { params } = this.props.navigation.state;
-
         this.state = {
-            name: params.name,
-            state: params.state,
-            district: params.district,
-            address: params.address,
-            phone: params.phone,
-            email: params.email,
-            isVerified: params.isVerified,
-            status: params.status
+            name: "",
+            state: "",
+            district: "",
+            address: "",
+            phone: "",
+            email: "",
+            isVerified: undefined,
+            status: "",
+            access_token: "",
+
+            auth_service: new AuthService(this)
         }
+
+        this.checkStoredToken().then(
+            ()=>{this.getHospitalData()}
+        )
     }  
+
+   checkStoredToken(){
+        return AsyncStorage.getItem("access_token").then((value) => {
+            if(value!=undefined){
+                this.setState({access_token:value})
+            }  
+        })
+    }
+
+    showToast(msg,btn){
+        Toast.show({
+            text: msg,
+            position: 'bottom',
+            buttonText: btn,
+            duration: 5000,
+            style: {
+                backgroundColor: "#212121",
+                opacity:0.76
+            }
+        })
+    }
+
+    getHospitalData(){
+        body = JSON.stringify({
+            access_token: this.state.access_token
+        })
+        this.state.auth_service.post(body,'/hospital/user_hospitals')
+        .then((response)=>{
+            if(response.status!=200){
+                this.showToast("Data fetching failed", "ok");
+            }
+            else{
+                response.json().then((res_json) =>{
+                    this.setState({
+                        name: res_json[0].name,
+                        state: res_json[0].state,
+                        district: res_json[0].district,
+                        address: res_json[0].address,
+                        phone: res_json[0].phone,
+                        email: res_json[0].email,
+                        isVerified: res_json[0].isVerified,
+                        status: res_json[0].status
+                    })
+                })
+
+                
+            }
+        })
+    }
     
     navgiateToEdit(){
         this.props.navigation.navigate('EditHospitalPrivateProfile', {
@@ -55,6 +111,19 @@ export class PrivateProfileInfo extends React.Component
                         </Button>
                     </Right>
                 </Header>
+
+                <View style = {styles.section}>
+                    <Thumbnail style = {{width: 70, height: 70}} round source={require('../../hos.png')} />
+                
+                    <Text style = {styles.nameText}> {this.state.name} </Text>
+                        
+                    <Text style={{color:'white', paddingTop: 5}}>  
+                        <Icon name = 'pin' style = {styles.icon} />
+                        {" "}{this.state.state}, Egypt
+                    </Text>
+                </View>
+
+                <View style={{ borderBottomColor: '#BDBDBD', borderBottomWidth: 3 }}/>
 
                 <ScrollView>
 
@@ -141,5 +210,23 @@ const styles = StyleSheet.create({
         fontSize: 20, 
         color:'#757575',
         flex: 1
+    },
+
+    icon:{
+        color: 'white',
+        fontSize: 20
+    },
+
+    nameText:{
+        color:'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingTop: 5
+    },
+
+    section: {
+        height: 140,
+        backgroundColor:'#F44336',
+        alignItems: 'center',
     }
 })
