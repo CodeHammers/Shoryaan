@@ -1,6 +1,6 @@
 import React from 'react'
 import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Picker, Item, Toast} from 'native-base'
-import {StatusBar, StyleSheet, ScrollView, View, TextInput, AsyncStorage} from 'react-native'
+import {StatusBar, StyleSheet, ScrollView, View, TextInput, AsyncStorage, Keyboard} from 'react-native'
 
 import {AuthService} from '../../services/auth'
 import {ValidateService} from '../../services/validate'
@@ -15,20 +15,20 @@ export class EditHospitalPrivateProfile extends React.Component
 
         this.state = {
             nameSaved: params.name,
-            stateSaved: params.state,
+            stateSaved: params.state || "Cairo",
             districtSaved: params.district,
             addressSaved: params.address,
             phoneSaved: params.phone,
-            statusSaved: params.status,
+            statusSaved: params.status || "Public",
             emailSaved: params.email,
 
             name: params.name,
-            state: params.state,
+            state: params.state || "Cairo",
             district: params.district,
             address: params.address,
             phone: params.phone,
             email: params.email,
-            status: params.status,
+            status: params.status || "Public",
             self: params.self,
 
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
@@ -49,10 +49,6 @@ export class EditHospitalPrivateProfile extends React.Component
                 this.setState({access_token:value})
             }
         }).done();
-    }
-
-    validateEmail(email){
-        this.state.validator.validate_email(email)
     }
 
     onStateValueChange(value) {
@@ -93,22 +89,19 @@ export class EditHospitalPrivateProfile extends React.Component
         this.state.auth_service.post(body,'/hospital/update')
         .then((response)=>{
             if(response.status!=200){
-                this.setState({name:this.state.nameSaved, state:this.state.stateSaved, email:this.state.emailSaved, 
-                    phone: this.state.phoneSaved, address: this.state.addressSaved, status: this.state.statusSaved, district: this.state.districtSaved})
+                this.setState({
+                    name:this.state.nameSaved, 
+                    state:this.state.stateSaved, 
+                    email:this.state.emailSaved, 
+                    phone: this.state.phoneSaved, 
+                    address: this.state.addressSaved, 
+                    status: this.state.statusSaved, 
+                    district: this.state.districtSaved})
                 this.showToast("Invalid update","ok");
             }
             else{
                 this.showToast("update sucess","ok");
-                this.state.self.setState(
-                    {name: this.state.name,
-                        state: this.state.state,
-                        district: this.state.district,
-                        address: this.state.address,
-                        phone: this.state.phone,
-                        email: this.state.email,
-                        status: this.state.status
-                    }   
-                )
+                this.state.self.getViewData();
                 this.props.navigation.goBack();
             }
         })
@@ -120,17 +113,17 @@ export class EditHospitalPrivateProfile extends React.Component
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
+                            <Icon onPress={() => { Keyboard.dismiss; this.props.navigation.goBack()}} name='arrow-back' />
                         </Button>
                     </Left>
 
                     <Body style = {styles.title}>
-                    <Title> EDIT </Title>
+                        <Title> Edit </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress = {()=> {this.editProfile()}} name='md-checkmark' />
+                            <Icon onPress = {()=> {Keyboard.dismiss; this.editProfile()}} name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>
@@ -140,7 +133,7 @@ export class EditHospitalPrivateProfile extends React.Component
                     <View style = {styles.form}>
 
                         <Text style = {styles.inputFieldLabels}> Hospital's name</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue= {this.state.name}
                             placeholderTextColor = "#757575"
@@ -163,16 +156,17 @@ export class EditHospitalPrivateProfile extends React.Component
                         </Picker>
 
                         <Text style = {styles.inputFieldLabels}> District</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue= {this.state.district}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
+                            autoCapitalize={'sentences'}
                             onChangeText={(text) =>{this.setState({district: text});}}
                         />
 
                         <Text style = {styles.inputFieldLabels}> Address</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue= {this.state.address}
                             placeholderTextColor = "#757575"
@@ -182,7 +176,7 @@ export class EditHospitalPrivateProfile extends React.Component
                         />
 
                         <Text style = {styles.inputFieldLabels}> Phone</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue= {this.state.phone}
                             placeholderTextColor = "#757575"
@@ -192,12 +186,13 @@ export class EditHospitalPrivateProfile extends React.Component
                         />
 
                         <Text style = {styles.inputFieldLabels}> E-mail</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue= {this.state.email}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             keyboardType = 'email-address'
+                            autoCapitalize = {'none'}
                             onChangeText={(text) =>{this.setState({email: text});}}
                         />
 
@@ -243,7 +238,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFF'
     },
 
-    inputBox: {
+    inputBoxNormal: {
         flexDirection: 'row',
         backgroundColor:'#ffffff',
         borderRadius: 15,
@@ -251,6 +246,32 @@ const styles = StyleSheet.create({
         fontSize:16,
         color:'#757575',
         borderColor: '#757575',
+        borderWidth: 2,
+        marginVertical: 8,
+        marginHorizontal: 10
+    },
+
+    inputBoxError:{
+        flexDirection: 'row',
+        backgroundColor:'#ffffff',
+        borderRadius: 15,
+        paddingHorizontal:25,
+        fontSize:16,
+        color:'#757575',
+        borderColor: '#CF000F',
+        borderWidth: 2,
+        marginVertical: 8,
+        marginHorizontal: 10
+    },
+
+    inputBoxPass:{
+        flexDirection: 'row',
+        backgroundColor:'#ffffff',
+        borderRadius: 15,
+        paddingHorizontal:25,
+        fontSize:16,
+        color:'#757575',
+        borderColor: '#1E824C',
         borderWidth: 2,
         marginVertical: 8,
         marginHorizontal: 10

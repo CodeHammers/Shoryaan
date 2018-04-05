@@ -38,7 +38,7 @@ export class EditProfile extends React.Component
             validName: undefined,
             validCity: undefined,
 
-            bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-","?"],
+            bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-", "?"],
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
             genders: ["Male", "Female"],
 
@@ -56,11 +56,6 @@ export class EditProfile extends React.Component
             this.setState({access_token:value})
           }
         }).done();
-    }
-
-    
-    validateUserName(username){
-        this.state.validator.validate_username(username)
     }
 
     editProfile(){

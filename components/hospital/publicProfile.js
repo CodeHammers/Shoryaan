@@ -21,8 +21,7 @@ export class HospitalPublicProfile extends React.Component
                 phone: params.phone,
                 email: params.email,
                 isVerified: params.isVerified,
-                status: params.status,
-                valid_email: undefined
+                status: params.status
         };
     }
 
@@ -40,7 +39,7 @@ export class HospitalPublicProfile extends React.Component
                     </Left>
 
                     <Body style = {styles.title}>
-                       <Title> HOSPITAL </Title>
+                        <Title> Hospital </Title>
                     </Body>
                    
                     <Right style = {{flex: 1}}>

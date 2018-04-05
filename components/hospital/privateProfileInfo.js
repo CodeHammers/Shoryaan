@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon, Toast, Thumbnail} from 'native-base';
+import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon, Thumbnail} from 'native-base';
 import {StyleSheet, View, ScrollView, StatusBar, AsyncStorage} from 'react-native'
 
 import {AuthService} from '../../services/auth'
@@ -23,29 +23,20 @@ export class PrivateProfileInfo extends React.Component
             auth_service: new AuthService(this)
         }
 
+        this.getViewData();
+    }  
+
+    getViewData(){
         this.checkStoredToken().then(
             ()=>{this.getHospitalData()}
         )
-    }  
+    }
 
    checkStoredToken(){
         return AsyncStorage.getItem("access_token").then((value) => {
             if(value!=undefined){
                 this.setState({access_token:value})
             }  
-        })
-    }
-
-    showToast(msg,btn){
-        Toast.show({
-            text: msg,
-            position: 'bottom',
-            buttonText: btn,
-            duration: 5000,
-            style: {
-                backgroundColor: "#212121",
-                opacity:0.76
-            }
         })
     }
 
@@ -56,23 +47,21 @@ export class PrivateProfileInfo extends React.Component
         this.state.auth_service.post(body,'/hospital/user_hospitals')
         .then((response)=>{
             if(response.status!=200){
-                this.showToast("Data fetching failed", "ok");
+               alret("Can't connect to server");
             }
             else{
-                response.json().then((res_json) =>{
+                response.json().then((resJSON) =>{
                     this.setState({
-                        name: res_json[0].name,
-                        state: res_json[0].state,
-                        district: res_json[0].district,
-                        address: res_json[0].address,
-                        phone: res_json[0].phone,
-                        email: res_json[0].email,
-                        isVerified: res_json[0].isVerified,
-                        status: res_json[0].status
+                        name: resJSON[0].name,
+                        state: resJSON[0].state,
+                        district: resJSON[0].district,
+                        address: resJSON[0].address,
+                        phone: resJSON[0].phone,
+                        email: resJSON[0].email,
+                        isVerified: resJSON[0].isVerified,
+                        status: resJSON[0].status
                     })
                 })
-
-                
             }
         })
     }
@@ -97,12 +86,12 @@ export class PrivateProfileInfo extends React.Component
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
+                            <Icon onPress={() => {this.props.navigation.navigate('Home')}} name='arrow-back' />
                         </Button>
                     </Left>
 
                     <Body style = {styles.title}>
-                        <Title> HOSPITAL </Title>
+                        <Title> Hospital </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>
@@ -132,38 +121,38 @@ export class PrivateProfileInfo extends React.Component
                         <List>
 
                             <ListItem>
-                                <Text style = {styles.listItemLabel}>Name:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.name}</Text>
+                                <Text>Name:{" "}</Text>
+                                <Text note>{this.state.name}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {styles.listItemLabel}>State:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.state}</Text>
+                                <Text>State:{" "}</Text>
+                                <Text note>{this.state.state}</Text>
                             </ListItem>
                             
                             <ListItem>
                                 <Text style = {styles.listItemLabel}>District:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.district}</Text>
+                                <Text note>{this.state.district}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {styles.listItemLabel}>Address:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.address}</Text>
+                                <Text>Address:{" "}</Text>
+                                <Text note>{this.state.address}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {styles.listItemLabel}>Phone:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.phone}</Text>
+                                <Text>Phone:{" "}</Text>
+                                <Text note>{this.state.phone}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text style = {styles.listItemLabel}>E-mail:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.email}</Text>
+                                <Text>E-mail:{" "}</Text>
+                                <Text note>{this.state.email}</Text>
                             </ListItem>
 
-                            <ListItem>
-                                <Text style = {styles.listItemLabel}>Status:{" "}</Text>
-                                <Text style = {styles.listItemData}>{this.state.status}</Text>
+                            <ListItem last>
+                                <Text>Status:{" "}</Text>
+                                <Text note>{this.state.status}</Text>
                             </ListItem>
 
                         </List>
@@ -199,17 +188,6 @@ const styles = StyleSheet.create({
 
     mainList:{
         backgroundColor:'#FFFFFF'
-    },
-
-    listItemLabel:{
-        fontSize: 20, 
-        color:'#212121'
-    },
-
-    listItemData:{
-        fontSize: 20, 
-        color:'#757575',
-        flex: 1
     },
 
     icon:{

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container,Icon, Header, Title , Button, Left, Right, Body, Text,Toast, ActionSheet } from 'native-base';
-import {TouchableOpacity,View,Image,StatusBar,StyleSheet,ScrollView} from 'react-native'
+import {TouchableOpacity,View,Image,StatusBar,StyleSheet,ScrollView, AsyncStorage} from 'react-native'
 import {H3} from 'native-base'
 import {AuthService} from '../../services/auth'
 
@@ -18,36 +18,48 @@ export class Home extends React.Component {
   
     constructor(props) {
         super(props);
-        const { params } = this.props.navigation.state;
+        
         this.state = {
-          username:params.username || "unknown",
-          email:params.email || "unknown",
-          bloodtype: params.bloodtype || "?",
-          gender: params.gender ||  "Male",
-          manager: params.hospitalManager,
-          name: params.name,
-          city: params.city,
-          state: params.state,
-          dateOfBirth: params.dateOfBirth,
-          auth_service: new AuthService(),
-
-          clicked: {}
+          manager: false,
+          auth_service: new AuthService()
         };
 
-    }   
+        //Retrieve the access token stored in the mobile cache and then retrieve the user data from the DB
+        this.getViewData();
+    }
     
-    navigateToProfile(){
-        this.props.navigation.navigate('Profile', {
-          username:this.state.username,
-          email:this.state.email ,
-          state: this.state.state ,
-          city: this.state.city ,
-          name: this.state.name,
-          bloodType: this.state.bloodtype,
-          gender: this.state.gender,
-          dateOfBirth: this.state.dateOfBirth,
+    getViewData(){
+      this.checkStoredToken().then(
+          ()=>{this.getUserData()}
+      )
+    }
+
+    checkStoredToken(){
+      return AsyncStorage.getItem("access_token").then((value) => {
+          if(value!=undefined){
+              this.setState({access_token:value})
+          }  
       })
     }
+
+  getUserData(){
+      body = JSON.stringify({
+          access_token: this.state.access_token
+      })
+      this.state.auth_service.post(body,'/auth/me')
+      .then((response) => {
+          if(response.status != 200){
+              alert("Can't connect to server")
+          }
+          else{
+              response.json().then((resJSON) =>{
+                  this.setState({
+                      manager: resJSON.hospitalManager
+                  })
+              })
+          }
+      })
+  }
 
     showUserSettings(){
       ActionSheet.show(
@@ -93,7 +105,7 @@ export class Home extends React.Component {
 
           <ScrollView>
             <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={() => {this.navigateToProfile()}}>
+            <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Profile')}}>
               <Image 
               source={require('../../images/home/i-received-icon.png')} 
               style={styles.ImageIconStyle} 

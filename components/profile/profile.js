@@ -1,7 +1,7 @@
 import React from 'react'
 import {View} from 'react-native'
 import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Thumbnail, List, ListItem} from 'native-base';
-import {StatusBar,StyleSheet,AsyncStorage,ScrollView} from 'react-native'
+import {StatusBar, StyleSheet, AsyncStorage, ScrollView} from 'react-native'
 
 import {AuthService} from '../../services/auth'
 
@@ -197,7 +197,7 @@ export class Profile extends React.Component
                                 <Text note>{this.state.gender}</Text>
                             </ListItem>
 
-                            <ListItem>
+                            <ListItem last>
                                 <Text >Date of birth:{" "}</Text>
                                 <Text note>{this.state.dateOfBirth}</Text>
                             </ListItem>
@@ -241,16 +241,6 @@ const styles = StyleSheet.create({
     icon:{
         color: 'white',
         fontSize: 20
-    },
-
-    listItemLabel:{
-        fontSize: 25, 
-        color:'#212121'
-    },
-
-    listItemData:{
-        fontSize: 20, 
-        color:'#757575'
     },
 
     bloodBar:{

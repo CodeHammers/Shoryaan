@@ -128,4 +128,10 @@ export  class ValidateService{
         var regex = /^[a-zA-Z][a-z0-9A-Z ]{2,20}$/;
         return regex.test(String(username));
     }
+
+    validatePhoneNumber(phone)
+    {
+        var regex = /^[0-9]{8,11}$/
+        return regex.test(String(phone));
+    }
 }

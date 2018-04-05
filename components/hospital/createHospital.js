@@ -1,6 +1,6 @@
 import React from 'react'
 import {Container, Header, Title, Content, Button, Left, Right, Body, Toast, Icon, Text, Picker, Item} from 'native-base'
-import {StatusBar,StyleSheet, AsyncStorage, ScrollView, View, TextInput} from 'react-native'
+import {StatusBar,StyleSheet, AsyncStorage, ScrollView, View, TextInput, Keyboard} from 'react-native'
 
 import {AuthService} from '../../services/auth'
 import {ValidateService} from '../../services/validate'
@@ -20,15 +20,15 @@ export class CreateHospital extends React.Component
             email: "",
             locationLongitude: 22.5,
             locationLatitude: 22.5,
-            valid_email: undefined,
             isVerified: false,
             status: "Public",
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
             statusOptions: ["Public", "Private"],
 
             access_token: "",
-
             auth_service: new AuthService(this),
+
+            valid_email: undefined,
             validator: new ValidateService(this)
         }
         
@@ -80,6 +80,7 @@ export class CreateHospital extends React.Component
             phone: this.state.phone,
             address: this.state.address,
             status: this.state.status,
+            district:this.state.district,
             locationLongitude: this.state.locationLongitude,
             locationLatitude: this.state.locationLatitude,
             isVerified: this.state.isVerified,
@@ -89,25 +90,10 @@ export class CreateHospital extends React.Component
         .then((response)=>{
             if(response.status!=200){
                 this.showToast("Creation failed", "ok");
-                response.json().then(
-                    (res_json)=>{
-                        alert(res_json.invalidAttributes)
-                    }
-                )
             }
             else{
                 this.showToast("Creation succeeded", "ok");
-                this.props.navigation.navigate('PrivateProfileInfo', 
-                {
-                    name: this.state.name,
-                    state: this.state.state,
-                    email: this.state.email,
-                    phone: this.state.phone,
-                    address: this.state.address,
-                    status: this.state.status,
-                    district: this.state.district,
-                    isVerified: this.state.isVerified
-                });
+                this.props.navigation.navigate('PrivateProfileInfo');
             }
         })
     }
@@ -121,17 +107,17 @@ export class CreateHospital extends React.Component
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
+                            <Icon onPress={() => {Keyboard.dismiss; this.props.navigation.goBack()}} name='arrow-back' />
                         </Button>
                     </Left>
 
                     <Body style = {styles.title}>
-                    <Title> CREATE </Title>
+                        <Title style = {{fontSize: 17}}> Create Hospital </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={()=> this.createHospital()} name='md-checkmark' />
+                            <Icon onPress={()=> {Keyboard.dismiss; this.createHospital()}} name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>
@@ -141,7 +127,7 @@ export class CreateHospital extends React.Component
                     <View style = {styles.form}>
 
                         <Text style = {styles.inputFieldLabels}> Hospital's name</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             placeholder= "Hospital's official name"
                             placeholderTextColor = "#757575"
@@ -164,16 +150,17 @@ export class CreateHospital extends React.Component
                         </Picker>
 
                         <Text style = {styles.inputFieldLabels}> District</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             placeholder= "i.e. Helioplis"
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
+                            autoCapitalize={'sentences'}
                             onChangeText={(text) =>{this.setState({district: text});}}
                         />
 
                         <Text style = {styles.inputFieldLabels}> Address</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             placeholder= "i.e building number, St. name off St. name"
                             placeholderTextColor = "#757575"
@@ -183,9 +170,9 @@ export class CreateHospital extends React.Component
                         />
 
                         <Text style = {styles.inputFieldLabels}> Phone</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "[City code] + [8 numbers]"
+                            placeholder= "[City code] + [8-11 digits]"
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             keyboardType = 'numeric'
@@ -193,28 +180,16 @@ export class CreateHospital extends React.Component
                         />
                         
                         <Text style = {styles.inputFieldLabels}> E-mail</Text>
-                        <Item style={{width:'100%', borderBottomColor: '#FFFF'}}>
-                            <TextInput style={styles.inputBox} 
-                                underlineColorAndroid='rgba(0,0,0,0)' 
-                                placeholder= "ie. queens@gmail.com"
-                                placeholderTextColor = "#757575"
-                                selectionColor="#212121"
-                                keyboardType = 'email-address'
-                                autoCapitalize = 'none'
-                                onChangeText={(text) =>{this.setState({email: text}); this.validateEmail(text);}}
-                            />
-                            {this.state.valid_email == true &&
-                                (
-                                    <Icon style={{color:'green'}}  name='checkmark-circle'/>
-                                )
-                            }
-                            {this.state.valid_email == false &&
-                                (
-                                    <Icon style={{color:'red'}}  name='close-circle'/>
-                                )
-                            }
-                        </Item>
-
+                        <TextInput style={styles.inputBoxNormal} 
+                            underlineColorAndroid='rgba(0,0,0,0)' 
+                            placeholder= "ie. queens@gmail.com"
+                            placeholderTextColor = "#757575"
+                            selectionColor="#212121"
+                            keyboardType = 'email-address'
+                            autoCapitalize = {'none'}
+                            onChangeText={(text) =>{this.setState({email: text});}}
+                        />
+                    
                         <Text style = {styles.inputFieldLabels}> Status</Text>
                         <Picker
                             iosHeader="Select one"
@@ -257,7 +232,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFF'
     },
 
-    inputBox: {
+    inputBoxNormal: {
         flex:1,
         flexDirection: 'row',
         backgroundColor:'#ffffff',
@@ -266,6 +241,32 @@ const styles = StyleSheet.create({
         fontSize:16,
         color:'#757575',
         borderColor: '#757575',
+        borderWidth: 2,
+        marginVertical: 8,
+        marginHorizontal: 10
+    },
+
+    inputBoxError:{
+        flexDirection: 'row',
+        backgroundColor:'#ffffff',
+        borderRadius: 15,
+        paddingHorizontal:25,
+        fontSize:16,
+        color:'#757575',
+        borderColor: '#CF000F',
+        borderWidth: 2,
+        marginVertical: 8,
+        marginHorizontal: 10
+    },
+
+    inputBoxPass:{
+        flexDirection: 'row',
+        backgroundColor:'#ffffff',
+        borderRadius: 15,
+        paddingHorizontal:25,
+        fontSize:16,
+        color:'#757575',
+        borderColor: '#1E824C',
         borderWidth: 2,
         marginVertical: 8,
         marginHorizontal: 10

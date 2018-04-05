@@ -62,7 +62,7 @@ export class HospitalPublicProfileInfo extends React.Component
                                 <Text style = {styles.listItemData}>{this.state.email}</Text>
                             </ListItem>
 
-                            <ListItem>
+                            <ListItem last>
                                 <Text style = {styles.listItemLabel}>Status:{" "}</Text>
                                 <Text style = {styles.listItemData}>{this.state.status}</Text>
                             </ListItem>
