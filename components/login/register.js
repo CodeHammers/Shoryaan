@@ -151,7 +151,7 @@ export class Register extends React.Component {
                )}
                {this.state.valid_state==2 && (
                   <Badge   style={{backgroundColor:'#F44336',opacity:.8}}>
-                  <Text  style={{color:'white'}} note>username: min 3 characters and no special ones
+                  <Text  style={{color:'white'}} note>username: invalid characters
                   </Text>
                 </Badge>
                )}

@@ -1,6 +1,6 @@
 import React from 'react'
 import {View} from 'react-native'
-import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Item, Toast, Picker} from 'native-base';
+import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Item, Toast, Picker,Input,Badge} from 'native-base';
 import {StatusBar,StyleSheet,AsyncStorage,ScrollView,TextInput,Keyboard} from 'react-native'
 
 import DatePicker from 'react-native-datepicker'
@@ -44,7 +44,9 @@ export class EditProfile extends React.Component
 
             access_token: '',
             auth_service: new AuthService(this),
-            validator: new ValidateService(this)
+            validator: new ValidateService(this),
+            valid_state: 0
+
         };
 
         this.checkStoredToken();
@@ -123,6 +125,19 @@ export class EditProfile extends React.Component
         })
     }
 
+
+    validate_username(un=false){
+        this.state.validator.validate_username(un)
+    }
+
+    validate_name(n=false){
+        this.state.validator.validate_name(n)
+    }
+
+    validate_city(c=false){
+        this.state.validator.validate_city(c)
+    }
+
     render(){
         return(
             <Container style = {styles.mainScreen}>
@@ -151,41 +166,67 @@ export class EditProfile extends React.Component
 
                     <View style = {styles.form}>
 
-                        <Text style = {styles.inputFieldLabels}> Username</Text>
+                        <Text style = {styles.inputFieldLabels} defaultValue = {this.state.username}> Username</Text>
                         <TextInput 
                             style={[
                                 this.state.valid_username == undefined? styles.inputBoxNormal : 
-                                this.state.valid_username? styles.inputBoxPass : styles.inputBoxError
+                                this.state.valid_username ? styles.inputBoxPass : styles.inputBoxError
                             ]}
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue = {this.state.username}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize = 'none'
-                            onChangeText={(text) =>{this.setState({username: text}); this.validateUserName(text);}}
+                            onChangeText={(text) =>{this.setState({username: text}); this.validate_username(text);}}
                         />
+
+                        {this.state.valid_state== this.state.validator.INVALID_USERNAME && (
+                            <Badge   style={{backgroundColor:'#F44336',opacity:.8}}>
+                            <Text  style={{color:'white'}} note>username: invalid characters
+                            </Text>
+                            </Badge>
+                        )}
 
                         <Text style = {styles.inputFieldLabels}> Name</Text>
                         <TextInput 
-                            style={styles.inputBoxNormal} 
+                            style={[
+                                this.state.validName == undefined? styles.inputBoxNormal : 
+                                this.state.validName ? styles.inputBoxPass : styles.inputBoxError
+                            ]}
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue= {this.state.name}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize={'sentences'}
-                            onChangeText={(text) =>{ this.setState({name: text});}}
+                            onChangeText={(text) =>{ this.setState({name: text}); this.validate_name(text);}}
                         />
+
+                        {this.state.valid_state== this.state.validator.INVALID_NAME && (
+                            <Badge   style={{backgroundColor:'#F44336',opacity:.8}}>
+                            <Text  style={{color:'white'}} note>name: invalid characters/too short
+                            </Text>
+                            </Badge>
+                        )}
 
                         <Text style = {styles.inputFieldLabels}> City</Text>
                         <TextInput 
-                            style={styles.inputBoxNormal}
+                            style={[
+                                this.state.validCity == undefined? styles.inputBoxNormal : 
+                                this.state.validCity ? styles.inputBoxPass : styles.inputBoxError
+                            ]}
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue= {this.state.city}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize={'sentences'}
-                            onChangeText={(text) =>{ this.setState({city: text});}}
+                            onChangeText={(text) =>{ this.setState({city: text});this.validate_city(text)}}
                         />
+                        {this.state.valid_state== this.state.validator.INVALID_CITY && (
+                            <Badge   style={{backgroundColor:'#F44336',opacity:.8}}>
+                            <Text  style={{color:'white'}} note>city: invalid
+                            </Text>
+                            </Badge>
+                        )}
 
                         <Text style = {styles.inputFieldLabels}> State</Text>
                         <Picker
