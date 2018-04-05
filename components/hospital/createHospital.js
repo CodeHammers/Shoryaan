@@ -200,6 +200,7 @@ export class CreateHospital extends React.Component
                                 placeholderTextColor = "#757575"
                                 selectionColor="#212121"
                                 keyboardType = 'email-address'
+                                autoCapitalize = 'none'
                                 onChangeText={(text) =>{this.setState({email: text}); this.validateEmail(text);}}
                             />
                             {this.state.valid_email == true &&

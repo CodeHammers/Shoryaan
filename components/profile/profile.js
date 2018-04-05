@@ -1,31 +1,74 @@
 import React from 'react'
-import {View,Image} from 'react-native'
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,Fab , Card, CardItem,Thumbnail,List,ListItem} from 'native-base';
-import {ImageBackground,StatusBar,StyleSheet,AsyncStorage,ScrollView} from 'react-native'
-import {H3,Input,Toast,Item,Label,Picker} from 'native-base'
+import {View} from 'react-native'
+import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Thumbnail, List, ListItem} from 'native-base';
+import {StatusBar,StyleSheet,AsyncStorage,ScrollView} from 'react-native'
+
+import {AuthService} from '../../services/auth'
 
 export class Profile extends React.Component
 {
-    
     constructor(props)
     {
         super(props);
 
-        const { params } = this.props.navigation.state;
-
-        if(params!=undefined || params == null)
-            this.state = {
-            username:params.username || "unknown",
-            email: params.email || "unknown",
-            state: params.state || "unkown",
-            city: params.city || "",
-            name: params.name || "",
-            bloodType: params.bloodType || "?",
+        this.state = {
+            username: "",
+            email: "",
+            state: "",
+            city: "",
+            name: "",
+            bloodType: "?",
             nextDonation: "60",
-            gender: params.gender || "unknown",
-            dateOfBirth: params.dateOfBirth || ""
-        };
+            gender: "",
+            dateOfBirth: "",
 
+            access_token: '',
+            auth_service: new AuthService(this),
+        }
+
+        //Retrieve the access token stored in the mobile cache and then retrieve the user data from the DB
+        this.getViewData();
+    }
+
+    
+    getViewData(){
+        this.checkStoredToken().then(
+            ()=>{this.getUserData()}
+        )
+    }
+
+    checkStoredToken(){
+        return AsyncStorage.getItem("access_token").then((value) => {
+            if(value!=undefined){
+                this.setState({access_token:value})
+            }  
+        })
+    }
+
+    getUserData(){
+        body = JSON.stringify({
+            access_token: this.state.access_token
+        })
+        this.state.auth_service.post(body,'/auth/me')
+        .then((response) => {
+            if(response.status != 200){
+                alert("Can't connect to server")
+            }
+            else{
+                response.json().then((resJSON) =>{
+                    this.setState({
+                        username: resJSON.username,
+                        state: resJSON.state,
+                        city: resJSON.city,
+                        name: resJSON.name,
+                        bloodType: resJSON.bloodtype || "?",
+                        gender: resJSON.gender,
+                        dateOfBirth: resJSON.dateOfBirth,
+                        email: resJSON.email
+                    })
+                })
+            }
+        })
     }
     
     convertBloodTypeSign(){
@@ -46,25 +89,11 @@ export class Profile extends React.Component
         else return bloodType.slice(0,-1);
     }
 
-    showToast(msg,btn){
-        Toast.show({
-            text: msg,
-            position: 'bottom',
-            buttonText: btn,
-            duration: 5000,
-            style: {
-                backgroundColor: "#212121",
-                opacity:0.76
-            }
-        })
-    }
-    
     navgiateToEdit(){
         this.props.navigation.navigate('EditProfile', {
             username:this.state.username,
-            email:this.state.email ,
-            state: this.state.state ,
-            city: this.state.city ,
+            state: this.state.state,
+            city: this.state.city,
             name: this.state.name,
             bloodType: this.state.bloodType,
             gender: this.state.gender,
@@ -81,17 +110,17 @@ export class Profile extends React.Component
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
+                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back'/>
                         </Button>
                     </Left>
 
                     <Body style = {styles.title}>
-                       <Title> PROFILE </Title>
+                       <Title> Profile </Title>
                     </Body>
                    
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                        <Icon onPress={() => this.navgiateToEdit()} name='md-create' />
+                            <Icon onPress={() => this.navgiateToEdit()} name='md-create'/>
                         </Button>
                     </Right>
                 </Header>

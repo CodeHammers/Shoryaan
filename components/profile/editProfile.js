@@ -1,13 +1,12 @@
 import React from 'react'
-import {View,Image} from 'react-native'
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text,Fab , Card, CardItem,Thumbnail,List,ListItem} from 'native-base';
-import {ImageBackground,StatusBar,StyleSheet,AsyncStorage,ScrollView,TextInput} from 'react-native'
-import {H3,Input,Toast,Item,Label,Picker} from 'native-base'
+import {View} from 'react-native'
+import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Item, Toast, Picker} from 'native-base';
+import {StatusBar,StyleSheet,AsyncStorage,ScrollView,TextInput,Keyboard} from 'react-native'
 
 import DatePicker from 'react-native-datepicker'
 
 import {AuthService} from '../../services/auth'
-
+import {ValidateService} from '../../services/validate'
 
 export class EditProfile extends React.Component
 {
@@ -18,35 +17,37 @@ export class EditProfile extends React.Component
         const { params } = this.props.navigation.state;
 
         this.state = {
-            usernameSaved: params.username || "unknown",
-            emailSaved: params.email || "unknown",
+            usernameSaved: params.username,
             bloodTypeSaved: params.bloodType || "?",
-            genderSaved: params.gender || "unknown",
-            nameSaved: params.name || "unkown",
-            citySaved: params.city || "unkown",
-            stateSaved: params.state,
+            genderSaved: params.gender || "Male",
+            nameSaved: params.name || "",
+            citySaved: params.city || "",
+            stateSaved: params.state || "Cairo",
             dateOfBirthSaved: params.dateOfBirth,
 
             username: params.username,
-            name: params.name,
-            email: params.email,
-            age: params.age,
-            state: params.state,
-            city: params.city,
-            bloodType: params.bloodType,
-            gender: params.gender || "unknown",
+            name: params.name || "",
+            state: params.state || "Cairo",
+            city: params.city || "",
+            bloodType: params.bloodType || "?",
+            gender: params.gender || "Male",
             dateOfBirth: params.dateOfBirth,
             self: params.self,
+
+            valid_username: undefined,
+            validName: undefined,
+            validCity: undefined,
 
             bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-","?"],
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
             genders: ["Male", "Female"],
 
             access_token: '',
-            auth_service: new AuthService()
+            auth_service: new AuthService(this),
+            validator: new ValidateService(this)
         };
 
-        this.checkStoredToken()
+        this.checkStoredToken();
     }
 
     checkStoredToken(){
@@ -55,6 +56,11 @@ export class EditProfile extends React.Component
             this.setState({access_token:value})
           }
         }).done();
+    }
+
+    
+    validateUserName(username){
+        this.state.validator.validate_username(username)
     }
 
     editProfile(){
@@ -72,20 +78,21 @@ export class EditProfile extends React.Component
         this.state.auth_service.post(body,'/auth/edit')
         .then((response)=>{
             if(response.status!=200){
-                this.setState({bloodType:this.state.bloodTypeSaved, username:this.state.usernameSaved, gender:this.state.genderSaved,
-                name: this.state.nameSaved, city: this.state.citySaved, state: this.state.stateSaved, dateOfBirth: this.state.dateOfBirthSaved })
-                this.showToast("Invalid update","ok")
+                this.setState(
+                    {bloodType:this.state.bloodTypeSaved, 
+                    username:this.state.usernameSaved, 
+                    gender:this.state.genderSaved,
+                    name: this.state.nameSaved, 
+                    city: this.state.citySaved, 
+                    state: this.state.stateSaved, 
+                    dateOfBirth: this.state.dateOfBirthSaved 
+                })
+                this.showToast("Invalid update","ok");
             }
             else{
-                this.showToast("update sucess","ok")
-
-                this.state.self.setState(
-                    {username: this.state.username, state: this.state.state,
-                      city: this.state.city, name: this.state.name, bloodType: this.state.bloodType, gender: this.state.gender,
-                       dateOfBirth: this.state.dateOfBirth}   
-                )
-
-                this.props.navigation.goBack()
+                this.showToast("update sucess","ok");
+                this.state.self.getViewData();
+                this.props.navigation.goBack();
             }
         })
     }
@@ -121,52 +128,62 @@ export class EditProfile extends React.Component
         })
     }
 
-
     render(){
         return(
             <Container style = {styles.mainScreen}>
+
                 <StatusBar style = {styles.statusBar} barStyle = "light-content"/>
 
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
+                            <Icon onPress={() => {Keyboard.dismiss; this.props.navigation.goBack()}} name='arrow-back' />
                         </Button>
                     </Left>
 
                     <Body style = {styles.title}>
-                    <Title> EDIT PROFILE </Title>
+                    <Title> Edit Profile </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>
                         <Button transparent>
-                            <Icon onPress={() => {this.editProfile()}} name='md-checkmark' />
+                            <Icon onPress={() => {Keyboard.dismiss; this.editProfile()}} name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>
 
                 <ScrollView>
+
                     <View style = {styles.form}>
+
                         <Text style = {styles.inputFieldLabels}> Username</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput 
+                            style={[
+                                this.state.valid_username == undefined? styles.inputBoxNormal : 
+                                this.state.valid_username? styles.inputBoxPass : styles.inputBoxError
+                            ]}
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue = {this.state.username}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
-                            onChangeText={(text) =>{ this.setState({username: text});}}
+                            autoCapitalize = 'none'
+                            onChangeText={(text) =>{this.setState({username: text}); this.validateUserName(text);}}
                         />
 
                         <Text style = {styles.inputFieldLabels}> Name</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput 
+                            style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue= {this.state.name}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
+                            autoCapitalize={'sentences'}
                             onChangeText={(text) =>{ this.setState({name: text});}}
                         />
 
                         <Text style = {styles.inputFieldLabels}> City</Text>
-                        <TextInput style={styles.inputBox} 
+                        <TextInput 
+                            style={styles.inputBoxNormal}
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             defaultValue= {this.state.city}
                             placeholderTextColor = "#757575"
@@ -225,7 +242,7 @@ export class EditProfile extends React.Component
                             maxDate="2000-12-31"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
-                            showIcon = {false}
+                            showIcon={false}
                             customStyles={{
                                 dateInput: {
                                   borderColor: '#FFFF',
@@ -242,9 +259,12 @@ export class EditProfile extends React.Component
                             onDateChange={(date) => {this.setState({dateOfBirth: date})}}
                         />
                         
-                        <View/>
+                    <View/>
+
                     </View>
+
                 </ScrollView>
+
             </Container>
         )
     }
@@ -274,7 +294,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFF'
     },
 
-    inputBox: {
+    inputBoxNormal: {
         flexDirection: 'row',
         backgroundColor:'#ffffff',
         borderRadius: 15,
@@ -282,6 +302,32 @@ const styles = StyleSheet.create({
         fontSize:16,
         color:'#757575',
         borderColor: '#757575',
+        borderWidth: 2,
+        marginVertical: 8,
+        marginHorizontal: 10
+    },
+
+    inputBoxError:{
+        flexDirection: 'row',
+        backgroundColor:'#ffffff',
+        borderRadius: 15,
+        paddingHorizontal:25,
+        fontSize:16,
+        color:'#757575',
+        borderColor: '#CF000F',
+        borderWidth: 2,
+        marginVertical: 8,
+        marginHorizontal: 10
+    },
+
+    inputBoxPass:{
+        flexDirection: 'row',
+        backgroundColor:'#ffffff',
+        borderRadius: 15,
+        paddingHorizontal:25,
+        fontSize:16,
+        color:'#757575',
+        borderColor: '#1E824C',
         borderWidth: 2,
         marginVertical: 8,
         marginHorizontal: 10
