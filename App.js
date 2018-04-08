@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { Platform } from 'react-native';
-import {Landing} from './components/login/landing'
-import {Home} from './components/home/home'
-import {Profile} from './components/profile/profile'
-import {Search} from './components/search/search'
-import {InitialSearch} from './components/search/initialsearch'
-import {EditProfile} from './components/profile/editProfile'
-import {HospitalPublicProfile} from './components/hospital/publicProfile'
-import {CreateHospital} from './components/hospital/createHospital'
-import {PrivateProfileInfo} from './components/hospital/privateProfileInfo'
-import {EditHospitalPrivateProfile} from './components/hospital/privateProfileEdit'
-import {ChangeUserPassword} from './components/profile/changePassword'
-import {Intro} from './components/intro/intro'
+import { Landing } from './components/login/landing'
+import { Home } from './components/home/home'
+import { Profile } from './components/profile/profile'
+import { Search } from './components/search/search'
+import { InitialSearch } from './components/search/initialsearch'
+import { EditProfile } from './components/profile/editProfile'
+import { HospitalPublicProfile } from './components/hospital/publicProfile'
+import { CreateHospital } from './components/hospital/createHospital'
+import { PrivateProfileInfo } from './components/hospital/privateProfileInfo'
+import { EditHospitalPrivateProfile } from './components/hospital/privateProfileEdit'
+import { ChangeUserPassword } from './components/profile/changePassword'
+import { Intro } from './components/intro/intro'
 
-import { StackNavigator, DrawerNavigator } from 'react-navigation'
+import { StackNavigator } from 'react-navigation'
 import { Root } from "native-base";
 
 /*
@@ -22,67 +22,57 @@ import { Root } from "native-base";
 ################################################################################
 */
 const RootStack = StackNavigator({
-  Landing: {
-    screen: Landing,
-  },
-  Intro: {
-    screen: Intro
-  },
-  Home:{
-    screen: Home
-  },
-  Profile:{
-    screen: Profile
-  },
-  EditProfile:{
-    screen: EditProfile
-  },
-  ChangeUserPassword:{
-    screen: ChangeUserPassword
-  },
-  Search:{
-    screen: Search
-  },
-  InitialSearch:{
-    screen: InitialSearch
-  },  
-  HospitalPublicProfile:{
-    screen: HospitalPublicProfile
-  }, 
-  CreateHospital:{
-    screen: CreateHospital
-  },
-  PrivateProfileInfo:{
-    screen: PrivateProfileInfo
-  },
-  EditHospitalPrivateProfile:{
-    screen: EditHospitalPrivateProfile
-  },
-  /*
-  //error message: PrivateProfileInfo should be a react componenet,
-  PrivateProfileInfo:{
-    screen: PrivateProfileInfo
-  }
-  */
+    Landing: {
+        screen: Landing,
+    },
+    Intro: {
+        screen: Intro
+    },
+    Home: {
+        screen: Home
+    },
+    Profile: {
+        screen: Profile
+    },
+    EditProfile: {
+        screen: EditProfile
+    },
+    ChangeUserPassword: {
+        screen: ChangeUserPassword
+    },
+    Search: {
+        screen: Search
+    },
+    InitialSearch: {
+        screen: InitialSearch
+    },
+    HospitalPublicProfile: {
+        screen: HospitalPublicProfile
+    },
+    CreateHospital: {
+        screen: CreateHospital
+    },
+    PrivateProfileInfo: {
+        screen: PrivateProfileInfo
+    },
+    EditHospitalPrivateProfile: {
+        screen: EditHospitalPrivateProfile
+    },
+    /*
+    //error message: PrivateProfileInfo should be a react componenet,
+    PrivateProfileInfo:{
+      screen: PrivateProfileInfo
+    }
+    */
 },
-{
-  headerMode: 'none',
-  navigationOptions: {
-    headerVisible: false,
-  },
-  initialRouteName: 'Landing',
-},
+    {
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        },
+        initialRouteName: 'Landing',
+    },
 )
-/*
-const DrawerStack = DrawerNavigator({
-  Home: { 
-    screen: Home 
-  },
-  InitialSearch: { 
-    screen: InitialSearch 
-  },
-})
-*/
 
 /*
 ################################################################################
@@ -92,14 +82,14 @@ const DrawerStack = DrawerNavigator({
 
 export default class App extends React.Component {
 
-  render() {
-    return (
+    render() {
+        return (
 
-        <Root>
-          <RootStack />
-        </Root>
-    )
-  }
+            <Root>
+                <RootStack />
+            </Root>
+        )
+    }
 }
 
 
