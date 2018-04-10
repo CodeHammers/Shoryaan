@@ -84,7 +84,6 @@ export class Search extends React.Component {
     /**
      * navigates user to specific hospital profile with data for this hopsital 
      */
-
     navgiateToHospital(name, state, district, address, phone, email, isVerified, status) {
         this.setState({
             name: name,
@@ -123,6 +122,7 @@ export class Search extends React.Component {
         })
     }
 
+    /** A function that renders that actual view on the screen */
     render() {
         const self = this;
         const content = this.state.checked
@@ -211,6 +211,7 @@ export class Search extends React.Component {
     }
 }
 
+/** Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     header: {
         backgroundColor: '#F44336',

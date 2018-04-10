@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth'
  * tab 2: search hospitals in Map relative to user's location (not implemented yet)
 */
 export class InitialSearch extends Component {
-
+    /** A function that renders that actual view on the screen */
     render() {
         return (
             <Container>
@@ -51,7 +51,7 @@ export class InitialSearch extends Component {
     }
 }
 
-
+/** Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     header: {
         backgroundColor: '#F44336',

@@ -15,20 +15,21 @@ export class Home extends React.Component {
         super(props);
 
         this.state = {
-            manager: false, //variable to indicate whether the user manages a hospital or not
+            /** variable to indicate whether the user manages a hospital or not */
+            manager: false,
             auth_service: new AuthService()
         };
 
-        //Retrieve the access token stored in the mobile cache and then retrieve the user data from the DB
+        /** Retrieve the access token stored in the mobile cache and then retrieve the user data from the DB */
         this.getViewData();
     }
-//get user data after checking his/her access token 
+
     getViewData() {
         this.checkStoredToken().then(
             () => { this.getUserData() }
         )
     }
-//check the access token if it is defined or not
+    /** check the access token if it is defined or not */
     checkStoredToken() {
         return AsyncStorage.getItem("access_token").then((value) => {
             if (value != undefined) {
@@ -36,7 +37,7 @@ export class Home extends React.Component {
             }
         })
     }
-
+    /** Retrieve user data from the database */
     getUserData() {
         body = JSON.stringify({
             access_token: this.state.access_token
@@ -55,7 +56,7 @@ export class Home extends React.Component {
                 }
             })
     }
-// Funtion to show settings menu when user click on settings icon
+    /** Funtion to show settings menu when user click on settings icon */
     showUserSettings() {
         ActionSheet.show(
             {
@@ -72,7 +73,7 @@ export class Home extends React.Component {
         )
     }
 
-
+    /** A function that renders the actual the view on the screen */
     render() {
         const self = this;
         return (
@@ -176,6 +177,8 @@ export class Home extends React.Component {
         )
     }
 }
+
+/** Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     container: {
         flex: 1,
