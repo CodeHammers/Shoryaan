@@ -56,7 +56,10 @@ export class AuthService {
         return AsyncStorage.setItem("access_token", response.access_token);
     }
 
-
+    /**
+     * checks if app cache contains 
+     * a token (valid or invalid)
+     */
 
 
     checkStoredToken() {

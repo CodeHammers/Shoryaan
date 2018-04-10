@@ -41,7 +41,10 @@ export class Landing extends React.Component {
   }
 
   /**
-   * 
+   * prompts the user to login with his facebook account
+   * if access is granted
+   * user FB_token is sent to the server to get him
+   * signed up/in
    */
   loginWithFacebook(){
     LoginManager.logInWithReadPermissions(['public_profile','email'])
