@@ -174,7 +174,6 @@ export class Search extends React.Component {
                     {
                         this.state.loading &&
                         <ActivityIndicator />
-
                     }
                     <List dataArray={this.state.arrayholder} renderRow={(arrayholder) =>
                         <ListItem avatar button={true} onPress={() => { this.navgiateToHospital(arrayholder.name, arrayholder.state, arrayholder.district, arrayholder.address, arrayholder.phone, arrayholder.email, arrayholder.isVerified, arrayholder.status) }}>
@@ -198,8 +197,6 @@ export class Search extends React.Component {
         );
     }
 }
-
-//add onPress in search result
 
 const styles = StyleSheet.create({
     header: {
