@@ -29,7 +29,12 @@ export class Search extends React.Component {
             loading: false
         };
     }
-
+    /**
+     * intiates the search process
+     * uses the keyword in textbox to search
+     * checks if filters used and adds them
+     * 
+     */
     Search(text) {
         this.setState({ loading: true })
         url = '/hospital/index'
@@ -59,7 +64,12 @@ export class Search extends React.Component {
                 this.setState({ arrayholder: responseJson })
             });
     }
-
+    /**
+     * 
+     * hook function to update state 
+     * with the current selected value
+     * in filters
+     */
     onStateValueChange(value) {
         this.setState({
             selectedState: value
@@ -71,6 +81,9 @@ export class Search extends React.Component {
             selectedStatus: value
         });
     }
+    /**
+     * navigates user to specific hospital profile with data for this hopsital 
+     */
 
     navgiateToHospital(name, state, district, address, phone, email, isVerified, status) {
         this.setState({

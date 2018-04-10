@@ -6,9 +6,11 @@ import { Content, List, ListItem, Thumbnail } from 'native-base';
 import { Search } from './search'
 import { AuthService } from '../../services/auth'
 
-// A view containing the two search tabs 
-// tab 1: search by hospital's name, state and status
-// tab 2: search hospitals in Map relative to user's location (not implemented yet)
+/**
+ * A view containing the two search tabs 
+ * tab 1: search by hospital's name, state and status
+ * tab 2: search hospitals in Map relative to user's location (not implemented yet)
+*/
 export class InitialSearch extends Component {
 
     render() {
