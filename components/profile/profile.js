@@ -18,25 +18,27 @@ export class Profile extends React.Component
             city: "",
             name: "",
             bloodType: "?",
-            nextDonation: "60",
+            nextDonation: "60",  //currently hardcoded
             gender: "",
             dateOfBirth: "",
 
             access_token: '',
-            auth_service: new AuthService(this),
+            auth_service: new AuthService(this), //instance from an authentication service
         }
 
-        //Retrieve the access token stored in the mobile cache and then retrieve the user data from the DB
+        //Retrieve the view need data.
         this.getViewData();
     }
 
-    
+    /* A function that retrieves the user data on two steps, first get the access token from the mobile cache
+       and then call function to get the user data */
     getViewData(){
         this.checkStoredToken().then(
             ()=>{this.getUserData()}
         )
     }
 
+    /* A function that retrieves that access token from the mobile's cache */
     checkStoredToken(){
         return AsyncStorage.getItem("access_token").then((value) => {
             if(value!=undefined){
@@ -45,6 +47,7 @@ export class Profile extends React.Component
         })
     }
 
+    /* A function that retrieves the user data from the database */
     getUserData(){
         body = JSON.stringify({
             access_token: this.state.access_token
@@ -71,8 +74,10 @@ export class Profile extends React.Component
         })
     }
     
+    /* An adpater function to reformat the blood type for proper representation, eg.turns + into +ve */
     convertBloodTypeSign(){
         var bloodType = this.state.bloodType;
+
         if(bloodType == '?') return "";
         else{
             if(bloodType[bloodType.length - 1] == '+'){
@@ -83,12 +88,15 @@ export class Profile extends React.Component
         }
     }
 
+    /* A function to extract the blood group letter from a string */
     convertBloodType(){
         var bloodType = this.state.bloodType;
+
         if(bloodType == '?') return "?"
         else return bloodType.slice(0,-1);
     }
 
+    /* A function that handles the data transaction between the profile and the edit profile views */
     navgiateToEdit(){
         this.props.navigation.navigate('EditProfile', {
             username:this.state.username,
@@ -102,6 +110,7 @@ export class Profile extends React.Component
         })
     }
 
+    /* A function that renders the actual view on the screen */
     render(){
         return(
             <Container style = {styles.mainScreen}>
@@ -211,6 +220,7 @@ export class Profile extends React.Component
     }
 }
 
+/* Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     mainScreen:{
         backgroundColor: '#FFFF'

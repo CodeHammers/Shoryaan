@@ -20,18 +20,21 @@ export class PrivateProfileInfo extends React.Component
             status: "",
             access_token: "",
 
-            auth_service: new AuthService(this)
+            auth_service: new AuthService(this) //instance from an authentication service
         }
 
-        this.getViewData();
+        this.getViewData(); //Get the view related data.
     }  
 
+    /* A function that retrieves the user data on two steps, first get the access token from the mobile cache
+       and then call function to get the user data */
     getViewData(){
         this.checkStoredToken().then(
             ()=>{this.getHospitalData()}
         )
     }
 
+    /* A function that retrieves that access token from the mobile's cache */
    checkStoredToken(){
         return AsyncStorage.getItem("access_token").then((value) => {
             if(value!=undefined){
@@ -40,6 +43,7 @@ export class PrivateProfileInfo extends React.Component
         })
     }
 
+    /* A function that sends a request to retreive the hospital data that's managed by the currently logged in user */
     getHospitalData(){
         body = JSON.stringify({
             access_token: this.state.access_token
@@ -66,6 +70,7 @@ export class PrivateProfileInfo extends React.Component
         })
     }
     
+    /* A function that handles the navigation from the private profile view to the editing view */
     navgiateToEdit(){
         this.props.navigation.navigate('EditHospitalPrivateProfile', {
             name: this.state.name,
@@ -79,7 +84,8 @@ export class PrivateProfileInfo extends React.Component
             self: this
         })
     }
-
+    
+    /* A function that renders the actual the view on the screen */
     render(){
         return(
             <Container style = {styles.form}>
@@ -166,6 +172,7 @@ export class PrivateProfileInfo extends React.Component
     }
 }
 
+/* Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     statusBar:{
         backgroundColor: '#D32F2F'

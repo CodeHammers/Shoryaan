@@ -11,6 +11,7 @@ export class EditHospitalPrivateProfile extends React.Component
     {
         super(props);
 
+        //Receive that data passed in from the hospital private view
         const {params} = this.props.navigation.state;
 
         this.state = {
@@ -31,18 +32,20 @@ export class EditHospitalPrivateProfile extends React.Component
             status: params.status || "Public",
             self: params.self,
 
+            //The arrays are used to populate the pickers
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
             statusOptions: ["Public", "Private"],
 
             access_token: "",
 
-            auth_service: new AuthService(this),
-            validator: new ValidateService(this)
+            auth_service: new AuthService(this), //instance from an authentication service
+            validator: new ValidateService(this) //instance from a validation service
         }
 
-        this.checkStoredToken();     
+        this.checkStoredToken();  //Retreive the token from the device cache   
     }
 
+    /* A function that retrieves that access token from the mobile's cache */
     checkStoredToken(){
         AsyncStorage.getItem("access_token").then((value) => {
             if(value!=undefined){
@@ -51,6 +54,7 @@ export class EditHospitalPrivateProfile extends React.Component
         }).done();
     }
 
+    /* A group of functions keep tracking of changing the pickers data */
     onStateValueChange(value) {
         this.setState({
             state: value
@@ -63,6 +67,7 @@ export class EditHospitalPrivateProfile extends React.Component
         });
     }
 
+    /* A function that's used to display an interaction message */
     showToast(msg,btn){
         Toast.show({
             text: msg,
@@ -76,6 +81,7 @@ export class EditHospitalPrivateProfile extends React.Component
         })
     }
 
+    /* A function that sends a request to the API to edit hospital data */
     editProfile(){
         body = JSON.stringify({
             name: this.state.name,
@@ -107,6 +113,7 @@ export class EditHospitalPrivateProfile extends React.Component
         })
     }
 
+    /* A function that renders the actual view on the screen */
     render(){
         return(
             <Container style = {styles.form}>
@@ -218,6 +225,7 @@ export class EditHospitalPrivateProfile extends React.Component
     }
 }
 
+/* Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     statusBar:{
         backgroundColor: '#D32F2F'

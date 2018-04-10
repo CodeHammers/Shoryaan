@@ -14,6 +14,7 @@ export class EditProfile extends React.Component
     {
         super(props);
 
+        //receive the parameters passed in from the profile view
         const { params } = this.props.navigation.state;
 
         this.state = {
@@ -34,24 +35,27 @@ export class EditProfile extends React.Component
             dateOfBirth: params.dateOfBirth,
             self: params.self,
 
+            //These group of variables are used for form validaitons
             valid_username: undefined,
             validName: undefined,
             validCity: undefined,
 
+            //The arrays are used to populate the picker values
             bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-", "?"],
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
             genders: ["Male", "Female"],
 
             access_token: '',
-            auth_service: new AuthService(this),
-            validator: new ValidateService(this),
-            valid_state: 0
+            auth_service: new AuthService(this),   //instance from an authentication service
+            validator: new ValidateService(this), //instance from a validation service
+            valid_state: 0  //indicates the validity state of the form (valid, invalid password, ..)
 
         };
 
         this.checkStoredToken();
     }
 
+    /* A function that retrieves that access token from the mobile's cache */
     checkStoredToken(){
         AsyncStorage.getItem("access_token").then((value) => {
           if(value!=undefined){
@@ -60,6 +64,7 @@ export class EditProfile extends React.Component
         }).done();
     }
 
+    /* A function that sends an edit request to the API */
     editProfile(){
         body = JSON.stringify({
                 username: this.state.username,
@@ -94,6 +99,7 @@ export class EditProfile extends React.Component
         })
     }
 
+    /* A group of functions that are used to keep track of changing picker values */
     onStateValueChange(value) {
         this.setState({
             state: value
@@ -112,6 +118,7 @@ export class EditProfile extends React.Component
         });
     }
 
+    /* A function that's used to display an interaction message */
     showToast(msg,btn){
         Toast.show({
             text: msg,
@@ -125,19 +132,20 @@ export class EditProfile extends React.Component
         })
     }
 
-
-    validate_username(un=false){
-        this.state.validator.validate_username(un)
+    /* A group of functions that call validation methods on the form's fields*/
+    validate_username(username=false){
+        this.state.validator.validate_username(username)
     }
 
-    validate_name(n=false){
-        this.state.validator.validate_name(n)
+    validate_name(name=false){
+        this.state.validator.validate_name(name)
     }
 
-    validate_city(c=false){
-        this.state.validator.validate_city(c)
+    validate_city(city=false){
+        this.state.validator.validate_city(city)
     }
 
+    /* A function that renders the view on the screen */
     render(){
         return(
             <Container style = {styles.mainScreen}>
@@ -152,7 +160,7 @@ export class EditProfile extends React.Component
                     </Left>
 
                     <Body style = {styles.title}>
-                    <Title> Edit Profile </Title>
+                        <Title> Edit Profile </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>
@@ -166,7 +174,7 @@ export class EditProfile extends React.Component
 
                     <View style = {styles.form}>
 
-                        <Text style = {styles.inputFieldLabels} defaultValue = {this.state.username}> Username</Text>
+                        <Text style = {styles.inputFieldLabels}> Username</Text>
                         <TextInput 
                             style={[
                                 this.state.valid_username == undefined? styles.inputBoxNormal : 
@@ -306,6 +314,7 @@ export class EditProfile extends React.Component
     }
 } 
 
+/* Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     mainScreen:{
         backgroundColor: '#FFFF'

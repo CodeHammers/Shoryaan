@@ -10,6 +10,7 @@ export class HospitalPublicProfile extends React.Component
     {
         super(props);
 
+        //Receive the parameters passed in from the search view
         const { params } = this.props.navigation.state;
 
         if(params != undefined || params == null)
@@ -25,6 +26,7 @@ export class HospitalPublicProfile extends React.Component
         };
     }
 
+    /* A function that renders that actual view on the screen */
     render(){
         return(
             <Container>
@@ -65,6 +67,7 @@ export class HospitalPublicProfile extends React.Component
     }
 }
 
+/* Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     statusBar:{
         backgroundColor: '#D32F2F'

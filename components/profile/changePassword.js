@@ -25,6 +25,7 @@ export class ChangeUserPassword extends React.Component
         this.checkStoredToken();
     }
 
+    /* A function that retrieves that access token from the mobile's cache */    
     checkStoredToken(){
         AsyncStorage.getItem("access_token").then((value) => {
           if(value!=undefined){
@@ -33,6 +34,7 @@ export class ChangeUserPassword extends React.Component
         }).done();
     }
 
+    /* A function that's used to display an interaction message */
     showToast(msg,btn){
         Toast.show({
             text: msg,
@@ -46,6 +48,7 @@ export class ChangeUserPassword extends React.Component
         })
     }
 
+    /* A function that checks that the new password matches the confirmed password */
     checkForm(){
         if(this.newPassword == this.confirmedPassword) {
             return true;
@@ -55,6 +58,7 @@ export class ChangeUserPassword extends React.Component
         }
     }
 
+    /* A function that sends a request to the API to reset the user password */
     editPassword(){
         var correct = this.checkForm();
         if(correct == true){
@@ -80,6 +84,7 @@ export class ChangeUserPassword extends React.Component
         }
     }
 
+    /* A function that renders the view */
     render(){
         return(
             <Container style = {styles.form}>
@@ -142,6 +147,7 @@ export class ChangeUserPassword extends React.Component
     }
 }
 
+/* Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     statusBar:{
         backgroundColor: '#D32F2F'

@@ -7,6 +7,7 @@ export class HospitalPublicProfileInfo extends React.Component
     constructor(props){
         super(props);
 
+        //Receive the parameters passed in from the parent view
         const params  = this.props.data;
 
         if(params != undefined || params == null)
@@ -22,6 +23,7 @@ export class HospitalPublicProfileInfo extends React.Component
         };
     }   
 
+    //A function that renders that actual view on the screen
     render(){
         return(
             <Container>
@@ -78,6 +80,7 @@ export class HospitalPublicProfileInfo extends React.Component
     }
 }
 
+/* Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     mainList:{
         backgroundColor:'#FFFFFF'

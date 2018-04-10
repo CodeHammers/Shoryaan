@@ -32,6 +32,7 @@ export class BloodRequestsDashboard extends React.Component
     }
 }
 
+/* Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     statusBar:{
         backgroundColor: '#D32F2F'
