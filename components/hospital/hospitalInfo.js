@@ -23,7 +23,7 @@ export class HospitalPublicProfileInfo extends React.Component
         };
     }   
 
-    //A function that renders that actual view on the screen
+    /** A function that renders that actual view on the */
     render(){
         return(
             <Container>
@@ -80,7 +80,7 @@ export class HospitalPublicProfileInfo extends React.Component
     }
 }
 
-/* Style sheet used for styling components used in the render function */
+/** Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     mainList:{
         backgroundColor:'#FFFFFF'

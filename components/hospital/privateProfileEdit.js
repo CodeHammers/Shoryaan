@@ -45,7 +45,7 @@ export class EditHospitalPrivateProfile extends React.Component
         this.checkStoredToken();  //Retreive the token from the device cache   
     }
 
-    /* A function that retrieves that access token from the mobile's cache */
+    /** A function that retrieves that access token from the mobile's cache */
     checkStoredToken(){
         AsyncStorage.getItem("access_token").then((value) => {
             if(value!=undefined){
@@ -54,7 +54,7 @@ export class EditHospitalPrivateProfile extends React.Component
         }).done();
     }
 
-    /* A group of functions keep tracking of changing the pickers data */
+    /** A group of functions keep tracking of changing the pickers data */
     onStateValueChange(value) {
         this.setState({
             state: value
@@ -67,7 +67,7 @@ export class EditHospitalPrivateProfile extends React.Component
         });
     }
 
-    /* A function that's used to display an interaction message */
+    /** A function that's used to display an interaction message */
     showToast(msg,btn){
         Toast.show({
             text: msg,
@@ -81,7 +81,7 @@ export class EditHospitalPrivateProfile extends React.Component
         })
     }
 
-    /* A function that sends a request to the API to edit hospital data */
+    /** A function that sends a request to the API to edit hospital data */
     editProfile(){
         body = JSON.stringify({
             name: this.state.name,
@@ -113,7 +113,7 @@ export class EditHospitalPrivateProfile extends React.Component
         })
     }
 
-    /* A function that renders the actual view on the screen */
+    /** A function that renders the actual view on the screen */
     render(){
         return(
             <Container style = {styles.form}>
@@ -225,7 +225,7 @@ export class EditHospitalPrivateProfile extends React.Component
     }
 }
 
-/* Style sheet used for styling components used in the render function */
+/** Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     statusBar:{
         backgroundColor: '#D32F2F'

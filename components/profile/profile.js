@@ -30,7 +30,7 @@ export class Profile extends React.Component
         this.getViewData();
     }
 
-    /* A function that retrieves the user data on two steps, first get the access token from the mobile cache
+    /** A function that retrieves the user data on two steps, first get the access token from the mobile cache
        and then call function to get the user data */
     getViewData(){
         this.checkStoredToken().then(
@@ -38,7 +38,7 @@ export class Profile extends React.Component
         )
     }
 
-    /* A function that retrieves that access token from the mobile's cache */
+    /** A function that retrieves that access token from the mobile's cache */
     checkStoredToken(){
         return AsyncStorage.getItem("access_token").then((value) => {
             if(value!=undefined){
@@ -47,7 +47,7 @@ export class Profile extends React.Component
         })
     }
 
-    /* A function that retrieves the user data from the database */
+    /** A function that retrieves the user data from the database */
     getUserData(){
         body = JSON.stringify({
             access_token: this.state.access_token
@@ -74,7 +74,7 @@ export class Profile extends React.Component
         })
     }
     
-    /* An adpater function to reformat the blood type for proper representation, eg.turns + into +ve */
+    /** An adpater function to reformat the blood type for proper representation, eg.turns + into +ve */
     convertBloodTypeSign(){
         var bloodType = this.state.bloodType;
 
@@ -88,7 +88,7 @@ export class Profile extends React.Component
         }
     }
 
-    /* A function to extract the blood group letter from a string */
+    /** A function to extract the blood group letter from a string */
     convertBloodType(){
         var bloodType = this.state.bloodType;
 
@@ -96,7 +96,7 @@ export class Profile extends React.Component
         else return bloodType.slice(0,-1);
     }
 
-    /* A function that handles the data transaction between the profile and the edit profile views */
+    /** A function that handles the data transaction between the profile and the edit profile views */
     navgiateToEdit(){
         this.props.navigation.navigate('EditProfile', {
             username:this.state.username,
@@ -110,7 +110,7 @@ export class Profile extends React.Component
         })
     }
 
-    /* A function that renders the actual view on the screen */
+    /** A function that renders the actual view on the screen */
     render(){
         return(
             <Container style = {styles.mainScreen}>
@@ -220,7 +220,7 @@ export class Profile extends React.Component
     }
 }
 
-/* Style sheet used for styling components used in the render function */
+/** Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     mainScreen:{
         backgroundColor: '#FFFF'

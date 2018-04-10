@@ -35,7 +35,7 @@ export class CreateHospital extends React.Component
         this.checkStoredToken();        
     }
 
-    /* A function that retrieves that access token from the mobile's cache */    
+    /** A function that retrieves that access token from the mobile's cache */    
     checkStoredToken(){
         AsyncStorage.getItem("access_token").then((value) => {
             if(value!=undefined){
@@ -44,12 +44,12 @@ export class CreateHospital extends React.Component
         }).done();
     }
 
-    /* A function that's used for validating the email field */
+    /** A function that's used for validating the email field */
     validateEmail(email){
         this.state.validator.validate_email(email)
     }
 
-    /* Functions that keep track of chaning picker values */
+    /** Functions that keep track of chaning picker values */
     onStateValueChange(value) {
         this.setState({
             state: value
@@ -62,7 +62,7 @@ export class CreateHospital extends React.Component
         });
     }
 
-    /* A function that's used to display an interaction message */
+    /** A function that's used to display an interaction message */
     showToast(msg,btn){
         Toast.show({
             text: msg,
@@ -76,7 +76,7 @@ export class CreateHospital extends React.Component
         })
     }
 
-    /* A function that sends a request to the API to create a new hospital */
+    /** A function that sends a request to the API to create a new hospital */
     createHospital(){
         body = JSON.stringify({
             name: this.state.name,
@@ -103,7 +103,7 @@ export class CreateHospital extends React.Component
         })
     }
 
-    /* A function that renders the actual view */
+    /** A function that renders the actual view */
     render(){
         return (
             <Container>
@@ -218,7 +218,7 @@ export class CreateHospital extends React.Component
     }
 }
 
-/* Style sheet used for styling components used in the render function */
+/** Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     statusBar:{
         backgroundColor: '#D32F2F'

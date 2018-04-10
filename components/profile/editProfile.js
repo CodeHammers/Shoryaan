@@ -55,7 +55,7 @@ export class EditProfile extends React.Component
         this.checkStoredToken();
     }
 
-    /* A function that retrieves that access token from the mobile's cache */
+    /** A function that retrieves that access token from the mobile's cache */
     checkStoredToken(){
         AsyncStorage.getItem("access_token").then((value) => {
           if(value!=undefined){
@@ -64,7 +64,7 @@ export class EditProfile extends React.Component
         }).done();
     }
 
-    /* A function that sends an edit request to the API */
+    /** A function that sends an edit request to the API */
     editProfile(){
         body = JSON.stringify({
                 username: this.state.username,
@@ -99,7 +99,7 @@ export class EditProfile extends React.Component
         })
     }
 
-    /* A group of functions that are used to keep track of changing picker values */
+    /** A group of functions that are used to keep track of changing picker values */
     onStateValueChange(value) {
         this.setState({
             state: value
@@ -118,7 +118,7 @@ export class EditProfile extends React.Component
         });
     }
 
-    /* A function that's used to display an interaction message */
+    /** A function that's used to display an interaction message */
     showToast(msg,btn){
         Toast.show({
             text: msg,
@@ -132,7 +132,7 @@ export class EditProfile extends React.Component
         })
     }
 
-    /* A group of functions that call validation methods on the form's fields*/
+    /** A group of functions that call validation methods on the form's fields*/
     validate_username(username=false){
         this.state.validator.validate_username(username)
     }
@@ -145,7 +145,7 @@ export class EditProfile extends React.Component
         this.state.validator.validate_city(city)
     }
 
-    /* A function that renders the view on the screen */
+    /** A function that renders the view on the screen */
     render(){
         return(
             <Container style = {styles.mainScreen}>
@@ -314,7 +314,7 @@ export class EditProfile extends React.Component
     }
 } 
 
-/* Style sheet used for styling components used in the render function */
+/** Style sheet used for styling components used in the render function */
 const styles = StyleSheet.create({
     mainScreen:{
         backgroundColor: '#FFFF'
