@@ -15,20 +15,20 @@ export class Home extends React.Component {
         super(props);
 
         this.state = {
-            manager: false,
+            manager: false, //variable to indicate whether the user manages a hospital or not
             auth_service: new AuthService()
         };
 
         //Retrieve the access token stored in the mobile cache and then retrieve the user data from the DB
         this.getViewData();
     }
-
+//get user data after checking his/her access token 
     getViewData() {
         this.checkStoredToken().then(
             () => { this.getUserData() }
         )
     }
-
+//check the access token if it is defined or not
     checkStoredToken() {
         return AsyncStorage.getItem("access_token").then((value) => {
             if (value != undefined) {
@@ -55,7 +55,7 @@ export class Home extends React.Component {
                 }
             })
     }
-
+// Funtion to show settings menu when user click on settings icon
     showUserSettings() {
         ActionSheet.show(
             {
