@@ -31,6 +31,8 @@ export class EditHospitalPrivateProfile extends React.Component
             email: params.email,
             status: params.status || "Public",
             self: params.self,
+            position: null,
+
 
             //The arrays are used to populate the pickers
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],

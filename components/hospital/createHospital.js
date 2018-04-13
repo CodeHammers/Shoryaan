@@ -24,6 +24,8 @@ export class CreateHospital extends React.Component
             status: "Public",
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
             statusOptions: ["Public", "Private"],
+            position: null,
+
 
             access_token: "",
             auth_service: new AuthService(this),
@@ -209,6 +211,13 @@ export class CreateHospital extends React.Component
                             })}
                         </Picker>
 
+
+
+                        <Button primary onPress={()=> this.props.navigation.navigate('LocateOnMap',{self: this}) }>
+                            <Text>
+                                Add Your Map Position 
+                            </Text>
+                        </Button>
                     </View>
 
                 </ScrollView>

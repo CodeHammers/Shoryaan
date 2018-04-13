@@ -13,6 +13,9 @@ import { EditHospitalPrivateProfile } from './components/hospital/privateProfile
 import { ChangeUserPassword } from './components/profile/changePassword'
 import { Intro } from './components/intro/intro'
 import { LocateOnMap } from './components/hospital/locateOnMap'
+import { HospitalHome } from './components/hospital/hospitalHome'
+import { BloodRequestsDashboard } from './components/hospital/bloodRequestsDashboard'
+import { Managers } from './components/hospital/managers'
 
 import { StackNavigator } from 'react-navigation'
 import { Root } from "native-base";
@@ -61,7 +64,16 @@ const RootStack = StackNavigator({
     },
     LocateOnMap:{
         screen: LocateOnMap
-    }
+    },
+    HospitalHome: {
+        screen: HospitalHome
+    },
+    BloodRequestsDashboard: {
+        screen: BloodRequestsDashboard
+    },
+    Managers: {
+        screen: Managers
+    },
     /*
     //error message: PrivateProfileInfo should be a react componenet,
     PrivateProfileInfo:{
