@@ -63,7 +63,10 @@ export class PrivateProfileInfo extends React.Component
                         phone: resJSON[0].phone,
                         email: resJSON[0].email,
                         isVerified: resJSON[0].isVerified,
-                        status: resJSON[0].status
+                        status: resJSON[0].status,
+
+                        position: null                      
+
                     })
                 })
             }
@@ -123,6 +126,7 @@ export class PrivateProfileInfo extends React.Component
                 <ScrollView>
 
                     <View style = {styles.mainList}>
+                 
 
                         <List>
 
@@ -162,6 +166,20 @@ export class PrivateProfileInfo extends React.Component
                             </ListItem>
 
                         </List>
+
+                        {
+                            this.state.position == null &&
+                            (
+
+                                <Button primary onPress={()=> this.props.navigation.navigate('LocateOnMap',{self: this}) }>
+                                    <Text>
+                                        Locate Your Hospital on Map
+                                    </Text>
+                                </Button>
+
+                            )
+                        }
+                
 
                     </View>
 

@@ -6,12 +6,31 @@ import { Content, List, ListItem, Thumbnail } from 'native-base';
 import { Search } from './search'
 import { AuthService } from '../../services/auth'
 import MapView from 'react-native-maps';
-/**
+import Marker  from 'react-native-maps';/**
  * A view containing the two search tabs 
  * tab 1: search by hospital's name, state and status
  * tab 2: search hospitals in Map relative to user's location (not implemented yet)
 */
 export class InitialSearch extends Component {
+    constructor(props) {
+      super(props);
+    
+      this.state = {
+        markers: [1,2,3,4,5,6],
+        region: {
+                  latitude: 26.78825,
+                  longitude: 30.4324,
+                  latitudeDelta: 10.0922,
+                  longitudeDelta: 10.0421,
+                },
+        mr: {
+          latitude: 26.78825,
+          longitude: 30.4324,
+        }
+
+      };
+    }
+
     /** A function that renders that actual view on the screen */
     render() {
         return (
@@ -43,14 +62,21 @@ export class InitialSearch extends Component {
 
                     <Tab tabStyle={styles.inactiveTabStyle} textStyle={styles.inactiveTabTextStyle}
                         activeTabStyle={styles.activeTabStyle} activeTextStyle={styles.activeTabTextStyle} heading="Map">
+
                         <MapView style={{flex:1}}
-                            initialRegion={{
-                            latitude: 37.78825,
-                            longitude: -122.4324,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421,
-                            }}
-                        />
+                            region={this.state.region}
+                            onRegionChange={this.onRegionChange}
+                        >
+
+                            <MapView.Marker draggable
+                                coordinate={this.state.mr}
+                                onDragEnd={(e) => this.setState({ mr: e.nativeEvent.coordinate })}
+                                title={'hello'}
+                                description={'hello world'}
+                            />
+
+                        </MapView>
+
                     </Tab>
                 </Tabs>
 

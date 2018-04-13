@@ -215,6 +215,11 @@ export class EditHospitalPrivateProfile extends React.Component
                                 return (<Item style = {styles.pickerItem} label={item} value={item} key={index}/>) 
                             })}
                         </Picker>
+                         <Button primary onPress={()=> this.props.navigation.navigate('LocateOnMap',{self: this}) }>
+                            <Text>
+                                Change Your Map Position 
+                            </Text>
+                        </Button>
 
                     </View>
 
