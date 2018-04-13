@@ -5,7 +5,7 @@ import { Content, List, ListItem, Thumbnail } from 'native-base';
 
 import { Search } from './search'
 import { AuthService } from '../../services/auth'
-
+import MapView from 'react-native-maps';
 /**
  * A view containing the two search tabs 
  * tab 1: search by hospital's name, state and status
@@ -43,6 +43,14 @@ export class InitialSearch extends Component {
 
                     <Tab tabStyle={styles.inactiveTabStyle} textStyle={styles.inactiveTabTextStyle}
                         activeTabStyle={styles.activeTabStyle} activeTextStyle={styles.activeTabTextStyle} heading="Map">
+                        <MapView style={{flex:1}}
+                            initialRegion={{
+                            latitude: 37.78825,
+                            longitude: -122.4324,
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421,
+                            }}
+                        />
                     </Tab>
                 </Tabs>
 

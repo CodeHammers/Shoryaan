@@ -10,9 +10,17 @@
       android:icon="@mipmap/ic_launcher"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
-      <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+      <meta-data 
+        android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"
 
-      <activity
+      />
+      <meta-data 
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyAuw7bByLhMOvIwSewVgLmdklHNAm1e720"
+      />
+
+
+        <activity
         android:name=".SplashActivity"
         android:theme="@style/SplashTheme"
         android:label="@string/app_name">
