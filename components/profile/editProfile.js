@@ -154,8 +154,8 @@ export class EditProfile extends React.Component
 
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() => {Keyboard.dismiss; this.props.navigation.goBack()}} name='arrow-back' />
+                        <Button transparent  onPress={() => {Keyboard.dismiss; this.props.navigation.goBack()}}>
+                            <Icon name='arrow-back' />
                         </Button>
                     </Left>
 

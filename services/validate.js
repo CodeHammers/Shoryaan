@@ -139,7 +139,7 @@ export  class ValidateService{
                     this.validate_name()
 
             }
-            this.SELF.setState({validName:true});
+            this.SELF.setState({validCity:true});
         }
     }
 
