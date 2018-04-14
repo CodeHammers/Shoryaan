@@ -1,9 +1,18 @@
 import React from 'react'
-import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon} from 'native-base';
+import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon,Thumbnail} from 'native-base';
 import {StyleSheet, View, ScrollView, StatusBar} from 'react-native'
 
-export class BloodRequestsDashboard extends React.Component
+export class Notifications extends React.Component
 {
+
+
+    constructor(props){
+        super(props)
+        this.state ={
+            arrayholder:[1,2,3,4,5,6]
+        }
+    }
+
     /** A function that renders the actual view */
     render(){
         return(
@@ -16,7 +25,7 @@ export class BloodRequestsDashboard extends React.Component
                     </Left>
 
                     <Body style = {styles.title}>
-                        <Title> REQUESTS </Title>
+                        <Title> Notifications </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>
@@ -26,12 +35,30 @@ export class BloodRequestsDashboard extends React.Component
                     </Right>
                 </Header>
 
-                 <Text> This is a placeholding page where the blood requests dashboard shall go</Text>
-                <Button bordered danger onPress={()=>this.props.navigation.navigate('BloodRequestForm')}>
-                    <Text>
-                        Make Blood Request
-                    </Text>
-                </Button>
+                 <Text> This is a placeholding page notifications shall go</Text>
+     
+                <View>
+
+                    <List dataArray={this.state.arrayholder} renderRow={(arrayholder) =>
+                        <ListItem avatar button={true}  onPress={() => {this.props.navigation.navigate('NotificationDetail') }}>
+                            <Left>
+                                <Thumbnail source={require('../../hos.png')} />
+                            </Left>
+                            <Body>
+                                <Text s>{'title'}</Text>
+                                <Text  note>{'date'}</Text>
+                            </Body>
+                            <Right>
+                                <Text  note>{'private'}</Text>
+                            </Right>
+                        </ListItem>
+                    }>
+                    </List>
+
+
+
+                </View>
+
             </Container>
         )
     }

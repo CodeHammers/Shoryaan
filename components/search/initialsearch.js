@@ -26,11 +26,26 @@ export class InitialSearch extends Component {
         mr: {
           latitude: 26.78825,
           longitude: 30.4324,
-        }
-
+        },
+        arrayholder: [],
+        auth_service: new AuthService(this),
       };
+      this.Search()
+      
     }
 
+
+    Search() {
+        url = '/hospital/index'
+
+        this.state.auth_service.get(url)
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({ loading: false })
+
+                this.setState({ arrayholder: responseJson })
+            });
+    }
     /** A function that renders that actual view on the screen */
     render() {
         return (
@@ -68,12 +83,14 @@ export class InitialSearch extends Component {
                             onRegionChange={this.onRegionChange}
                         >
 
-                            <MapView.Marker draggable
-                                coordinate={this.state.mr}
-                                onDragEnd={(e) => this.setState({ mr: e.nativeEvent.coordinate })}
-                                title={'hello'}
-                                description={'hello world'}
-                            />
+                            {this.state.arrayholder.map(marker => (
+                                <MapView.Marker
+                                coordinate={  {latitude: marker.locationLatitude,longitude: marker.locationLongitude} }
+                                title={marker.name}
+                                description={'we need plood :v'}
+                                />
+                            ))}
+
 
                         </MapView>
 

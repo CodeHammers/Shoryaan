@@ -138,7 +138,7 @@ export class Login extends React.Component {
                 }
                 {
                     !this.state.show_loader    &&
-                    <Icon name= 'person' />
+                    <Icon name= 'ios-log-in' />
                 }
                 {
                     !this.state.show_loader &&

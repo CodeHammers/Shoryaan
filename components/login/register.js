@@ -175,10 +175,7 @@ export class Register extends React.Component {
                  <ActivityIndicator size="large" color="#fff" />
                 )            
                 }
-                {
-                    !this.state.show_loader    &&
-                    <Icon name= 'md-create' />
-                }
+            
                 {
                     !this.state.show_loader &&
                     <Text >Register </Text>

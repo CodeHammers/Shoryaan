@@ -4,18 +4,12 @@ import { TouchableOpacity, View, Image, StatusBar, StyleSheet, ScrollView, Async
 import { H3 } from 'native-base'
 import { AuthService } from '../../services/auth'
 
-var BUTTONS = [
-    { text: "Change password", icon: "american-football", iconColor: "#2c8ef4" },
-    { text: "Language options", icon: "analytics", iconColor: "#f42ced" },
-    { text: "Log out", icon: "aperture", iconColor: "#ea943b" }
-];
 
 export class HospitalHome extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            /** variable to indicate whether the user manages a hospital or not */
             auth_service: new AuthService()
         };
 

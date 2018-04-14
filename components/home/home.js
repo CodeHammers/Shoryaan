@@ -5,9 +5,9 @@ import { H3 } from 'native-base'
 import { AuthService } from '../../services/auth'
 
 var BUTTONS = [
-    { text: "Change password", icon: "american-football", iconColor: "#2c8ef4" },
-    { text: "Language options", icon: "analytics", iconColor: "#f42ced" },
-    { text: "Log out", icon: "aperture", iconColor: "#ea943b" }
+    { text: "Change password", icon: "md-create", iconColor: "red" },
+    { text: "Notifications", icon: "md-notifications", iconColor: "red" },
+    { text: "Log out", icon: "md-log-out", iconColor: "red" }
 ];
 
 export class Home extends React.Component {
@@ -67,6 +67,9 @@ export class Home extends React.Component {
                 if (buttonIndex != undefined || buttonIndex != null) {
                     if (BUTTONS[buttonIndex].text == "Change password") {
                         this.props.navigation.navigate('ChangeUserPassword');
+                    }
+                    if (BUTTONS[buttonIndex].text == "Notifications") {
+                        this.props.navigation.navigate('Notifications');
                     }
                 }
             }

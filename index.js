@@ -13,7 +13,7 @@ YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
   'Warning: componentWillReceiveProps is deprecated',
   'Warning: componentWillUpdate is deprecated',
-  'Warning: Failed prop type:'
+  //'Warning: Failed prop type:'
 ]);
 
 AppRegistry.registerComponent('shoryaan', () => App);

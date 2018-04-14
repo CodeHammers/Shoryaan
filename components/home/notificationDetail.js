@@ -2,7 +2,7 @@ import React from 'react'
 import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon} from 'native-base';
 import {StyleSheet, View, ScrollView, StatusBar} from 'react-native'
 
-export class BloodRequestsDashboard extends React.Component
+export class NotificationDetail extends React.Component
 {
     /** A function that renders the actual view */
     render(){
@@ -16,7 +16,7 @@ export class BloodRequestsDashboard extends React.Component
                     </Left>
 
                     <Body style = {styles.title}>
-                        <Title> REQUESTS </Title>
+                        <Title> Details </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>
@@ -27,12 +27,7 @@ export class BloodRequestsDashboard extends React.Component
                 </Header>
 
                  <Text> This is a placeholding page where the blood requests dashboard shall go</Text>
-                <Button bordered danger onPress={()=>this.props.navigation.navigate('BloodRequestForm')}>
-                    <Text>
-                        Make Blood Request
-                    </Text>
-                </Button>
-            </Container>
+              </Container>
         )
     }
 }
