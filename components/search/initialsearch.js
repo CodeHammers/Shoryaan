@@ -87,7 +87,7 @@ export class InitialSearch extends Component {
                                 <MapView.Marker
                                 coordinate={  {latitude: marker.locationLatitude,longitude: marker.locationLongitude} }
                                 title={marker.name}
-                                description={'we need plood :v'}
+                                description={marker.status}
                                 />
                             ))}
 

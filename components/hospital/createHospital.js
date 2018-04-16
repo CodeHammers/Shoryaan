@@ -80,6 +80,7 @@ export class CreateHospital extends React.Component
 
     /** A function that sends a request to the API to create a new hospital */
     createHospital(){
+   
         body = JSON.stringify({
             name: this.state.name,
             state: this.state.state,
@@ -88,8 +89,8 @@ export class CreateHospital extends React.Component
             address: this.state.address,
             status: this.state.status,
             district:this.state.district,
-            locationLongitude: this.state.locationLongitude,
-            locationLatitude: this.state.locationLatitude,
+            locationLongitude: this.state.position == null ? this.state.locationLongitude : this.state.position.longitude,
+            locationLatitude: this.state.position == null ? this.state.locationLatitude : this.state.position.latitude,
             isVerified: this.state.isVerified,
             access_token: this.state.access_token
         })
@@ -105,7 +106,9 @@ export class CreateHospital extends React.Component
         })
     }
 
-    /** A function that renders the actual view */
+    /**
+     *  A function that renders the actual view
+    */
     render(){
         return (
             <Container>
@@ -212,12 +215,13 @@ export class CreateHospital extends React.Component
                         </Picker>
 
 
-
-                        <Button primary onPress={()=> this.props.navigation.navigate('LocateOnMap',{self: this}) }>
-                            <Text>
-                                Add Your Map Position 
-                            </Text>
+                         <Button bordered danger onPress={()=> this.props.navigation.navigate('LocateOnMap',{self: this}) }    
+                         style = {styles.pickerList}>
+                             <Icon name = 'pin' style = {{}} />
+                            <Text>Locate on Map</Text>
                         </Button>
+
+
                     </View>
 
                 </ScrollView>

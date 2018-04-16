@@ -92,7 +92,7 @@ export class EditHospitalPrivateProfile extends React.Component
             phone: this.state.phone,
             address: this.state.address,
             district: this.state.district,
-            status: this.state.status
+            status: this.state.status,
         })
         this.state.auth_service.post(body,'/hospital/update')
         .then((response)=>{
@@ -217,11 +217,7 @@ export class EditHospitalPrivateProfile extends React.Component
                                 return (<Item style = {styles.pickerItem} label={item} value={item} key={index}/>) 
                             })}
                         </Picker>
-                         <Button primary onPress={()=> this.props.navigation.navigate('LocateOnMap',{self: this}) }>
-                            <Text>
-                                Change Your Map Position 
-                            </Text>
-                        </Button>
+             
 
                     </View>
 
