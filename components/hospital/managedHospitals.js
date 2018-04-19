@@ -67,7 +67,7 @@ export class ManagedHospitals extends React.Component
                     </Left>
 
                     <Body style = {styles.title}>
-                        <Title> Managers </Title>
+                        <Title> Manage </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>

@@ -20,6 +20,7 @@ import { BloodRequestForm } from './components/hospital/bloodRequestForm'
 import { Notifications } from './components/home/notifications'
 import { NotificationDetail } from './components/home/notificationDetail'
 import { ManagedHospitals } from './components/hospital/managedHospitals'
+import { DonationMap } from './components/home/donationmap'
 
 import { StackNavigator } from 'react-navigation'
 import { Root } from "native-base";
@@ -89,6 +90,9 @@ const RootStack = StackNavigator({
     },
     ManagedHospitals: {
         screen: ManagedHospitals
+    },
+    DonationMap: {
+        screen: DonationMap
     }
     
 },

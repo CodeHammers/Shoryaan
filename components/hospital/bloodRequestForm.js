@@ -1,6 +1,8 @@
 import React from 'react'
-import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon,Form,Input,Item,H1,H2,H3} from 'native-base';
+import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon,Form,Input,Item,H1,H2,H3,Toast} from 'native-base';
 import {StyleSheet, View, ScrollView, StatusBar} from 'react-native'
+
+import { AuthService } from '../../services/auth'
 
 export class BloodRequestForm extends React.Component
 {
@@ -10,10 +12,13 @@ export class BloodRequestForm extends React.Component
         const { params } = this.props.navigation.state;
 
         this.state = {
-            id: params.id,
+            hospital: params.id,
             title:'',
             content:'',
-            bloodTypes:''
+            bloodTypes:'',
+            auth_service: new AuthService(),
+            position: null
+
         }
     }
 
@@ -26,7 +31,20 @@ export class BloodRequestForm extends React.Component
             }
             else{
                 this.showToast("Creation succeeded", "ok");
-                this.props.navigation.navigate('PrivateProfileInfo');
+                this.props.navigation.goBack();
+            }
+        })
+    }
+    /** A function that's used to display an interaction message */
+    showToast(msg,btn){
+        Toast.show({
+            text: msg,
+            position: 'bottom',
+            buttonText: btn,
+            duration: 5000,
+            style: {
+                backgroundColor: "#212121",
+                opacity:0.76
             }
         })
     }
@@ -89,11 +107,16 @@ export class BloodRequestForm extends React.Component
                     </Item>
 
 
-                    <Button bordered danger style={{marginTop:8}} rounded>
+                    <Button bordered danger style={{marginTop:8}} rounded onPress={()=>{this.submitRequest()}}>
                         <Text>
                             Make Blood Request
                         </Text>
                     </Button>
+                    <Button bordered  style={{marginTop:8}} danger onPress={()=>this.props.navigation.navigate('LocateOnMap',{self:this})}>
+                    <Text>
+                        Map
+                    </Text>
+                </Button>
                 </Form>
 
 

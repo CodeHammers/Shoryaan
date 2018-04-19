@@ -114,7 +114,7 @@ export class Home extends React.Component {
                             </Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={styles.button} onPress={() => { this.props.navigation.navigate('DonationMap') }} >
                             <Image
                                 source={require('../../images/home/12_blood_2.png')}
                                 style={styles.ImageIconStyle}
