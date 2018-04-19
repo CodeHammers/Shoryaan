@@ -8,8 +8,10 @@ import { AuthService } from '../../services/auth'
 export class HospitalHome extends React.Component {
     constructor(props) {
         super(props);
+        const { params } = this.props.navigation.state;
 
         this.state = {
+            id: params.id,
             auth_service: new AuthService()
         };
 
@@ -45,7 +47,7 @@ export class HospitalHome extends React.Component {
 
                 <ScrollView>
                     <View style={styles.container}>
-                        <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('PrivateProfileInfo')  }}>
+                        <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('PrivateProfileInfo',{id: this.state.id})  }}>
                             <Image
                                 source={require('../../images/home/hos.png')}
                                 style={styles.ImageIconStyle}
@@ -55,7 +57,7 @@ export class HospitalHome extends React.Component {
                             </Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.button} onPress= {()=>{this.props.navigation.navigate('BloodRequestsDashboard')} }>
+                        <TouchableOpacity style={styles.button} onPress= {()=>{this.props.navigation.navigate('BloodRequestsDashboard',{id: this.state.id})} }>
                             <Image
                                 source={require('../../images/home/hos.png')}
                                 style={styles.ImageIconStyle}
@@ -67,7 +69,7 @@ export class HospitalHome extends React.Component {
                     </View>
 
                     <View style={styles.container}>
-                        <TouchableOpacity style={styles.button}  onPress= {()=>{this.props.navigation.navigate('Managers')} }>
+                        <TouchableOpacity style={styles.button}  onPress= {()=>{this.props.navigation.navigate('Managers',{id: this.state.id})} }>
                             <Image
                                 source={require('../../images/home/hos.png')}
                                 style={styles.ImageIconStyle}

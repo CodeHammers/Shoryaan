@@ -98,6 +98,7 @@ export class CreateHospital extends React.Component
         .then((response)=>{
             if(response.status!=200){
                 this.showToast("Creation failed", "ok");
+          
             }
             else{
                 this.showToast("Creation succeeded", "ok");

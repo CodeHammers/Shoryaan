@@ -8,6 +8,7 @@ export class PrivateProfileInfo extends React.Component
 {
     constructor(props){
         super(props);
+        const { params } = this.props.navigation.state;
 
         this.state = {
             name: "",
@@ -19,7 +20,7 @@ export class PrivateProfileInfo extends React.Component
             isVerified: undefined,
             status: "",
             access_token: "",
-
+            id: params.id,
             auth_service: new AuthService(this) //instance from an authentication service
         }
 
@@ -55,15 +56,22 @@ export class PrivateProfileInfo extends React.Component
             }
             else{
                 response.json().then((resJSON) =>{
+                    h={};
+                    for(i=0;i<resJSON.length;i++){
+                        if(resJSON[i].id==this.state.id)
+                         h=resJSON[i]
+                    }
+
+
                     this.setState({
-                        name: resJSON[0].name,
-                        state: resJSON[0].state,
-                        district: resJSON[0].district,
-                        address: resJSON[0].address,
-                        phone: resJSON[0].phone,
-                        email: resJSON[0].email,
-                        isVerified: resJSON[0].isVerified,
-                        status: resJSON[0].status,
+                        name: h.name,
+                        state: h.state,
+                        district: h.district,
+                        address: h.address,
+                        phone: h.phone,
+                        email: h.email,
+                        isVerified: h.isVerified,
+                        status: h.status,
 
                         position: null                      
 

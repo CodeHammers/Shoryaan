@@ -150,7 +150,7 @@ export class Home extends React.Component {
                     <View style={styles.container}>
                         <TouchableOpacity style={styles.button} onPress={() => {
                             if (this.state.manager) {
-                                this.props.navigation.navigate('HospitalHome');
+                                this.props.navigation.navigate('ManagedHospitals');
                             }
                             else {
                                 this.props.navigation.navigate('CreateHospital');

@@ -19,7 +19,7 @@ import { Managers } from './components/hospital/managers'
 import { BloodRequestForm } from './components/hospital/bloodRequestForm'
 import { Notifications } from './components/home/notifications'
 import { NotificationDetail } from './components/home/notificationDetail'
-
+import { ManagedHospitals } from './components/hospital/managedHospitals'
 
 import { StackNavigator } from 'react-navigation'
 import { Root } from "native-base";
@@ -87,6 +87,9 @@ const RootStack = StackNavigator({
     NotificationDetail: {
         screen: NotificationDetail
     },
+    ManagedHospitals: {
+        screen: ManagedHospitals
+    }
     
 },
     {

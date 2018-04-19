@@ -7,12 +7,28 @@ export class BloodRequestForm extends React.Component
 
     constructor(props){
         super(props);
+        const { params } = this.props.navigation.state;
 
         this.state = {
+            id: params.id,
             title:'',
             content:'',
             bloodTypes:''
         }
+    }
+
+    submitRequest(){
+        body = JSON.stringify(this.state)
+        this.state.auth_service.post(body,'/notification/create')
+        .then((response)=>{
+            if(response.status!=200){
+                this.showToast("Creation failed", "ok");
+            }
+            else{
+                this.showToast("Creation succeeded", "ok");
+                this.props.navigation.navigate('PrivateProfileInfo');
+            }
+        })
     }
     /** A function that renders the actual view */
     render(){
