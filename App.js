@@ -21,6 +21,8 @@ import { Notifications } from './components/home/notifications'
 import { NotificationDetail } from './components/home/notificationDetail'
 import { ManagedHospitals } from './components/hospital/managedHospitals'
 import { DonationMap } from './components/home/donationmap'
+import { BloodRequestDetails } from './components/hospital/bloodRequestDetails'
+
 
 import { StackNavigator } from 'react-navigation'
 import { Root } from "native-base";
@@ -93,6 +95,9 @@ const RootStack = StackNavigator({
     },
     DonationMap: {
         screen: DonationMap
+    },
+    BloodRequestDetails:{
+        screen: BloodRequestDetails
     }
     
 },
