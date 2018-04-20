@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon,Thumbnail} from 'native-base';
+import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon,Thumbnail,Fab} from 'native-base';
 import {StyleSheet, View, ScrollView, StatusBar} from 'react-native'
 
 import { AuthService } from '../../services/auth'
@@ -70,15 +70,26 @@ export class BloodRequestsDashboard extends React.Component
                         </ListItem>
                     }>
                     </List>
+
+
+
+
+ 
+
+
+
                     </View>
+
+  
                     </ScrollView>
+        <Fab
+           onPress={()=>this.props.navigation.navigate('BloodRequestForm',{id:this.state.id})}
+            containerStyle={{ }}
+            style={{ backgroundColor: 'red' }}
+            position="bottomRight">
+            <Icon name="add" />
+          </Fab>
 
-
-                <Button bordered danger onPress={()=>this.props.navigation.navigate('BloodRequestForm',{id:this.state.id})}>
-                    <Text>
-                        Make Blood Request
-                    </Text>
-                </Button>
           
             </Container>
         )

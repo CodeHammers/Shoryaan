@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon,Form,Input,Item,H1,H2,H3,Toast} from 'native-base';
+import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon,Form,Input,Item,H1,H2,H3,Toast,Fab} from 'native-base';
 import {StyleSheet, View, ScrollView, StatusBar} from 'react-native'
 
 import { AuthService } from '../../services/auth'
@@ -113,16 +113,20 @@ export class BloodRequestDetails extends React.Component
                             Update Blood Request
                         </Text>
                     </Button>
-                    <Button bordered  style={{marginTop:8}} danger onPress={()=>this.props.navigation.navigate('LocateOnMap',{self:this})}>
-                    <Text>
-                        Map
-                    </Text>
-                </Button>
+         
                 </Form>
 
 
 
 
+
+            <Fab
+                 onPress={()=>this.props.navigation.navigate('LocateOnMap',{self:this})}             
+                containerStyle={{ }}
+                style={{ backgroundColor: 'red' }}
+                position="bottomRight">
+                <Icon name="pin" />
+            </Fab>
 
 
 

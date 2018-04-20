@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Picker, Item, Toast} from 'native-base'
+import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Picker, Item, Toast,Fab} from 'native-base'
 import {StatusBar, StyleSheet, ScrollView, View, TextInput, AsyncStorage, Keyboard} from 'react-native'
 
 import {AuthService} from '../../services/auth'
@@ -222,6 +222,17 @@ export class EditHospitalPrivateProfile extends React.Component
                     </View>
 
                 </ScrollView>
+
+
+
+
+            <Fab
+                 onPress={()=>this.props.navigation.navigate('LocateOnMap',{self:this})}             
+                containerStyle={{ }}
+                style={{ backgroundColor: 'red' }}
+                position="bottomRight">
+                <Icon name="pin" />
+            </Fab>
 
             </Container>
         )

@@ -175,19 +175,7 @@ export class PrivateProfileInfo extends React.Component
 
                         </List>
 
-                        {
-                            this.state.position == null &&
-                            (
-
-                                <Button primary onPress={()=> this.props.navigation.navigate('LocateOnMap',{self: this}) }>
-                                    <Text>
-                                        Locate Your Hospital on Map
-                                    </Text>
-                                </Button>
-
-                            )
-                        }
-                
+     
 
                     </View>
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Header, Title, Content, Button, Left, Right, Body, Toast, Icon, Text, Picker, Item} from 'native-base'
+import {Container, Header, Title, Content, Button, Left, Right, Body, Toast, Icon, Text, Picker, Item,Fab} from 'native-base'
 import {StatusBar,StyleSheet, AsyncStorage, ScrollView, View, TextInput, Keyboard} from 'react-native'
 
 import {AuthService} from '../../services/auth'
@@ -221,17 +221,20 @@ export class CreateHospital extends React.Component
                         </Picker>
 
 
-                         <Button bordered danger onPress={()=> this.props.navigation.navigate('LocateOnMap',{self: this}) }    
-                         style = {styles.pickerList}>
-                             <Icon name = 'pin' style = {{}} />
-                            <Text>Locate on Map</Text>
-                        </Button>
+ 
 
 
                     </View>
 
                 </ScrollView>
 
+            <Fab
+                onPress={()=> this.props.navigation.navigate('LocateOnMap',{self: this}) }                 
+                containerStyle={{ }}
+                style={{ backgroundColor: 'red' }}
+                position="bottomRight">
+                <Icon name="pin" />
+            </Fab>
             </Container>
         )
     }
