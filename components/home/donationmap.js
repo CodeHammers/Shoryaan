@@ -58,7 +58,7 @@ export class DonationMap extends React.Component
                     </Left>
 
                     <Body style = {styles.title}>
-                        <Title> Locate on Map </Title>
+                        <Title> Donate </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>

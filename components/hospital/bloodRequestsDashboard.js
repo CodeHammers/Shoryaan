@@ -61,7 +61,7 @@ export class BloodRequestsDashboard extends React.Component
                             </Left>
                             <Body>
                                 <Text style={styles.listitemname}>{arrayholder.title}</Text>
-                                <Text style={styles.StatePickerItem} note>{arrayholder.details}</Text>
+                                <Text style={styles.StatePickerItem} note>{arrayholder.bloodTypes}</Text>
                             </Body>
                             <Right>
 
