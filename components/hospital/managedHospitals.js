@@ -77,7 +77,19 @@ export class ManagedHospitals extends React.Component
                     </Right>
                 </Header>
 
-                 <Text> Managed Hospitals</Text>
+                <View style={{flexDirection:'row',margin:10}}>               
+                    <Text>  Managed Hospitals</Text>
+                    <Right>
+                        <Button transparent onPress={()=>{this.getHospitalData()}}> 
+                            <Icon style={{color:'red'}} name='md-sync' />
+                        </Button>
+                    </Right>
+        
+
+                
+                </View>
+
+
 
                 <View>
 
@@ -91,7 +103,7 @@ export class ManagedHospitals extends React.Component
                                 <Text style={styles.StatePickerItem} note>{''}</Text>
                             </Body>
                             <Right>
-                                <Text style={styles.StatePickerItem} note>{h.status}</Text>
+                            <Icon style={styles.StatePickerItem} style ={  {color: 'red'}  }  name={h.verified ?  'md-eye' : 'md-eye-off'}></Icon>
                             </Right>
                         </ListItem>
                     }>

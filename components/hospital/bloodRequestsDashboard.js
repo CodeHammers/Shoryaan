@@ -52,6 +52,18 @@ export class BloodRequestsDashboard extends React.Component
                     </Right>
                 </Header>
 
+              <View style={{flexDirection:'row',margin:10}}>               
+                <Text> Blood Requests</Text>
+                <Right>
+                    <Button transparent onPress={()=>{this.getRequests()}}> 
+                        <Icon style={{color:'red'}} name='md-sync' />
+                    </Button>
+                </Right>
+    
+
+                
+                </View>
+
                 <ScrollView>
                     <View>
                   <List dataArray={this.state.bloodRequests} renderRow={(arrayholder) =>

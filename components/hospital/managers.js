@@ -15,7 +15,8 @@ export class Managers extends React.Component
         this.state ={
             managers:[],
             id: params.id,
-            auth_service: new AuthService(this) //instance from an authentication service
+            auth_service: new AuthService(this), //instance from an authentication service
+            email: ''
 
         }
         this.getManagers()
@@ -29,11 +30,14 @@ export class Managers extends React.Component
     }
 
     setManager(){
-        alert("Not implement in frontEnd yet")
-        this.state.auth_service.get('/hospital/hospital_users?id='+this.state.id+"&user_email="+this.state.email)
+        //alert("msg="+this.state.id +',,hi='+this.state.email)
+        //return
+        //alert("Not implement in frontEnd yet")
+        this.state.auth_service.get('/hospital/add_user_to_hospital?id='+this.state.id+"&email="+this.state.email)
         .then((res)=> { return res.json() } )
         .then((res_json)=>{
             this.setState({managers: res_json })
+            alert('Sucess')
         })
     }
 
@@ -58,9 +62,17 @@ export class Managers extends React.Component
                         </Button>
                     </Right>
                 </Header>
+                <View style={{flexDirection:'row',margin:10}}>               
+                        <Text> Managers</Text>
+                        <Right>
+                            <Button transparent onPress={()=>{this.getManagers()}}> 
+                                <Icon style={{color:'red'}} name='md-sync' />
+                            </Button>
+                        </Right>
+          
 
-                 <Text> Managers</Text>
-
+                
+                </View>
                 <View>
 
                     <List dataArray={this.state.managers} renderRow={(arrayholder) =>
@@ -69,7 +81,7 @@ export class Managers extends React.Component
                                 <Thumbnail source={require('../../hos.png')} />
                             </Left>
                             <Body>
-                                <Text style={styles.listitemname}>{arrayholder.name}</Text>
+                                <Text style={styles.listitemname}>{arrayholder.username}</Text>
                                 <Text style={styles.StatePickerItem} note>{arrayholder.email}</Text>
                             </Body>
                             <Right>
@@ -84,12 +96,12 @@ export class Managers extends React.Component
                     <Item style={{marginTop:8,marginBottom:8}} >
                                 <Input   
                                     placeholder='Email'
-                                    onChangeText={(text) =>{ this.setState({content: text});}}
+                                    onChangeText={(text) =>{ this.setState({email: text});}}
 
                                 />
                         
                     </Item>
-                    <Button rounded  danger sytle={{marginTop:12}} >
+                    <Button rounded  danger sytle={{marginTop:12}} onPress={()=>{this.setManager()}} >
                         <Text>Add New Manager </Text>
                     </Button>
             </Form>
