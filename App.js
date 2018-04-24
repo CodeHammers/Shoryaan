@@ -22,6 +22,8 @@ import { NotificationDetail } from './components/home/notificationDetail'
 import { ManagedHospitals } from './components/hospital/managedHospitals'
 import { DonationMap } from './components/home/donationmap'
 import { BloodRequestDetails } from './components/hospital/bloodRequestDetails'
+import { Guidelines } from './components/guidelines/guidelines'
+import { Eligibility } from './components/guidelines/eligibility'
 
 
 import { StackNavigator } from 'react-navigation'
@@ -98,8 +100,13 @@ const RootStack = StackNavigator({
     },
     BloodRequestDetails:{
         screen: BloodRequestDetails
+    },
+    Guidelines:{
+        screen: Guidelines
+    },
+    Eligibility:{
+        screen: Eligibility
     }
-    
 },
     {
         headerMode: 'none',

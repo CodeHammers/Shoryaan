@@ -98,7 +98,7 @@ export class Home extends React.Component {
                     </Left>
 
                     <Body style={styles.title}>
-                        <Title> HOME </Title>
+                        <Title> Home </Title>
                     </Body>
 
                     <Right style={{ flex: 1 }}>
@@ -132,7 +132,7 @@ export class Home extends React.Component {
                     </View>
 
                     <View style={styles.container}>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={styles.button} onPress={() => { this.props.navigation.navigate('Guidelines') }}>
                             <Image
                                 source={require('../../images/home/can-i-give-blood-icon-homepage.png')}
                                 style={styles.ImageIconStyle}
@@ -142,13 +142,13 @@ export class Home extends React.Component {
                             </Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={styles.button} onPress={() => { this.props.navigation.navigate('Eligibility') }}>
                             <Image
                                 source={require('../../images/home/Health_Tests-512.png')}
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                Blood Facts
+                                Eligibility
                             </Text>
                         </TouchableOpacity>
                     </View>
