@@ -105,7 +105,7 @@ export class CreateHospital extends React.Component
                 this.showToast("Creation succeeded", "ok");
                 response.json().then(
                     (resJson)=>{
-                        this.props.navigation.navigate('PrivateProfileInfo',{id: resJson.id});
+                        this.props.navigation.navigate('ManagedHospitals',{id: resJson.id});
                     }
                 )
             }

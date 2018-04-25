@@ -17,13 +17,24 @@ export class BloodRequestForm extends React.Component
             content:'',
             bloodTypes:'',
             auth_service: new AuthService(),
-            position: null
+            position: null,
+            self: params.self
 
         }
     }
 
     submitRequest(){
-        body = JSON.stringify(this.state)
+        body = JSON.stringify(
+            {
+                hospital: this.state.hospital,
+                title:this.state.title,
+                content:this.state.content,
+                bloodTypes:this.state.bloodTypes,
+                position: this.state.position,
+            }
+
+
+        )
         this.state.auth_service.post(body,'/notification/create')
         .then((response)=>{
             if(response.status!=200){
@@ -31,6 +42,7 @@ export class BloodRequestForm extends React.Component
             }
             else{
                 this.showToast("Creation succeeded", "ok");
+                this.state.self.getRequests()
                 this.props.navigation.goBack();
             }
         })

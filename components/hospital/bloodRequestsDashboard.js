@@ -67,7 +67,7 @@ export class BloodRequestsDashboard extends React.Component
                 <ScrollView>
                     <View>
                   <List dataArray={this.state.bloodRequests} renderRow={(arrayholder) =>
-                        <ListItem avatar button={true} onPress={()=>this.props.navigation.navigate('BloodRequestDetails',{br:arrayholder})}>
+                        <ListItem avatar button={true} onPress={()=>this.props.navigation.navigate('BloodRequestDetails',{br:arrayholder,self: this})}>
                             <Left>
                                 <Thumbnail source={require('../../hos.png')} />
                             </Left>
@@ -95,7 +95,7 @@ export class BloodRequestsDashboard extends React.Component
   
                     </ScrollView>
         <Fab
-           onPress={()=>this.props.navigation.navigate('BloodRequestForm',{id:this.state.id})}
+           onPress={()=>this.props.navigation.navigate('BloodRequestForm',{id:this.state.id,self:this})}
             containerStyle={{ }}
             style={{ backgroundColor: 'red' }}
             position="bottomRight">

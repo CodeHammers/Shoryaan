@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Header, Item, Input, Icon,Title, Button, Text, CheckBox, Body, ListItem, Picker, Content, List, Left, Right, Thumbnail } from 'native-base';
+import { Container, Header, Item, Input, Icon,Title, Button, Text, CheckBox, Body, ListItem, Picker, Content, List, Left, Right, Thumbnail ,Fab} from 'native-base';
 import {StyleSheet, View, ScrollView, StatusBar, AsyncStorage} from 'react-native'
 
 
@@ -112,6 +112,15 @@ export class ManagedHospitals extends React.Component
 
 
                 </View>
+
+            <Fab
+                onPress={()=>this.props.navigation.navigate('CreateHospital')}
+                containerStyle={{ }}
+                style={{ backgroundColor: 'red' }}
+                position="bottomRight">
+                <Icon name="add" />
+            </Fab>
+
 
 
             </Container>

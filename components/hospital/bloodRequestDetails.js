@@ -18,13 +18,21 @@ export class BloodRequestDetails extends React.Component
             bloodTypes: params.br.bloodTypes,
             n_id: params.br.id,
             auth_service: new AuthService(),
-            position: {latitude:params.br.lat,longitude: params.br.lng}
+            position: {latitude:params.br.lat,longitude: params.br.lng},
+            self: params.self
 
         }
     }
 
     updateRequest(){
-        body = JSON.stringify(this.state)
+        body = JSON.stringify({
+            hospital: this.state.hospital,
+            title: this.state.title,
+            content: this.state.content,
+            bloodTypes: this.state.bloodTypes,
+            n_id: this.state.n_id,
+            position: this.state.position,
+        })
         this.state.auth_service.post(body,'/notification/update')
         .then((response)=>{
             if(response.status!=200){
@@ -32,6 +40,7 @@ export class BloodRequestDetails extends React.Component
             }
             else{
                 this.showToast("update succeeded", "ok");
+                this.state.self.getRequests()
                 this.props.navigation.goBack();
             }
         })
