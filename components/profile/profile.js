@@ -59,6 +59,8 @@ export class Profile extends React.Component
             }
             else{
                 response.json().then((resJSON) =>{
+
+
                     this.setState({
                         username: resJSON.username,
                         state: resJSON.state,
@@ -67,8 +69,10 @@ export class Profile extends React.Component
                         bloodType: resJSON.bloodtype || "?",
                         gender: resJSON.gender,
                         dateOfBirth: resJSON.dateOfBirth,
-                        email: resJSON.email
+                        email: resJSON.email,
+                        position: {latitude: resJSON.lat,longitude: resJSON.lng}
                     })
+
                 })
             }
         })
@@ -106,6 +110,7 @@ export class Profile extends React.Component
             bloodType: this.state.bloodType,
             gender: this.state.gender,
             dateOfBirth: this.state.dateOfBirth ,
+            position: this.state.position,
             self: this
         })
     }

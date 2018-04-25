@@ -89,6 +89,21 @@ export class HospitalHome extends React.Component {
                         </TouchableOpacity>
                     </View>
 
+
+
+                    <View style={styles.container}>
+            
+                        <TouchableOpacity style={styles.button}  onPress={()=>{ this.props.navigation.navigate('DonorsStats')}} >
+                            <Image
+                                source={require('../../images/home/hos.png')}
+                                style={styles.ImageIconStyle}
+                            />
+                            <Text style={styles.textbutton} >
+                                Stats 
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+
                 </ScrollView>
             </Container>
         )

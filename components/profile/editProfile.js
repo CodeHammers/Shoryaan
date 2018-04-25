@@ -1,6 +1,6 @@
 import React from 'react'
 import {View} from 'react-native'
-import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Item, Toast, Picker,Input,Badge} from 'native-base';
+import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, Item, Toast, Picker,Input,Badge,Fab} from 'native-base';
 import {StatusBar,StyleSheet,AsyncStorage,ScrollView,TextInput,Keyboard} from 'react-native'
 
 import DatePicker from 'react-native-datepicker'
@@ -40,6 +40,10 @@ export class EditProfile extends React.Component
             validName: undefined,
             validCity: undefined,
 
+
+            position: params.position,
+
+
             //The arrays are used to populate the picker values
             bloodTypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-", "?"],
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
@@ -51,7 +55,7 @@ export class EditProfile extends React.Component
             valid_state: 0  //indicates the validity state of the form (valid, invalid password, ..)
 
         };
-
+        //alert(params.position.latitude)
         this.checkStoredToken();
     }
 
@@ -74,6 +78,8 @@ export class EditProfile extends React.Component
                 city: this.state.city,
                 dateOfBirth: this.state.dateOfBirth,
                 password: "protected",
+                lat: this.state.position ? this.state.position.latitude : null,
+                lng: this.state.position ? this.state.position.longitude : null,
                 gender: this.state.gender,
                 access_token: this.state.access_token
             })
@@ -308,6 +314,15 @@ export class EditProfile extends React.Component
                     </View>
 
                 </ScrollView>
+
+            <Fab
+                 onPress={()=>this.props.navigation.navigate('LocateOnMap',{self:this})}             
+                containerStyle={{ }}
+                style={{ backgroundColor: 'red' }}
+                position="bottomRight">
+                <Icon name="pin" />
+            </Fab>
+
 
             </Container>
         )

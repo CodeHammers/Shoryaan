@@ -24,7 +24,7 @@ import { DonationMap } from './components/home/donationmap'
 import { BloodRequestDetails } from './components/hospital/bloodRequestDetails'
 import { Guidelines } from './components/guidelines/guidelines'
 import { Eligibility } from './components/guidelines/eligibility'
-
+import { DonorsStats } from './components/hospital/donorsStats'
 
 import { StackNavigator } from 'react-navigation'
 import { Root } from "native-base";
@@ -106,6 +106,9 @@ const RootStack = StackNavigator({
     },
     Eligibility:{
         screen: Eligibility
+    },
+    DonorsStats: {
+        screen: DonorsStats
     }
 },
     {
