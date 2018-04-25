@@ -493,9 +493,6 @@ export class Eligibility extends React.Component {
     }
 }
 
-//decrease the space between cards
-//make the carditem footer with the content
-
 const styles = StyleSheet.create({
     header: {
         backgroundColor: '#F44336',
