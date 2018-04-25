@@ -78,21 +78,6 @@ export class HospitalHome extends React.Component {
                                 Other Managers
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}  onPress={()=>{ this.props.navigation.navigate('CreateHospital')}} >
-                            <Image
-                                source={require('../../images/home/hos.png')}
-                                style={styles.ImageIconStyle}
-                            />
-                            <Text style={styles.textbutton} >
-                                Create 
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-
-
-
-                    <View style={styles.container}>
-            
                         <TouchableOpacity style={styles.button}  onPress={()=>{ this.props.navigation.navigate('DonorsStats')}} >
                             <Image
                                 source={require('../../images/home/hos.png')}
@@ -103,7 +88,6 @@ export class HospitalHome extends React.Component {
                             </Text>
                         </TouchableOpacity>
                     </View>
-
                 </ScrollView>
             </Container>
         )

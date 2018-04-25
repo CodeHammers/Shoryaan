@@ -72,9 +72,7 @@ export class Home extends React.Component {
                         this.props.navigation.navigate('Notifications');
                     }
                     if (BUTTONS[buttonIndex].text == "Log out") {
-                        AsyncStorage.setItem("access_token",undefined).then(
-                            ()=>{ this.props.navigation.navigate('Landing');}
-                        )
+                         this.props.navigation.navigate('Auth');
                     }
 
                 }

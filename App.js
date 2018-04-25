@@ -1,3 +1,7 @@
+
+
+import {  SwitchNavigator } from 'react-navigation';
+
 import React, { Component } from 'react';
 import { Platform } from 'react-native';
 import { Landing } from './components/login/landing'
@@ -29,18 +33,30 @@ import { DonorsStats } from './components/hospital/donorsStats'
 import { StackNavigator } from 'react-navigation'
 import { Root } from "native-base";
 
+
+
 /*
 ################################################################################
-|--------------------------Navigation Routing----------------------------------|
+|--------------------------App Routing----------------------------------|
 ################################################################################
 */
-const RootStack = StackNavigator({
+const AuthStack = StackNavigator({   
     Landing: {
         screen: Landing,
+    }, 
+
     },
-    Intro: {
-        screen: Intro
-    },
+    {
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        },
+        initialRouteName: 'Landing',   
+    }
+);
+
+const AppStack = StackNavigator({
+
     Home: {
         screen: Home
     },
@@ -116,17 +132,27 @@ const RootStack = StackNavigator({
         navigationOptions: {
             headerVisible: false,
         },
-        initialRouteName: 'Landing',
+        initialRouteName: 'Home',
     },
 )
 
-/*
-################################################################################
-|----------------------Application Root Component------------------------------|
-################################################################################
-*/
 
-export default class App extends React.Component {
+
+
+
+const RootStack = SwitchNavigator(
+    {
+      AuthLoading: Intro,
+      App: AppStack,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'AuthLoading',
+    }
+  )
+
+
+  export default class App extends React.Component {
 
     render() {
         return (
@@ -137,49 +163,3 @@ export default class App extends React.Component {
         )
     }
 }
-
-
-/*
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
-    );
-  }
-}
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
-*/

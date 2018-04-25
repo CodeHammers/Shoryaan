@@ -18,9 +18,10 @@ export class Landing extends React.Component {
       register_or_login_view: false,
       auth_service: new AuthService(this)
     };
-    this.state.auth_service.checkStoredToken() 
   
   }
+
+
 
 
    /**
@@ -67,7 +68,7 @@ export class Landing extends React.Component {
                                 response.json().then(
                                     (res_json)=>{
                                         this.state.auth_service.handleToken(res_json)
-                                        this.props.navigation.navigate('Home',res_json.user)
+                                        this.props.navigation.navigate('App',res_json.user)
                                     }
                                 )
                             }

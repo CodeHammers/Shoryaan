@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import { Container, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Body, Icon ,Title,Button,Fab} from 'native-base';
+
+import {AuthService} from '../../services/auth'
+
+
 const cards = [
   {
     text: 'Shoryaan',
@@ -19,8 +23,12 @@ export  class Intro extends Component {
   constructor(props){
     super(props)
     this.state = {
-      active:false
+      active:false,
+      auth_service: new AuthService(this)
+
     }
+    this.state.auth_service.checkStoredToken() 
+
   }
 
   render() {
@@ -57,7 +65,7 @@ export  class Intro extends Component {
             containerStyle={{ opacity:.92}}
             style={{ backgroundColor: '#5067FF' }}
             position="bottomRight"
-            onPress={() => {this.setState({active:!this.state.active});this.props.navigation.navigate('Landing')}}>
+            onPress={() => {this.setState({active:!this.state.active});this.props.navigation.navigate('Auth')}}>
             <Icon name="arrow-forward" />
 
           </Fab>

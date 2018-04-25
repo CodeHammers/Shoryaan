@@ -6,9 +6,9 @@ export class AuthService {
     //for google avds use 10.0.2.2
     //BASE_URL = 'http://10.0.2.2:1337';
     //for genymotion 
-    BASE_URL ='http://10.0.3.2:1337';
+    //BASE_URL ='http://10.0.3.2:1337';
     //production url
-    //BASE_URL = 'https://shoryaan-api.herokuapp.com'
+    BASE_URL = 'https://shoryaan-api.herokuapp.com'
     SELF = null
     constructor(self) {
         this.SELF = self
@@ -93,19 +93,19 @@ export class AuthService {
                 else {
                     response = response.json()
                         .then((res_json) => {
-                            if (no_toast)
+                            if (no_toast){
                                 this.SELF.state.navigate(this.SELF.state.self, res_json)
+                            }
                             else {
-                                //alert(res_json.hospitalManager)
-                                this.SELF.props.navigation.navigate('Home', res_json)
+                                this.SELF.props.navigation.navigate('App', res_json)
                             }
 
                             this.SELF.setState({ show_loader: false })
                         }
                         )
                     //valid token
-                    if (no_toast != true)
-                        this.SELF.showToast('Already logged in! moving you to home', 'Good')
+                    //if (no_toast != true)
+                      //  this.SELF.showToast('Already logged in! moving you to home', 'Good')
 
                 }
             })
