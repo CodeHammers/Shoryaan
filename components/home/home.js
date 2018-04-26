@@ -4,6 +4,9 @@ import { TouchableOpacity, View, Image, StatusBar, StyleSheet, ScrollView, Async
 import { H3 } from 'native-base'
 import { AuthService } from '../../services/auth'
 
+import I18n, { getLanguages } from 'react-native-i18n';
+
+
 var BUTTONS = [
     { text: "Change password", icon: "md-create", iconColor: "red" },
     { text: "Notifications", icon: "md-notifications", iconColor: "red" },
@@ -22,8 +25,15 @@ export class Home extends React.Component {
 
         /** Retrieve the access token stored in the mobile cache and then retrieve the user data from the DB */
         this.getViewData();
+  
     }
 
+    componentWillMount() {
+        getLanguages().then(languages => {
+          this.setState({ languages: languages });
+          //alert(languages)
+        });
+    }
     getViewData() {
         this.checkStoredToken().then(
             () => { this.getUserData() }
@@ -136,7 +146,9 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                Guidelines
+                                
+
+                                {I18n.t('Guidelines')}
                             </Text>
                         </TouchableOpacity>
 
@@ -232,3 +244,12 @@ const styles = StyleSheet.create({
         resizeMode: 'stretch',
     },
 })
+
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+ 
+  'en': require('../../locales/en'),
+ 
+};

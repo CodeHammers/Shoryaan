@@ -12,6 +12,7 @@
     "react-native": "0.54.0",
     "react-native-datepicker": "^1.6.0",
     "react-native-fbsdk": "^0.7.0",
+    "react-native-i18n": "^2.0.12",
     "react-native-maps": "^0.21.0",
     "react-navigation": "^1.4.0"
   },
