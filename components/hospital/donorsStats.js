@@ -22,15 +22,10 @@ export class DonorsStats extends React.Component
                 latitudeDelta: 10.0922,
                 longitudeDelta: 10.0421,
               },
-  
-              mr: {
-                  latitude: 26.78825,
-                  longitude: 30.4324,
-              },
-  
             auth_service: new AuthService(),
             donors: [],
-            btStats:{}
+            btStats:{},
+            bloodTypes:  ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-','?'],
 
         }
         this.getDonors()
@@ -91,18 +86,32 @@ export class DonorsStats extends React.Component
                             <Icon name='home' />
                         </Button>
                     </Right>
+                
                 </Header>
                 <H3> Blood Diversity </H3>
 
 
             
                 <View style={{flex:.5}}>
-
-
-                    <Text>A+</Text>
-                    <Text>{this.state.btStats['A+']}</Text>
-                    <Text>AB-</Text>
-                    <Text>{this.state.btStats['AB-']}</Text>
+                    <List>
+                    {this.state.bloodTypes.map((item, index) => {
+                        if(this.state.btStats[item]==undefined)
+                            return ;
+                        return (      
+                        <ListItem>
+                            <Body>
+                                <Text>{item}</Text>
+                                <Text note>{'hello'}</Text>
+                            </Body>
+                            <Right>
+                                <Badge>
+                                <Text >{this.state.btStats[item]}</Text>
+                                </Badge>
+                            </Right>
+                        </ListItem>          
+                        ) 
+                    })}
+                    </List>
 
                 </View>
 

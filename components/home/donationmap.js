@@ -84,7 +84,6 @@ export class DonationMap extends React.Component
                             ))}
 
                         </MapView>
-                        <Text style={{color:'#222'}} note>Note: You need to long press the marker to start dragging </Text>
                      </View>
             </Container>
         )

@@ -38,6 +38,8 @@ export class Search extends React.Component {
     Search(text) {
         this.setState({ loading: true })
         url = '/hospital/index'
+        if(text==undefined)
+            text = this.state.searchText
         if (this.state.checked) {
             if (this.state.selectedState != "" & this.state.selectedStatus == "") {
                 url = url + '?name=' + text + '&state=' + this.state.selectedState
@@ -162,12 +164,10 @@ export class Search extends React.Component {
 
                     <Header searchBar style={styles.header} noShadow={true} androidStatusBarColor={'#D32F2F'}>
                         <Item rounded>
-                            <Icon name="ios-search" />
-                            <Input onChangeText={(text) => { this.setState({ searchText: text }); this.Search(text) }} placeholder="Search" />
+                            <Icon onPress={()=>{this.Search() }} name="ios-search" />
+                            <Input onChangeText={(text) => { this.setState({ searchText: text });}} placeholder="Search" />
                         </Item>
-                        <Button transparent>
-                            <Text>Search</Text>
-                        </Button>
+                   
                     </Header>
 
                     <ListItem>
@@ -180,6 +180,7 @@ export class Search extends React.Component {
                     </ListItem>
 
                     {content}
+             
 
                     <View style={{ width: 200, alignItems: 'center', alignSelf: 'center' }}>
 

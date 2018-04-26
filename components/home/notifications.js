@@ -1,9 +1,13 @@
 import React from 'react'
-import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon,Thumbnail} from 'native-base';
+import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon,Thumbnail,H3} from 'native-base';
 import {StyleSheet, View, ScrollView, StatusBar,AsyncStorage} from 'react-native'
 
 
 import {AuthService} from '../../services/auth'
+
+import MapView from 'react-native-maps';
+
+
 
 export class Notifications extends React.Component
 {
@@ -96,8 +100,9 @@ export class Notifications extends React.Component
                 </Header>
 
      
-                <View>
+                <View >
 
+                    <H3>Notifications</H3>
                     <List dataArray={this.state.notifications} renderRow={(arrayholder) =>
                         <ListItem avatar button={true}  
                         onPress={() => {this.props.navigation.navigate('NotificationDetail',arrayholder) }}>
@@ -106,10 +111,10 @@ export class Notifications extends React.Component
                             </Left>
                             <Body>
                                 <Text s>{arrayholder.title}</Text>
-                                <Text  note>{'date'}</Text>
+                                <Text  note>{arrayholder.bloodTypes}</Text>
                             </Body>
                             <Right>
-                                <Text  note>{'private'}</Text>
+                            <Icon style={styles.StatePickerItem} style ={ arrayholder.lng  ? {color: 'red'}: {}  }  name='pin'></Icon>
                             </Right>
                         </ListItem>
                     }>
@@ -118,6 +123,8 @@ export class Notifications extends React.Component
 
 
                 </View>
+
+
 
             </Container>
         )

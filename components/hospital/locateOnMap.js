@@ -60,7 +60,7 @@ export class LocateOnMap extends React.Component
                     <View  style={{flex:1}}>
 
                         <MapView style={{flex:1}}
-                            region={this.state.region}
+                            initialRegion={this.state.region}
                             onRegionChange={this.onRegionChange}
                         >
 
