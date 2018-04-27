@@ -7,6 +7,9 @@ import { Search } from './search'
 import { AuthService } from '../../services/auth'
 import MapView from 'react-native-maps';
 import Marker  from 'react-native-maps';
+
+import I18n, { getLanguages } from 'react-native-i18n';
+
 /**
  * A view containing the two search tabs 
  * tab 1: search by hospital's name, state and status
@@ -35,6 +38,12 @@ export class InitialSearch extends Component {
       
     }
 
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+        });
+    }
 
     Search() {
         url = '/hospital/index'
@@ -71,13 +80,13 @@ export class InitialSearch extends Component {
 
                 <Tabs initialPage={0}>
                     <Tab tabStyle={styles.inactiveTabStyle} textStyle={styles.inactiveTabTextStyle}
-                        activeTabStyle={styles.activeTabStyle} activeTextStyle={styles.activeTabTextStyle} heading="Search">
+                        activeTabStyle={styles.activeTabStyle} activeTextStyle={styles.activeTabTextStyle} heading={I18n.t("Search")}>
                         <Search self={this} />
 
                     </Tab>
 
                     <Tab tabStyle={styles.inactiveTabStyle} textStyle={styles.inactiveTabTextStyle}
-                        activeTabStyle={styles.activeTabStyle} activeTextStyle={styles.activeTabTextStyle} heading="Map">
+                        activeTabStyle={styles.activeTabStyle} activeTextStyle={styles.activeTabTextStyle} heading={I18n.t("Map")}>
 
                         <MapView style={{flex:1}}
                             region={this.state.region}
@@ -135,3 +144,11 @@ const styles = StyleSheet.create({
         color: '#FFFF'
     },
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+
+    'en': require('../../locales/en'),
+    'ar-EG': require('../../locales/ar')
+};

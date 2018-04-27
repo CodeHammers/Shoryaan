@@ -39,7 +39,7 @@ export class HospitalHome extends React.Component {
                     </Left>
 
                     <Body style={styles.title}>
-                        <Title> HOSPITAL </Title>
+                        <Title> Hospital </Title>
                     </Body>
                     <Right style = {{flex: 1}}>
                         <Button transparent>

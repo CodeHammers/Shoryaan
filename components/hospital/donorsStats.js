@@ -138,12 +138,6 @@ export class DonorsStats extends React.Component
         </View>
 
 
-
-
-
-
-
-
             </Container>
         )
     }

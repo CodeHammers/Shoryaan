@@ -253,7 +253,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
                                 
                                     <Text style={styles.question}>
-                                        Are you 65 years of age or over?
+                                        {I18n.t('Are you 65 years of age or over?')}
                                     </Text>
                                 
                                 </View>
@@ -290,7 +290,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        Do you weigh less than 7 stone 12 lbs (less than 50kgs) or more than 20 stone 6 lbs (130kgs)?
+                                        {I18n.t('Do you weigh less than 7 stone 12 lbs (less than 50kgs) or more than 20 stone 6 lbs (130kgs)?')}
                                     </Text>
 
                                 </View>    
@@ -327,7 +327,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        For women; are you under 26 years of age?
+                                        {I18n.t('For women; are you under 26 years of age?')}
                                     </Text>
 
                                 </View>    
@@ -364,7 +364,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        Today or in the last 2 weeks have you had any illness or injury, e.g. a cough, a cold, a sore throat, vomiting, diarrhoea or an open wound?
+                                        {I18n.t('Today or in the last 2 weeks have you had any illness or injury, e.g. a cough, a cold, a sore throat, vomiting, diarrhoea or an open wound?')}
                                     </Text>
 
                                 </View>
@@ -401,7 +401,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        Have you had any medical tests or investigations in the last 4 months or since your last donation?
+                                        {I18n.t('Have you had any medical tests or investigations in the last 4 months or since your last donation?')}
                                     </Text>
 
                                 </View>
@@ -438,7 +438,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        Have you had a tattoo or body piercing in the last 4 months?
+                                        {I18n.t('Have you had a tattoo or body piercing in the last 4 months?')}
                                     </Text>
 
                                 </View>
@@ -473,7 +473,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        For women; are you pregnant or have you have you been pregnant in the past 12 months?
+                                        {I18n.t('For women; are you pregnant or have you have you been pregnant in the past 12 months?')}
                                     </Text>
 
                                 </View>

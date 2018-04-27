@@ -29,6 +29,8 @@
    "Eligibility": "استحقاق",
    "My Hospital": "مستشفي",
    "Search":"بحث",
+   "Map": "خريطة",
+   "State": "محافظة",
    "Use Filter": "استخدام تصفية",
     "You cannot donate at this time. However, we would be delighted to see you when you are 18." : "لا يمكنك التبرع في هذا الوقت. ومع ذلك ، سيكون من دواعي سرورنا أن نراك عندما يكون عمرك 18 عامًا." ,
     "If you have never given blood before, then you cannot donate However:  - if you are between 65 and 69 years and have given blood in the last 10 years then you can give blood.  - if you are 70 years or over and you have given blood in the last 2 years and you have a certificate of fitness from your GP, you can give blood. The certificate is valid for 12 months from the date of issue.": "إذا لم تعط الدم من قبل ، فلا يمكنك التبرع: - إذا كنت بين 65 و 69 سنة وأعطيت الدم في السنوات العشر الأخيرة ، يمكنك التبرع بالدم. - إذا كان عمرك 70 عامًا أو أكثر وكنت قد أعطيت الدم في السنتين الأخيرتين ولديك شهادة لياقة من طبيبك العمومي ، فيمكنك التبرع بالدم. الشهادة صالحة لمدة 12 شهرًا من تاريخ الإصدار.",
@@ -39,5 +41,11 @@
     "You cannot donate for 4 months from the date of the tattoo or the piercing.": "لا يمكنك التبرع لمدة 4 أشهر من تاريخ الوشم أو الثقب.",
     "You cannot donate during pregnancy and for 12 months after your pregnancy.": "ا يمكنك التبرع خلال فترة الحمل ولمدة 12 شهرا بعد الحمل.",
     "Are you under 18?": "هل انت اقل من 18 سنة؟",
-
+    "Are you 65 years of age or over?": "هل عمرك 65 سنة أو أكثر؟",
+    "Do you weigh less than 7 stone 12 lbs (less than 50kgs) or more than 20 stone 6 lbs (130kgs)?":"هل تزن أقل من 7 حجارة 12 باوند (أقل من 50 كلجم) أو أكثر من 20 حبة 6 رطل (130 كجم)؟",
+    "For women; are you under 26 years of age?": "للنساء هل أنت تحت سن 26 سنة؟",
+    "Today or in the last 2 weeks have you had any illness or injury, e.g. a cough, a cold, a sore throat, vomiting, diarrhoea or an open wound?": "اليوم أو في الأسبوعين الأخيرين هل كان لديك أي مرض أو إصابة ، على سبيل المثال ، السعال أو البرد أو التهاب الحلق أو القيء أو الإسهال أو الجرح المفتوح؟",
+    "Have you had any medical tests or investigations in the last 4 months or since your last donation?": "هل أجريت أي تحاليل أو تحقيقات طبية خلال الـ 4 أشهر الماضية أو منذ آخر تبرع لك؟",
+    "Have you had a tattoo or body piercing in the last 4 months?": "هل كان لديك وشم أو ثقب في الجسم في الأشهر 4 الماضية؟",
+    "For women; are you pregnant or have you have you been pregnant in the past 12 months?": "للنساء هل أنت حامل أو هل كنت حاملاً خلال الـ 12 شهراً الماضية؟",
 }

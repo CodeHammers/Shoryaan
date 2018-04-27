@@ -140,7 +140,7 @@ export class Search extends React.Component {
         const content = this.state.checked
             ?
             <View>
-                <Text style={styles.inputFieldLabels}> State</Text>
+                <Text style={styles.inputFieldLabels}> {I18n.t('State')}</Text>
                 <Picker
                     iosHeader="Select one"
                     mode="dropdown"
@@ -152,7 +152,7 @@ export class Search extends React.Component {
                         return (<Item style={styles.StatePickerItem} label={item} value={item} key={index} />)
                     })}
                 </Picker>
-                <Text style={styles.inputFieldLabels}> Status</Text>
+                <Text style={styles.inputFieldLabels}> {I18n.t('Status')}</Text>
                 <Picker
                     iosHeader="Select one"
                     mode="dropdown"
@@ -175,7 +175,7 @@ export class Search extends React.Component {
                     <Header searchBar style={styles.header} noShadow={true} androidStatusBarColor={'#D32F2F'}>
                         <Item rounded>
                             <Icon onPress={() => { this.Search() }} name="ios-search" />
-                            <Input onChangeText={(text) => { this.setState({ searchText: text }); }} placeholder="Search" />
+                            <Input onChangeText={(text) => { this.setState({ searchText: text }); }} placeholder= {I18n.t("Search")} />
                         </Item>
 
                     </Header>
