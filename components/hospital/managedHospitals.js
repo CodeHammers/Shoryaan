@@ -6,6 +6,9 @@ import {StyleSheet, View, ScrollView, StatusBar, AsyncStorage} from 'react-nativ
 import {AuthService} from '../../services/auth'
 
 
+import I18n, { getLanguages } from 'react-native-i18n';
+
+
 export class ManagedHospitals extends React.Component
 {
 
@@ -78,7 +81,7 @@ export class ManagedHospitals extends React.Component
                 </Header>
 
                 <View style={{flexDirection:'row',margin:10}}>               
-                    <Text>  Managed Hospitals</Text>
+                    <Text>    {I18n.t('Managed Hospitals')} </Text>
                     <Right>
                         <Button transparent onPress={()=>{this.getHospitalData()}}> 
                             <Icon style={{color:'red'}} name='md-sync' />
@@ -149,3 +152,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFF'
     }
 })
+
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+ 
+  'en': require('../../locales/en'),
+   'ar': require('../../locales/ar')
+ 
+};

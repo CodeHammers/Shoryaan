@@ -1,5 +1,25 @@
 
 {
-    Guidelines: 'ارشادات',
+    "Guidelines": "ارشادات",
+ 	"Managed Hospitals": "المستشفيات المدارة",
+ 	"Hospital's official name":"اسم المستشفى الرسمي",
+ 	"Helioplis": "على سبيل المثال مصر الجديدة",
+ 	"building number St name off St name":"رقم المبنى واسم الشارع",
+ 	"City code 8-11 digits": "رمز المدينة من 8 إلى 11 رقمًا",
+ 	"Hospital name":"اسم المستشفى",
+ 	"District":"منطقة",
+ 	"Address":"عنوان",
+ 	"Phone": "هاتف",
+ 	"E-mail":"البريد الإلكتروني",
+ 	"Status":"وضع قانوني",
+ 	"Public":"عامة",
+ 	"Private": "خاص",
+ 	"Stats":"احصائيات",
+ 	"Managers":"إدارة",
+ 	"Blood Requests":"طلبات الدم",
+ 	"Hospital Profile":"مستشفى الملف الشخصي",
+ 	"Add New Manager":"أضف مدير جديد",
+ 	"Blood Diversity":"تنوع الدم"
+
 }
 

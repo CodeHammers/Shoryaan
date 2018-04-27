@@ -5,6 +5,10 @@ import {StatusBar,StyleSheet, AsyncStorage, ScrollView, View, TextInput, Keyboar
 import {AuthService} from '../../services/auth'
 import {ValidateService} from '../../services/validate'
 
+import I18n, { getLanguages } from 'react-native-i18n';
+
+
+
 export class CreateHospital extends React.Component
 {
     constructor(props)
@@ -23,7 +27,7 @@ export class CreateHospital extends React.Component
             isVerified: false,
             status: "Public",
             states: ["Cairo", "Alexandria", "Giza", "Aswan", "Asyut", "Beheira", "Beni Suef", "Dakahlia", "New Valley", "Port Said", "Sharqia", "Suez"],
-            statusOptions: ["Public", "Private"],
+            statusOptions: [ "Public" , "Private"],
             position: null,
 
 
@@ -143,10 +147,10 @@ export class CreateHospital extends React.Component
 
                     <View style = {styles.form}>
 
-                        <Text style = {styles.inputFieldLabels}> Hospital's name</Text>
+                        <Text style = {styles.inputFieldLabels}> {I18n.t("Hospital name")}  </Text>
                         <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "Hospital's official name"
+                            placeholder=   {I18n.t("Hospital's official name")}  
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize={'sentences'}
@@ -166,37 +170,37 @@ export class CreateHospital extends React.Component
                             })}
                         </Picker>
 
-                        <Text style = {styles.inputFieldLabels}> District</Text>
+                        <Text style = {styles.inputFieldLabels}>   {I18n.t("District")} </Text>
                         <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "i.e. Helioplis"
+                            placeholder= {I18n.t("Helioplis")}  
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize={'sentences'}
                             onChangeText={(text) =>{this.setState({district: text});}}
                         />
 
-                        <Text style = {styles.inputFieldLabels}> Address</Text>
+                        <Text style = {styles.inputFieldLabels}>  {I18n.t("Address")}  </Text>
                         <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "i.e building number, St. name off St. name"
+                            placeholder=  {I18n.t("building number St name off St name")}    
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize = {'sentences'}
                             onChangeText={(text) =>{this.setState({address: text});}}
                         />
 
-                        <Text style = {styles.inputFieldLabels}> Phone</Text>
+                        <Text style = {styles.inputFieldLabels}>  {I18n.t("Phone")} </Text>
                         <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "[City code] + [8-11 digits]"
+                            placeholder= {I18n.t("City code 8-11 digits")}  
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             keyboardType = 'numeric'
                             onChangeText={(text) =>{this.setState({phone: text});}}
                         />
                         
-                        <Text style = {styles.inputFieldLabels}> E-mail</Text>
+                        <Text style = {styles.inputFieldLabels}>  {I18n.t("E-mail")}</Text>
                         <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             placeholder= "ie. queens@gmail.com"
@@ -207,7 +211,7 @@ export class CreateHospital extends React.Component
                             onChangeText={(text) =>{this.setState({email: text});}}
                         />
                     
-                        <Text style = {styles.inputFieldLabels}> Status</Text>
+                        <Text style = {styles.inputFieldLabels}> {I18n.t("Status")}</Text>
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
@@ -216,7 +220,7 @@ export class CreateHospital extends React.Component
                             style = {styles.pickerList}
                             >
                             {this.state.statusOptions.map((item, index) => {
-                                return (<Item style = {styles.pickerItem} label={item} value={item} key={index}/>) 
+                                return (<Item style = {styles.pickerItem} label={I18n.t(item)} value={item} key={index}/>) 
                             })}
                         </Picker>
 

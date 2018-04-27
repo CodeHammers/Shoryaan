@@ -4,6 +4,8 @@ import {StyleSheet, View, ScrollView, StatusBar} from 'react-native'
 
 import {AuthService} from '../../services/auth'
 
+import I18n, { getLanguages } from 'react-native-i18n';
+
 
 export class Managers extends React.Component
 {
@@ -63,7 +65,7 @@ export class Managers extends React.Component
                     </Right>
                 </Header>
                 <View style={{flexDirection:'row',margin:10}}>               
-                        <Text> Managers</Text>
+                        <Text> {I18n.t('Managers')} </Text>
                         <Right>
                             <Button transparent onPress={()=>{this.getManagers()}}> 
                                 <Icon style={{color:'red'}} name='md-sync' />
@@ -85,7 +87,7 @@ export class Managers extends React.Component
                                 <Text style={styles.StatePickerItem} note>{arrayholder.email}</Text>
                             </Body>
                             <Right>
-                                <Text style={styles.StatePickerItem} note>{'manager'}</Text>
+                                <Text style={styles.StatePickerItem} note>{I18n.t('Managers')} </Text>
                             </Right>
                         </ListItem>
                     }>
@@ -95,14 +97,14 @@ export class Managers extends React.Component
 
                     <Item style={{marginTop:8,marginBottom:8}} >
                                 <Input   
-                                    placeholder='Email'
+                                    placeholder={I18n.t('E-mail')} 
                                     onChangeText={(text) =>{ this.setState({email: text});}}
 
                                 />
                         
                     </Item>
                     <Button rounded  danger sytle={{marginTop:12}} onPress={()=>{this.setManager()}} >
-                        <Text>Add New Manager </Text>
+                        <Text>  {I18n.t("Add New Manager")}  </Text>
                     </Button>
             </Form>
                
@@ -137,3 +139,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFF'
     }
 })
+
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+ 
+  'ar': require('../../locales/ar'),
+ 
+};
