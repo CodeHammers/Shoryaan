@@ -4,6 +4,9 @@ import {StyleSheet, View, ScrollView, StatusBar} from 'react-native'
 
 import { AuthService } from '../../services/auth'
 
+import I18n, { getLanguages } from 'react-native-i18n';
+
+
 
 export class BloodRequestsDashboard extends React.Component
 {
@@ -53,7 +56,7 @@ export class BloodRequestsDashboard extends React.Component
                 </Header>
 
               <View style={{flexDirection:'row',margin:10}}>               
-                <Text> Blood Requests</Text>
+                <Text>  {I18n.t('Blood Requests')} </Text>
                 <Right>
                     <Button transparent onPress={()=>{this.getRequests()}}> 
                         <Icon style={{color:'red'}} name='md-sync' />
@@ -129,3 +132,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFF'
     }
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+ 
+  'ar': require('../../locales/ar'),
+ 
+};

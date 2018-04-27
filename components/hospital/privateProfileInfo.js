@@ -4,6 +4,9 @@ import {StyleSheet, View, ScrollView, StatusBar, AsyncStorage} from 'react-nativ
 
 import {AuthService} from '../../services/auth'
 
+import I18n, { getLanguages } from 'react-native-i18n';
+
+
 export class PrivateProfileInfo extends React.Component
 {
     constructor(props){
@@ -139,7 +142,7 @@ export class PrivateProfileInfo extends React.Component
                         <List>
 
                             <ListItem>
-                                <Text>Name:{" "}</Text>
+                                <Text> {I18n.t("Hospital name")} :{" "}</Text>
                                 <Text note>{this.state.name}</Text>
                             </ListItem>
 
@@ -149,27 +152,27 @@ export class PrivateProfileInfo extends React.Component
                             </ListItem>
                             
                             <ListItem>
-                                <Text style = {styles.listItemLabel}>District:{" "}</Text>
+                                <Text style = {styles.listItemLabel}> {I18n.t("District")} :{" "}</Text>
                                 <Text note>{this.state.district}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text>Address:{" "}</Text>
+                                <Text> {I18n.t("Address")} :{" "}</Text>
                                 <Text note>{this.state.address}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text>Phone:{" "}</Text>
+                                <Text>{I18n.t("Phone")}:{" "}</Text>
                                 <Text note>{this.state.phone}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text>E-mail:{" "}</Text>
+                                <Text>{I18n.t("E-mail")}:{" "}</Text>
                                 <Text note>{this.state.email}</Text>
                             </ListItem>
 
                             <ListItem last>
-                                <Text>Status:{" "}</Text>
+                                <Text>{I18n.t("Status")}:{" "}</Text>
                                 <Text note>{this.state.status}</Text>
                             </ListItem>
 

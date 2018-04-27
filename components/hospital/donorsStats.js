@@ -6,6 +6,9 @@ import { AuthService } from '../../services/auth'
 
 import MapView from 'react-native-maps';
 
+import I18n, { getLanguages } from 'react-native-i18n';
+
+
 
 
 export class DonorsStats extends React.Component
@@ -88,7 +91,7 @@ export class DonorsStats extends React.Component
                     </Right>
                 
                 </Header>
-                <H3> Blood Diversity </H3>
+                <H3>  {I18n.t('Blood Diversity')}  </H3>
 
 
             
@@ -167,3 +170,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFF'
     }
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+ 
+  'ar': require('../../locales/ar'),
+ 
+};

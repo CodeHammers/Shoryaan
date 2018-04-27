@@ -5,6 +5,10 @@ import { H3 } from 'native-base'
 import { AuthService } from '../../services/auth'
 
 
+import I18n, { getLanguages } from 'react-native-i18n';
+
+
+
 export class HospitalHome extends React.Component {
     constructor(props) {
         super(props);
@@ -53,7 +57,8 @@ export class HospitalHome extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                 Hospital Profile
+                               
+                                  {I18n.t('Hospital Profile')} 
                             </Text>
                         </TouchableOpacity>
 
@@ -63,7 +68,8 @@ export class HospitalHome extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                Blood Requests
+                                {I18n.t('Blood Requests')} 
+
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -75,7 +81,7 @@ export class HospitalHome extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                Other Managers
+                                 {I18n.t('Managers')} 
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button}  onPress={()=>{ this.props.navigation.navigate('DonorsStats')}} >
@@ -84,7 +90,7 @@ export class HospitalHome extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton} >
-                                Stats 
+                                  {I18n.t('Stats')} 
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -141,3 +147,12 @@ const styles = StyleSheet.create({
         resizeMode: 'stretch',
     },
 })
+
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+ 
+  'ar': require('../../locales/ar'),
+ 
+};
