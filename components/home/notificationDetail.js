@@ -4,7 +4,7 @@ import {StyleSheet, View, ScrollView, StatusBar} from 'react-native'
 
 import MapView from 'react-native-maps';
 
-
+import I18n, { getLanguages } from 'react-native-i18n';
 
 export class NotificationDetail extends React.Component
 {
@@ -25,6 +25,14 @@ export class NotificationDetail extends React.Component
               },
         }
     }
+
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+        });
+    }
+
     /** A function that renders the actual view */
     render(){
         return(
@@ -47,10 +55,10 @@ export class NotificationDetail extends React.Component
                     </Right>
                 </Header>
                 <View style={{flex:.5}}>
-                 <H3>Request Details</H3>
-                 <Text> Title: <Text note>{this.state.title}</Text> </Text> 
-                 <Text> details: <Text note>{this.state.details}</Text> </Text> 
-                 <Text> Needed Blood Types: <Text note>{this.state.bloodTypes}</Text> </Text> 
+                 <H3>{I18n.t('Request Details')}</H3>
+                 <Text> {I18n.t('Title')}: <Text note>{this.state.title}</Text> </Text> 
+                 <Text> {I18n.t('details')}: <Text note>{this.state.details}</Text> </Text> 
+                 <Text> {I18n.t('Needed Blood Types')}: <Text note>{this.state.bloodTypes}</Text> </Text> 
                 </View>
 
                 <View  style={{flex:.5}}>
@@ -68,9 +76,6 @@ export class NotificationDetail extends React.Component
 
                     </MapView>
                 </View>
-
-
-
 
               </Container>
         )
@@ -98,3 +103,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFF'
     }
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+    'en': require('../../locales/en'),
+    'ar-EG': require('../../locales/ar')
+};

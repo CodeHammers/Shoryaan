@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT,
-    //    resizeMode: 'stretch',
+    //  resizeMode: 'stretch',
     }
 })

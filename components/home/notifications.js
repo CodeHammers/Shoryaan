@@ -2,16 +2,13 @@ import React from 'react'
 import {Container,Text, List, ListItem, Header, Left, Body, Right, Title, Button, Icon,Thumbnail,H3} from 'native-base';
 import {StyleSheet, View, ScrollView, StatusBar,AsyncStorage} from 'react-native'
 
-
 import {AuthService} from '../../services/auth'
 
 import MapView from 'react-native-maps';
-
-
+import I18n, { getLanguages } from 'react-native-i18n';
 
 export class Notifications extends React.Component
 {
-
 
     constructor(props){
         super(props)
@@ -23,7 +20,6 @@ export class Notifications extends React.Component
 
     }
 
-
     /** 
      * A function that retrieves the user data on two steps, first get the access token from the mobile cache
      * and then call function to get the user data 
@@ -34,6 +30,12 @@ export class Notifications extends React.Component
         )
     }
 
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+        });
+    }
 
     /**
      *  A function that retrieves that access token from the mobile's cache 
@@ -65,7 +67,6 @@ export class Notifications extends React.Component
         })
     }
 
-    
     getRequests(bt){
         body = JSON.stringify({bloodtype: bt})
         this.state.auth_service.post(body,'/notification/index')
@@ -83,8 +84,8 @@ export class Notifications extends React.Component
             <Container style = {styles.form}>
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <Icon name='arrow-back' />
                         </Button>
                     </Left>
 
@@ -99,10 +100,9 @@ export class Notifications extends React.Component
                     </Right>
                 </Header>
 
-     
                 <View >
 
-                    <H3>Notifications</H3>
+                    <H3>{I18n.t('Notifications')}</H3>
                     <List dataArray={this.state.notifications} renderRow={(arrayholder) =>
                         <ListItem avatar button={true}  
                         onPress={() => {this.props.navigation.navigate('NotificationDetail',arrayholder) }}>
@@ -120,11 +120,7 @@ export class Notifications extends React.Component
                     }>
                     </List>
 
-
-
                 </View>
-
-
 
             </Container>
         )
@@ -152,3 +148,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFF'
     }
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+    'en': require('../../locales/en'),
+    'ar-EG': require('../../locales/ar')
+};

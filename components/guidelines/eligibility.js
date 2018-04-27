@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, StatusBar, Switch, View, ScrollView } from 'react-native';
 import { Container, Header, Button, Title, Right, Left, Body, Icon, Card, CardItem, Text, Content } from 'native-base';
 
+import I18n, { getLanguages } from 'react-native-i18n';
+
 export class Eligibility extends React.Component {
     constructor(props) {
         super(props);
@@ -21,6 +23,13 @@ export class Eligibility extends React.Component {
             question13: false,
             question14: false
         };
+    }
+
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+        });
     }
 
     onValue1Change(value) {
@@ -112,7 +121,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    You cannot donate at this time. However, we would be delighted to see you when you are 18.
+                    {I18n.t('You cannot donate at this time. However, we would be delighted to see you when you are 18.')}
                 </Text>
             </View>
             : null;
@@ -120,7 +129,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    If you have never given blood before, then you cannot donate However:  - if you are between 65 and 69 years and have given blood in the last 10 years then you can give blood.  - if you are 70 years or over and you have given blood in the last 2 years and you have a certificate of fitness from your GP, you can give blood. The certificate is valid for 12 months from the date of issue.
+                    {I18n.t('If you have never given blood before, then you cannot donate However:  - if you are between 65 and 69 years and have given blood in the last 10 years then you can give blood.  - if you are 70 years or over and you have given blood in the last 2 years and you have a certificate of fitness from your GP, you can give blood. The certificate is valid for 12 months from the date of issue.')}
                 </Text>
             </View>
             : null;
@@ -128,7 +137,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    If you weigh less than 50 kgs you are unable to donate at this time. If you weigh more than 130 kgs you are unable to give blood at a mobile blood donor clinic.
+                    {I18n.t('If you weigh less than 50 kgs you are unable to donate at this time. If you weigh more than 130 kgs you are unable to give blood at a mobile blood donor clinic.')}
                 </Text>
             </View>
             : null;
@@ -136,7 +145,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    If you are a female under 26 years of age and are less than 5ft 6 inches (168cms) in height and less than 10st 3lb (65 kgs) your height and weight will need to be assessed to establish your eligibility to donate.
+                    {I18n.t('If you are a female under 26 years of age and are less than 5ft 6 inches (168cms) in height and less than 10st 3lb (65 kgs) your height and weight will need to be assessed to establish your eligibility to donate.')}
                 </Text>
             </View>
             : null;
@@ -144,7 +153,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    You cannot donate if you have any illness or injury which may mean that it is not safe to give your blood to a sick patient.
+                    {I18n.t('You cannot donate if you have any illness or injury which may mean that it is not safe to give your blood to a sick patient.')}
                 </Text>
             </View>
             : null;
@@ -152,7 +161,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    You cannot donate if you had an endoscopy (scope) in the last 4 months. If you were diagnosed with a medical condition or illness.
+                    {I18n.t('You cannot donate if you had an endoscopy (scope) in the last 4 months. If you were diagnosed with a medical condition or illness.')}
                 </Text>
             </View>
             : null;
@@ -160,7 +169,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    You cannot donate for 4 months from the date of the tattoo or the piercing.
+                    {I18n.t('You cannot donate for 4 months from the date of the tattoo or the piercing.')}
                 </Text>
             </View>
             : null;
@@ -168,7 +177,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    You cannot donate during pregnancy and for 12 months after your pregnancy.
+                    {I18n.t('You cannot donate during pregnancy and for 12 months after your pregnancy.')}
                 </Text>
             </View>
             : null;
@@ -207,7 +216,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        Are you under 18?
+                                        {I18n.t('Are you under 18?')}
                                     </Text>
                                 
                                 </View>
@@ -525,3 +534,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     }
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+    'en': require('../../locales/en'),
+    'ar-EG': require('../../locales/ar')
+};
