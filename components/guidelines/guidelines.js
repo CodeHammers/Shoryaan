@@ -1,7 +1,11 @@
 import React from 'react';
-import { Image, StyleSheet, StatusBar } from 'react-native';
+import { Image, StyleSheet, StatusBar, ImageBackground } from 'react-native';
 import { Container, Header, Button, View, Title, Right, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Body, Icon } from 'native-base';
 
+import SCREEN_IMPORT from 'Dimensions'
+
+const SCREEN_WIDTH = SCREEN_IMPORT.get('window').width;
+const SCREEN_HEIGHT = SCREEN_IMPORT.get('window').height;
 const cards = [
     {
         image: require('../../tog-help.jpg'),
@@ -27,16 +31,18 @@ export class Guidelines extends React.Component {
                     <Body style={styles.title}>
                         <Title> Guidelines </Title>
                     </Body>
-                    <Right style={{ flex:1 }} />
+                    <Right style={{ flex: 1 }} />
                 </Header>
 
-                <View style={{ flex:1 }}>
+                <View style={{ flex: 1 }}>
                     <DeckSwiper
                         dataSource={cards}
                         renderItem={item =>
                             <Card style={{ elevation: 3 }}>
                                 <CardItem cardBody>
-                                    <Image style={{ height: 600, flex: 1 }} source={item.image} />
+
+                                    <Image style={styles.FullScreenImage} source={item.image} />
+
                                 </CardItem>
                             </Card>
                         }
@@ -56,4 +62,11 @@ const styles = StyleSheet.create({
     statusBar: {
         backgroundColor: '#D32F2F'
     },
+
+    FullScreenImage: {
+        flex: 1,
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
+    //    resizeMode: 'stretch',
+    }
 })

@@ -1,4 +1,3 @@
-
 {
     "Guidelines": "ارشادات",
  	"Managed Hospitals": "المستشفيات المدارة",
@@ -19,7 +18,11 @@
  	"Blood Requests":"طلبات الدم",
  	"Hospital Profile":"مستشفى الملف الشخصي",
  	"Add New Manager":"أضف مدير جديد",
- 	"Blood Diversity":"تنوع الدم"
-
+ 	"Blood Diversity":"تنوع الدم",
+    "My Profile": "ملفي الشخصي",
+    "Donate Blood": "تبرع بالدم",
+    "Eligibility": "استحقاق",
+    "My Hospital": "مستشفي",
+    "Search":"بحث",
+	"Use Filter": "استخدام تصفية"
 }
-

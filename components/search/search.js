@@ -3,6 +3,8 @@ import { Container, Header, Item, Input, Icon, Button, Text, CheckBox, Body, Lis
 import { TouchableOpacity, ScrollView, View, StatusBar, StyleSheet, ActivityIndicator } from 'react-native';
 import { AuthService } from '../../services/auth'
 
+import I18n, { getLanguages } from 'react-native-i18n';
+
 export class Search extends React.Component {
     constructor(props) {
         super(props);
@@ -29,6 +31,14 @@ export class Search extends React.Component {
             loading: false
         };
     }
+
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+        });
+    }
+
     /**
      * intiates the search process
      * uses the keyword in textbox to search
@@ -38,7 +48,7 @@ export class Search extends React.Component {
     Search(text) {
         this.setState({ loading: true })
         url = '/hospital/index'
-        if(text==undefined)
+        if (text == undefined)
             text = this.state.searchText
         if (this.state.checked) {
             if (this.state.selectedState != "" & this.state.selectedStatus == "") {
@@ -164,10 +174,10 @@ export class Search extends React.Component {
 
                     <Header searchBar style={styles.header} noShadow={true} androidStatusBarColor={'#D32F2F'}>
                         <Item rounded>
-                            <Icon onPress={()=>{this.Search() }} name="ios-search" />
-                            <Input onChangeText={(text) => { this.setState({ searchText: text });}} placeholder="Search" />
+                            <Icon onPress={() => { this.Search() }} name="ios-search" />
+                            <Input onChangeText={(text) => { this.setState({ searchText: text }); }} placeholder="Search" />
                         </Item>
-                   
+
                     </Header>
 
                     <ListItem>
@@ -175,12 +185,12 @@ export class Search extends React.Component {
                             checked={this.state.checked}
                             onPress={() => this.setState({ checked: !this.state.checked })} />
                         <Body>
-                            <Text>Use Filter</Text>
+                            <Text>{I18n.t('Use Filter')}</Text>
                         </Body>
                     </ListItem>
 
                     {content}
-             
+
 
                     <View style={{ width: 200, alignItems: 'center', alignSelf: 'center' }}>
 
@@ -207,7 +217,6 @@ export class Search extends React.Component {
 
                 </View>
             </ScrollView>
-
         );
     }
 }
@@ -252,3 +261,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#F44336'
     }
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+
+    'en': require('../../locales/en'),
+    'ar-EG': require('../../locales/ar')
+};

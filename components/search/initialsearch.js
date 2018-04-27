@@ -6,7 +6,8 @@ import { Content, List, ListItem, Thumbnail } from 'native-base';
 import { Search } from './search'
 import { AuthService } from '../../services/auth'
 import MapView from 'react-native-maps';
-import Marker  from 'react-native-maps';/**
+import Marker  from 'react-native-maps';
+/**
  * A view containing the two search tabs 
  * tab 1: search by hospital's name, state and status
  * tab 2: search hospitals in Map relative to user's location (not implemented yet)
@@ -90,7 +91,6 @@ export class InitialSearch extends Component {
                                 description={marker.status}
                                 />
                             ))}
-
 
                         </MapView>
 
