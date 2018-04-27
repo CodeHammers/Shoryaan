@@ -4,6 +4,7 @@ import {Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text
 import {StatusBar, StyleSheet, AsyncStorage, ScrollView} from 'react-native'
 
 import {AuthService} from '../../services/auth'
+import I18n, { getLanguages } from 'react-native-i18n';
 
 export class Profile extends React.Component
 {
@@ -28,6 +29,13 @@ export class Profile extends React.Component
 
         //Retrieve the view need data.
         this.getViewData();
+    }
+
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+        });
     }
 
     /** A function that retrieves the user data on two steps, first get the access token from the mobile cache
@@ -123,8 +131,8 @@ export class Profile extends React.Component
 
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back'/>
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <Icon name='arrow-back'/>
                         </Button>
                     </Left>
 
@@ -133,8 +141,8 @@ export class Profile extends React.Component
                     </Body>
                    
                     <Right style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() => this.navgiateToEdit()} name='md-create'/>
+                        <Button transparent onPress={() => this.navgiateToEdit()}>
+                            <Icon name='md-create'/>
                         </Button>
                     </Right>
                 </Header>
@@ -161,17 +169,17 @@ export class Profile extends React.Component
 
                         <View style={{flexDirection: 'row', alignContent: 'flex-end'}}>
                             <Text style={{fontSize: 40, fontWeight: 'bold', lineHeight: 40, color: '#D32F2F'}}>{this.state.nextDonation}</Text>
-                            <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F', paddingRight: 15}}>days</Text>
+                            <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F', paddingRight: 15}}>{I18n.t('days')}</Text>
                         </View>
                     </View>
                     
                     <View style = {styles.bloodBarSub}>
                         <View style={{flexDirection: 'row', alignContent: 'flex-start'}}>
-                            <Text style={{fontSize: 18, color: '#757575'}}>Blood Type</Text>
+                            <Text style={{fontSize: 18, color: '#757575'}}>{I18n.t('Blood Type')}</Text>
                         </View>
 
                         <View style={{flexDirection: 'row', alignContent: 'flex-end'}}>
-                        <Text style={{fontSize: 18, color: '#757575'}}>Next donation</Text>
+                        <Text style={{fontSize: 18, color: '#757575'}}>{I18n.t('Next donation')}</Text>
                         </View>
                     </View>
                 </View>
@@ -182,37 +190,37 @@ export class Profile extends React.Component
                     <View style = {styles.mainList}>
                         <List>
                             <ListItem>
-                                <Text >Username:{" "}</Text>
+                                <Text>{I18n.t('Username')}:{" "}</Text>
                                 <Text note>{this.state.username}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text >E-mail:{" "}</Text>
+                                <Text>{I18n.t('E-mail')}:{" "}</Text>
                                 <Text note>{this.state.email}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text >Name:{" "}</Text>
+                                <Text>{I18n.t('Name')}:{" "}</Text>
                                 <Text note>{this.state.name}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text >State:{" "}</Text>
+                                <Text>{I18n.t('State')}:{" "}</Text>
                                 <Text note>{this.state.state}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text >City:{" "}</Text>
+                                <Text>{I18n.t('City')}:{" "}</Text>
                                 <Text note>{this.state.city}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text >Gender:{" "}</Text>
+                                <Text>{I18n.t('Gender')}:{" "}</Text>
                                 <Text note>{this.state.gender}</Text>
                             </ListItem>
 
                             <ListItem last>
-                                <Text >Date of birth:{" "}</Text>
+                                <Text>{I18n.t('Date of birth')}:{" "}</Text>
                                 <Text note>{this.state.dateOfBirth}</Text>
                             </ListItem>
 
@@ -293,3 +301,10 @@ const styles = StyleSheet.create({
         backgroundColor:'#FFFFFF'
     }
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+    'en': require('../../locales/en'),
+    'ar-EG': require('../../locales/ar')
+};

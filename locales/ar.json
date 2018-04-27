@@ -48,4 +48,18 @@
     "Have you had any medical tests or investigations in the last 4 months or since your last donation?": "هل أجريت أي تحاليل أو تحقيقات طبية خلال الـ 4 أشهر الماضية أو منذ آخر تبرع لك؟",
     "Have you had a tattoo or body piercing in the last 4 months?": "هل كان لديك وشم أو ثقب في الجسم في الأشهر 4 الماضية؟",
     "For women; are you pregnant or have you have you been pregnant in the past 12 months?": "للنساء هل أنت حامل أو هل كنت حاملاً خلال الـ 12 شهراً الماضية؟",
+    "Old password": "كلمة المرور القديمة",
+    "Enter your old password": "أدخل كلمة المرور القديمة",
+    "New password": "كلمة السر الجديدة",
+    "Enter your new password, minimum of 8 characters":"أدخل كلمة المرور الجديدة ، على الأقل 8 أحرف",
+    "Confirm password":"تأكيد كلمة المرور",
+    "Re-enter your new password, please don't copy it":"أعد إدخال كلمة المرور الجديدة ، يرجى عدم نسخها",
+    "Username":"اسم المستخدم",
+    "Name": "اسم",
+    "City": "مدينة",
+    "Gender": "نوع",
+    "Date of birth": "تاريخ الولادة",
+    "Next donation": "تبرع المقبل",
+    "Blood Type": "فصيلة الدم",
+    "days": "أيام"
 }

@@ -4,6 +4,7 @@ import {StatusBar,StyleSheet,AsyncStorage,ScrollView,TextInput, View} from 'reac
 
 import {AuthService} from '../../services/auth'
 import {ValidateService} from '../../services/validate'
+import I18n, { getLanguages } from 'react-native-i18n';
 
 export class ChangeUserPassword extends React.Component
 {
@@ -23,6 +24,13 @@ export class ChangeUserPassword extends React.Component
         }
 
         this.checkStoredToken();
+    }
+
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+        });
     }
 
     /** A function that retrieves that access token from the mobile's cache */    
@@ -90,13 +98,13 @@ export class ChangeUserPassword extends React.Component
             <Container style = {styles.form}>
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() => this.props.navigation.goBack()} name='arrow-back' />
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <Icon name='arrow-back' />
                         </Button>
                     </Left>
 
                     <Body style = {styles.title}>
-                        <Title> PASSWORD </Title>
+                        <Title> Password </Title>
                     </Body>
                 
                     <Right style = {{flex: 1}}>
@@ -108,10 +116,10 @@ export class ChangeUserPassword extends React.Component
 
                 <ScrollView>
                     <View style = {styles.form}>
-                        <Text style = {styles.inputFieldLabels}> Old password</Text>
+                        <Text style = {styles.inputFieldLabels}> {I18n.t('Old password')}</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "Enter your old password"
+                            placeholder= {I18n.t("Enter your old password")}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             secureTextEntry = {true}
@@ -119,10 +127,10 @@ export class ChangeUserPassword extends React.Component
                             onChangeText={(text) =>{this.setState({oldPassword: text});}}
                         />
 
-                        <Text style = {styles.inputFieldLabels}> New password</Text>
+                        <Text style = {styles.inputFieldLabels}> {I18n.t('New password')}</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "Enter your new password, minimum of 8 characters"
+                            placeholder= {I18n.t("Enter your new password, minimum of 8 characters")}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             secureTextEntry = {true}
@@ -130,10 +138,10 @@ export class ChangeUserPassword extends React.Component
                             onChangeText={(text) =>{this.setState({newPassword: text});}}
                         />
 
-                        <Text style = {styles.inputFieldLabels}> Confirm password</Text>
+                        <Text style = {styles.inputFieldLabels}> {I18n.t('Confirm password')}</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= "Re-enter your new password, please don't copy it"
+                            placeholder= {I18n.t("Re-enter your new password, please don't copy it")}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             secureTextEntry = {true}
@@ -187,3 +195,10 @@ const styles = StyleSheet.create({
         fontSize: 20
     }
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+    'en': require('../../locales/en'),
+    'ar-EG': require('../../locales/ar')
+};
