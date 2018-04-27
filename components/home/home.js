@@ -25,15 +25,16 @@ export class Home extends React.Component {
 
         /** Retrieve the access token stored in the mobile cache and then retrieve the user data from the DB */
         this.getViewData();
-  
+
     }
 
     componentWillMount() {
         getLanguages().then(languages => {
-          this.setState({ languages: languages });
-          //alert(languages)
+            this.setState({ languages: languages });
+            //alert(languages)
         });
     }
+
     getViewData() {
         this.checkStoredToken().then(
             () => { this.getUserData() }
@@ -82,9 +83,8 @@ export class Home extends React.Component {
                         this.props.navigation.navigate('Notifications');
                     }
                     if (BUTTONS[buttonIndex].text == "Log out") {
-                         this.props.navigation.navigate('Auth');
+                        this.props.navigation.navigate('Auth');
                     }
-
                 }
             }
         )
@@ -124,7 +124,7 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                My Profile
+                                {I18n.t('My Profile')}
                             </Text>
                         </TouchableOpacity>
 
@@ -134,7 +134,7 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                Donate Blood
+                                {I18n.t('Donate Blood')}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -146,7 +146,6 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                
 
                                 {I18n.t('Guidelines')}
                             </Text>
@@ -158,7 +157,7 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                Eligibility
+                                {I18n.t('Eligibility')}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -177,7 +176,7 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                My Hospital
+                                {I18n.t('My Hospital')}
                             </Text>
                         </TouchableOpacity>
 
@@ -187,7 +186,7 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                Search
+                                {I18n.t('Search')}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -242,6 +241,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         resizeMode: 'stretch',
+        marginBottom: 10
     },
 })
 
@@ -249,7 +249,6 @@ const styles = StyleSheet.create({
 I18n.fallbacks = true;
 
 I18n.translations = {
- 
-  'en': require('../../locales/en'),
- 
+    'en': require('../../locales/en'),
+    'ar-EG': require('../../locales/ar')
 };

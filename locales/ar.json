@@ -1,10 +1,12 @@
 
 {
-    Guidelines: 'ارشادات',
-    My Profile: 'ملفي الشخصي',
-    Donate Blood: 'تبرع بالدم',
-    Eligibility: 'استحقاق',
-    My Hospital: 'مستشفي',
-    Search: 'بحث'  
+    'Guidelines': 'ارشادات',
+    'My Profile': 'ملفي الشخصي',
+    'Donate Blood': 'تبرع بالدم',
+    'Eligibility': 'استحقاق',
+    'My Hospital': 'مستشفي',
+    'Search': 'بحث',
+    
+    'Use Filter': 'استخدام تصفية'
 }
 

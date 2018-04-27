@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     FullScreenImage: {
         flex: 1,
         width: SCREEN_WIDTH,
-        height: SCREEN_HEIGHT
+        height: SCREEN_HEIGHT,
+    //    resizeMode: 'stretch',
     }
 })
