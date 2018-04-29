@@ -7,6 +7,7 @@ import DatePicker from 'react-native-datepicker'
 
 import {AuthService} from '../../services/auth'
 import {ValidateService} from '../../services/validate'
+import I18n, { getLanguages } from 'react-native-i18n';
 
 export class EditProfile extends React.Component
 {
@@ -57,6 +58,13 @@ export class EditProfile extends React.Component
         };
         //alert(params.position.latitude)
         this.checkStoredToken();
+    }
+
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+        });
     }
 
     /** A function that retrieves that access token from the mobile's cache */
@@ -170,8 +178,8 @@ export class EditProfile extends React.Component
                     </Body>
                 
                     <Right style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() => {Keyboard.dismiss; this.editProfile()}} name='md-checkmark' />
+                        <Button transparent onPress={() => {Keyboard.dismiss; this.editProfile()}}>
+                            <Icon name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>
@@ -180,7 +188,7 @@ export class EditProfile extends React.Component
 
                     <View style = {styles.form}>
 
-                        <Text style = {styles.inputFieldLabels}> Username</Text>
+                        <Text style = {styles.inputFieldLabels}> {I18n.t('Username')}</Text>
                         <TextInput 
                             style={[
                                 this.state.valid_username == undefined? styles.inputBoxNormal : 
@@ -196,12 +204,11 @@ export class EditProfile extends React.Component
 
                         {this.state.valid_state== this.state.validator.INVALID_USERNAME && (
                             <Badge   style={{backgroundColor:'#F44336',opacity:.8}}>
-                            <Text  style={{color:'white'}} note>username: invalid characters
-                            </Text>
+                            <Text  style={{color:'white'}} note>username: invalid characters</Text>
                             </Badge>
                         )}
 
-                        <Text style = {styles.inputFieldLabels}> Name</Text>
+                        <Text style = {styles.inputFieldLabels}>{I18n.t('Name')}</Text>
                         <TextInput 
                             style={[
                                 this.state.validName == undefined? styles.inputBoxNormal : 
@@ -217,12 +224,11 @@ export class EditProfile extends React.Component
 
                         {this.state.valid_state== this.state.validator.INVALID_NAME && (
                             <Badge   style={{backgroundColor:'#F44336',opacity:.8}}>
-                            <Text  style={{color:'white'}} note>name: invalid characters/too short
-                            </Text>
+                            <Text  style={{color:'white'}} note>name: invalid characters/too short</Text>
                             </Badge>
                         )}
 
-                        <Text style = {styles.inputFieldLabels}> City</Text>
+                        <Text style = {styles.inputFieldLabels}>{I18n.t('City')}</Text>
                         <TextInput 
                             style={[
                                 this.state.validCity == undefined? styles.inputBoxNormal : 
@@ -237,12 +243,11 @@ export class EditProfile extends React.Component
                         />
                         {this.state.valid_state== this.state.validator.INVALID_CITY && (
                             <Badge   style={{backgroundColor:'#F44336',opacity:.8}}>
-                            <Text  style={{color:'white'}} note>city: invalid
-                            </Text>
+                            <Text  style={{color:'white'}} note>city: invalid</Text>
                             </Badge>
                         )}
 
-                        <Text style = {styles.inputFieldLabels}> State</Text>
+                        <Text style = {styles.inputFieldLabels}>{I18n.t('State')}</Text>
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
@@ -255,7 +260,7 @@ export class EditProfile extends React.Component
                             })}
                         </Picker>
                         
-                        <Text style = {styles.inputFieldLabels}> Blood type</Text>
+                        <Text style = {styles.inputFieldLabels}>{I18n.t('Blood type')}</Text>
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
@@ -268,7 +273,7 @@ export class EditProfile extends React.Component
                             })}
                         </Picker>
                         
-                        <Text style = {styles.inputFieldLabels}> Gender</Text>
+                        <Text style = {styles.inputFieldLabels}> {I18n.t('Gender')}</Text>
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
@@ -281,7 +286,7 @@ export class EditProfile extends React.Component
                             })}
                         </Picker> 
 
-                        <Text style = {styles.inputFieldLabels}> Date of birth</Text>
+                        <Text style = {styles.inputFieldLabels}>{I18n.t('Date of birth')}</Text>
                         <DatePicker
                             style={{width: 125}}
                             date={this.state.dateOfBirth}
@@ -409,3 +414,10 @@ const styles = StyleSheet.create({
         color: '#757575'
     }
 })
+
+I18n.fallbacks = true;
+
+I18n.translations = {
+    'en': require('../../locales/en'),
+    'ar-EG': require('../../locales/ar')
+};

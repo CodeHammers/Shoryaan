@@ -33,8 +33,8 @@ export class HospitalHome extends React.Component {
 
                 <Header style={styles.header} noShadow={true} androidStatusBarColor={'#D32F2F'}>
                     <Left style={{ flex: 1 }}>
-                        <Button transparent>
-                            <Icon name='arrow-back' onPress={() => this.props.navigation.goBack()} />
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <Icon name='arrow-back'/>
                         </Button>
                     </Left>
 

@@ -121,7 +121,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    {I18n.t('You cannot donate at this time. However, we would be delighted to see you when you are 18.')}
+                    {I18n.t('You cannot donate at this time However we would be delighted to see you when you are 18')}
                 </Text>
             </View>
             : null;
@@ -129,7 +129,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    {I18n.t('If you have never given blood before, then you cannot donate However:  - if you are between 65 and 69 years and have given blood in the last 10 years then you can give blood.  - if you are 70 years or over and you have given blood in the last 2 years and you have a certificate of fitness from your GP, you can give blood. The certificate is valid for 12 months from the date of issue.')}
+                    {I18n.t('If you have never given blood before then you cannot donate However   if you are between 65 and 69 years and have given blood in the last 10 years then you can give blood   if you are 70 years or over and you have given blood in the last 2 years and you have a certificate of fitness from your GP you can give blood The certificate is valid for 12 months from the date of issue')}
                 </Text>
             </View>
             : null;
@@ -137,7 +137,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    {I18n.t('If you weigh less than 50 kgs you are unable to donate at this time. If you weigh more than 130 kgs you are unable to give blood at a mobile blood donor clinic.')}
+                    {I18n.t('If you weigh less than 50 kgs you are unable to donate at this time If you weigh more than 130 kgs you are unable to give blood at a mobile blood donor clinic')}
                 </Text>
             </View>
             : null;
@@ -145,7 +145,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    {I18n.t('If you are a female under 26 years of age and are less than 5ft 6 inches (168cms) in height and less than 10st 3lb (65 kgs) your height and weight will need to be assessed to establish your eligibility to donate.')}
+                    {I18n.t('If you are a female under 26 years of age and are less than 168cms in height and less than 65 kgs your height and weight will need to be assessed to establish your eligibility to donate')}
                 </Text>
             </View>
             : null;
@@ -153,7 +153,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    {I18n.t('You cannot donate if you have any illness or injury which may mean that it is not safe to give your blood to a sick patient.')}
+                    {I18n.t('You cannot donate if you have any illness or injury which may mean that it is not safe to give your blood to a sick patient')}
                 </Text>
             </View>
             : null;
@@ -161,7 +161,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    {I18n.t('You cannot donate if you had an endoscopy (scope) in the last 4 months. If you were diagnosed with a medical condition or illness.')}
+                    {I18n.t('You cannot donate if you had an endoscopy (scope) in the last 4 months If you were diagnosed with a medical condition or illness')}
                 </Text>
             </View>
             : null;
@@ -169,7 +169,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    {I18n.t('You cannot donate for 4 months from the date of the tattoo or the piercing.')}
+                    {I18n.t('You cannot donate for 4 months from the date of the tattoo or the piercing')}
                 </Text>
             </View>
             : null;
@@ -177,7 +177,7 @@ export class Eligibility extends React.Component {
             ?
             <View>
                 <Text style={{ color: 'red', fontSize: 16 }}>
-                    {I18n.t('You cannot donate during pregnancy and for 12 months after your pregnancy.')}
+                    {I18n.t('You cannot donate during pregnancy and for 12 months after your pregnancy')}
                 </Text>
             </View>
             : null;
@@ -290,7 +290,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        {I18n.t('Do you weigh less than 7 stone 12 lbs (less than 50kgs) or more than 20 stone 6 lbs (130kgs)?')}
+                                        {I18n.t('Do you weigh less 50kgs or more than 130kgs?')}
                                     </Text>
 
                                 </View>    
@@ -327,7 +327,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        {I18n.t('For women; are you under 26 years of age?')}
+                                        {I18n.t('For women are you under 26 years of age?')}
                                     </Text>
 
                                 </View>    
@@ -364,7 +364,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        {I18n.t('Today or in the last 2 weeks have you had any illness or injury, e.g. a cough, a cold, a sore throat, vomiting, diarrhoea or an open wound?')}
+                                        {I18n.t('Today or in the last 2 weeks have you had any illness or injury eg a cough a cold a sore throat vomiting diarrhoea or an open wound?')}
                                     </Text>
 
                                 </View>
@@ -473,7 +473,7 @@ export class Eligibility extends React.Component {
                                 <View style={{ flex: 5 }}>
 
                                     <Text style={styles.question}>
-                                        {I18n.t('For women; are you pregnant or have you have you been pregnant in the past 12 months?')}
+                                        {I18n.t('For women are you pregnant or have you been pregnant in the past 12 months?')}
                                     </Text>
 
                                 </View>

@@ -108,8 +108,8 @@ export class ChangeUserPassword extends React.Component
                     </Body>
                 
                     <Right style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() => this.editPassword()} name='md-checkmark' />
+                        <Button transparent onPress={() => this.editPassword()}>
+                            <Icon name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>

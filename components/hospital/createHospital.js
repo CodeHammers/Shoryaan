@@ -137,8 +137,8 @@ export class CreateHospital extends React.Component
                     </Body>
                 
                     <Right style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={()=> {Keyboard.dismiss; this.createHospital()}} name='md-checkmark' />
+                        <Button transparent onPress={()=> {Keyboard.dismiss; this.createHospital()}}>
+                            <Icon name='md-checkmark' />
                         </Button>
                     </Right>
                 </Header>

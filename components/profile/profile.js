@@ -68,7 +68,6 @@ export class Profile extends React.Component
             else{
                 response.json().then((resJSON) =>{
 
-
                     this.setState({
                         username: resJSON.username,
                         state: resJSON.state,

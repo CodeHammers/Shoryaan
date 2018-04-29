@@ -105,8 +105,8 @@ export class PrivateProfileInfo extends React.Component
             <Container style = {styles.form}>
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() => {this.props.navigation.goBack()}} name='arrow-back' />
+                        <Button transparent onPress={() => {this.props.navigation.goBack()}}>
+                            <Icon name='arrow-back' />
                         </Button>
                     </Left>
 
@@ -115,8 +115,8 @@ export class PrivateProfileInfo extends React.Component
                     </Body>
                 
                     <Right style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() => this.navgiateToEdit()} name='md-create' />
+                        <Button transparent onPress={() => this.navgiateToEdit()}>
+                            <Icon name='md-create' />
                         </Button>
                     </Right>
                 </Header>
