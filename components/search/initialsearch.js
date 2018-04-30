@@ -65,9 +65,9 @@ export class InitialSearch extends Component {
 
                 <Header style={styles.header} hasTabs noShadow={true} androidStatusBarColor={'#D32F2F'}>
                     <Left style={{ flex: 1 }}>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='arrow-back' />
-                        </Button>
+                   
+                        <Icon name='arrow-back' style={{color:'white'}}   onPress={() => this.props.navigation.goBack()}/>
+                  
                     </Left>
 
                     <Body style={styles.title}>

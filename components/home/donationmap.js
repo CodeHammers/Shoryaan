@@ -52,9 +52,7 @@ export class DonationMap extends React.Component
             <Container style = {styles.form}>
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='arrow-back' />
-                        </Button>
+                        <Icon name='arrow-back'  style={{color:'white'}}  onPress={() => this.props.navigation.goBack()}/>
                     </Left>
 
                     <Body style = {styles.title}>
@@ -62,9 +60,9 @@ export class DonationMap extends React.Component
                     </Body>
                 
                     <Right style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() =>{} } name='md-home' />
-                        </Button>
+                     
+                            <Icon onPress={() =>{} }  style={{color:'white'}}   name='md-home' />
+              
                     </Right>
                 </Header>
 

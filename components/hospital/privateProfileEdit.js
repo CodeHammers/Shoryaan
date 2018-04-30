@@ -121,9 +121,9 @@ export class EditHospitalPrivateProfile extends React.Component
             <Container style = {styles.form}>
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
-                        <Button transparent onPress={() => { Keyboard.dismiss; this.props.navigation.goBack()}}>
-                            <Icon name='arrow-back' />
-                        </Button>
+                   
+                        <Icon name='arrow-back'  style={{color:'white'}} onPress={() => { Keyboard.dismiss; this.props.navigation.goBack()}}  />
+            
                     </Left>
 
                     <Body style = {styles.title}>
@@ -131,9 +131,9 @@ export class EditHospitalPrivateProfile extends React.Component
                     </Body>
                 
                     <Right style = {{flex: 1}}>
-                        <Button transparent onPress = {()=> {Keyboard.dismiss; this.editProfile()}}>
-                            <Icon name='md-checkmark' />
-                        </Button>
+                   
+                            <Icon name='md-checkmark' style={{color:'white'}}  onPress = {()=> {Keyboard.dismiss; this.editProfile()}} />
+            
                     </Right>
                 </Header>
 

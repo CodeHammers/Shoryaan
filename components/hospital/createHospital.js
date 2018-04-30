@@ -127,9 +127,9 @@ export class CreateHospital extends React.Component
 
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon onPress={() => {Keyboard.dismiss; this.props.navigation.goBack()}} name='arrow-back' />
-                        </Button>
+                  
+                        <Icon style={{color:'white'}} onPress={() => {Keyboard.dismiss; this.props.navigation.goBack()}} name='arrow-back' />
+      
                     </Left>
 
                     <Body style = {styles.title}>
@@ -137,9 +137,9 @@ export class CreateHospital extends React.Component
                     </Body>
                 
                     <Right style = {{flex: 1}}>
-                        <Button transparent onPress={()=> {Keyboard.dismiss; this.createHospital()}}>
-                            <Icon name='md-checkmark' />
-                        </Button>
+                     
+                        <Icon name='md-checkmark' style={{color:'white'}}  onPress={()=> {Keyboard.dismiss; this.createHospital()}} />
+                    
                     </Right>
                 </Header>
 

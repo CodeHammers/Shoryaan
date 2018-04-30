@@ -84,9 +84,8 @@ export class Notifications extends React.Component
             <Container style = {styles.form}>
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='arrow-back' />
-                        </Button>
+                            <Icon name='arrow-back' onPress={() => this.props.navigation.goBack()}  style={{color:'white'}} />
+              
                     </Left>
 
                     <Body style = {styles.title}>
@@ -94,9 +93,9 @@ export class Notifications extends React.Component
                     </Body>
                 
                     <Right style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon name='home' />
-                        </Button>
+      
+                        <Icon name='home' style={{color:'white'}}  />
+
                     </Right>
                 </Header>
 

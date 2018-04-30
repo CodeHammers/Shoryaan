@@ -35,9 +35,9 @@ export class HospitalPublicProfile extends React.Component
 
                 <Header hasTabs style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='arrow-back' />
-                        </Button>
+                        
+                            <Icon name='arrow-back'  style={{color:'white'}} onPress={() => this.props.navigation.goBack()} />
+            
                     </Left>
 
                     <Body style = {styles.title}>
@@ -45,9 +45,9 @@ export class HospitalPublicProfile extends React.Component
                     </Body>
                    
                     <Right style = {{flex: 1}}>
-                        <Button transparent>
-                            <Icon name='search' />
-                        </Button>
+                       
+                            <Icon name='search'   style={{color:'white'}}  />
+              
                     </Right>
                 </Header>
                 

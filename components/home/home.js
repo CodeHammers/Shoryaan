@@ -100,9 +100,7 @@ export class Home extends React.Component {
 
                 <Header style={styles.header} noShadow={true} androidStatusBarColor={'#D32F2F'}>
                     <Left style={{ flex: 1 }}>
-                        <Button transparent onPress={() => this.props.navigation.navigate('InitialSearch')}>
-                            <Icon name='search'/>
-                        </Button>
+                            <Icon name='search' style={{color:'white'}}  onPress={() => this.props.navigation.navigate('InitialSearch')}/>
                     </Left>
 
                     <Body style={styles.title}>
@@ -110,9 +108,8 @@ export class Home extends React.Component {
                     </Body>
 
                     <Right style={{ flex: 1 }}>
-                        <Button transparent onPress={() => this.showUserSettings()}>
-                            <Icon name='md-settings'/>
-                        </Button>
+                            <Icon name='md-settings'  style={{color:'white'}} onPress={() => this.showUserSettings()} />
+      
                     </Right>
                 </Header>
 
