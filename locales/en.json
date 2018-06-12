@@ -1,7 +1,6 @@
 
 {
-    "Guidelines": "Guidelines",
-    "My Profile": "My Profile",
+    "My Profile": "ملفي الشخصي",
     "Notifications": "Notifications",
     "Title": "Title",
     "Donate Blood": "Donate Blood",
@@ -44,4 +43,5 @@
     "Next donation": "Next donation",
     "Blood Type": "Blood Type",
     "days": "days",
+    "Profile":"Profile"
 }

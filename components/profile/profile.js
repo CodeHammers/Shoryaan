@@ -25,6 +25,8 @@ export class Profile extends React.Component
 
             access_token: '',
             auth_service: new AuthService(this), //instance from an authentication service
+            languages:""
+
         }
 
         //Retrieve the view need data.
@@ -168,17 +170,23 @@ export class Profile extends React.Component
 
                         <View style={{flexDirection: 'row', alignContent: 'flex-end'}}>
                             <Text style={{fontSize: 40, fontWeight: 'bold', lineHeight: 40, color: '#D32F2F'}}>{this.state.nextDonation}</Text>
-                            <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F', paddingRight: 15}}>{I18n.t('days')}</Text>
+                            <Text style={{fontSize: 15, lineHeight: 15, color: '#D32F2F', paddingRight: 15}}>
+                            {this.state.languages.includes('ar') ?   I18n.t('days') : 'days' }
+                            </Text>
                         </View>
                     </View>
                     
                     <View style = {styles.bloodBarSub}>
                         <View style={{flexDirection: 'row', alignContent: 'flex-start'}}>
-                            <Text style={{fontSize: 18, color: '#757575'}}>{I18n.t('Blood Type')}</Text>
+                            <Text style={{fontSize: 18, color: '#757575'}}>
+                            { this.state.languages.includes('ar') ? I18n.t('Blood Type') : 'Blood Type' }
+                            </Text>
                         </View>
 
                         <View style={{flexDirection: 'row', alignContent: 'flex-end'}}>
-                        <Text style={{fontSize: 18, color: '#757575'}}>{I18n.t('Next donation')}</Text>
+                        <Text style={{fontSize: 18, color: '#757575'}}>
+                            { this.state.languages.includes('ar') ? I18n.t('Next donation') : 'Next donation'}
+                        </Text>
                         </View>
                     </View>
                 </View>
@@ -189,37 +197,37 @@ export class Profile extends React.Component
                     <View style = {styles.mainList}>
                         <List>
                             <ListItem>
-                                <Text>{I18n.t('Username')}:{" "}</Text>
+                                <Text>{ this.state.languages.includes('ar') ?  I18n.t('Username') :'Username' }:{" "}</Text>
                                 <Text note>{this.state.username}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text>{I18n.t('E-mail')}:{" "}</Text>
-                                <Text note>{this.state.email}</Text>
+                                <Text>{this.state.languages.includes('ar') ?  I18n.t('E-mail') : 'E-mail'}:{" "}</Text>
+                                <Text note>{ this.state.email}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text>{I18n.t('Name')}:{" "}</Text>
+                                <Text>{ this.state.languages.includes('ar') ?  I18n.t('Name') : 'Name' }:{" "}</Text>
                                 <Text note>{this.state.name}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text>{I18n.t('State')}:{" "}</Text>
+                                <Text>{ this.state.languages.includes('ar') ?  I18n.t('State') : 'State'}:{" "}</Text>
                                 <Text note>{this.state.state}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text>{I18n.t('City')}:{" "}</Text>
+                                <Text>{ this.state.languages.includes('ar') ?  I18n.t('City') : 'City'}:{" "}</Text>
                                 <Text note>{this.state.city}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text>{I18n.t('Gender')}:{" "}</Text>
+                                <Text>{ this.state.languages.includes('ar') ?  I18n.t('Gender') : 'Gender'}:{" "}</Text>
                                 <Text note>{this.state.gender}</Text>
                             </ListItem>
 
                             <ListItem last>
-                                <Text>{I18n.t('Date of birth')}:{" "}</Text>
+                                <Text>{ this.state.languages.includes('ar') ?  I18n.t('Date of birth'): 'Date of birth'}:{" "}</Text>
                                 <Text note>{this.state.dateOfBirth}</Text>
                             </ListItem>
 

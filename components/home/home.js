@@ -20,7 +20,8 @@ export class Home extends React.Component {
         this.state = {
             /** variable to indicate whether the user manages a hospital or not */
             manager: false,
-            auth_service: new AuthService()
+            auth_service: new AuthService(),
+            languages:""
         };
 
         /** Retrieve the access token stored in the mobile cache and then retrieve the user data from the DB */
@@ -31,6 +32,7 @@ export class Home extends React.Component {
     componentWillMount() {
         getLanguages().then(languages => {
             this.setState({ languages: languages });
+            //alert(languages)
             //alert(languages)
         });
     }
@@ -121,7 +123,7 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                {I18n.t('My Profile')}
+                                { this.state.languages.includes('ar') ?  I18n.t('My Profile') : "My Profile"  }
                             </Text>
                         </TouchableOpacity>
 
@@ -131,7 +133,7 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                {I18n.t('Donate Blood')}
+                                { this.state.languages.includes('ar') ? I18n.t('Donate Blood') : 'Donate Blood' }
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -144,7 +146,7 @@ export class Home extends React.Component {
                             />
                             <Text style={styles.textbutton}>
 
-                                {I18n.t('Guidelines')}
+                                { this.state.languages.includes('ar') ? I18n.t('Guidelines') : 'Guidelines'}
                             </Text>
                         </TouchableOpacity>
 
@@ -154,7 +156,7 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                {I18n.t('Eligibility')}
+                                {  this.state.languages.includes('ar') ?  I18n.t('Eligibility') : 'Eligibility'}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -173,7 +175,7 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                {I18n.t('My Hospital')}
+                                {  this.state.languages.includes('ar') ? I18n.t('My Hospital') : 'My Hospital'}
                             </Text>
                         </TouchableOpacity>
 
@@ -183,7 +185,7 @@ export class Home extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                {I18n.t('Search')}
+                                {  this.state.languages.includes('ar') ? I18n.t('Search') : 'Search'}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -246,6 +248,6 @@ const styles = StyleSheet.create({
 I18n.fallbacks = true;
 
 I18n.translations = {
-    'en': require('../../locales/en'),
+    'en-US': require('../../locales/en'),
     'ar-EG': require('../../locales/ar')
 };

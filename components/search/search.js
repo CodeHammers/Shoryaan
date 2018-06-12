@@ -28,7 +28,8 @@ export class Search extends React.Component {
             isVerified: "",
             status: "",
             self: self,
-            loading: false
+            loading: false,
+            languages: ""
         };
     }
 
@@ -140,7 +141,7 @@ export class Search extends React.Component {
         const content = this.state.checked
             ?
             <View>
-                <Text style={styles.inputFieldLabels}> {I18n.t('State')}</Text>
+                <Text style={styles.inputFieldLabels}> { this.state.languages.includes('ar') ?  I18n.t('State') : 'State'}</Text>
                 <Picker
                     iosHeader="Select one"
                     mode="dropdown"
@@ -152,7 +153,7 @@ export class Search extends React.Component {
                         return (<Item style={styles.StatePickerItem} label={item} value={item} key={index} />)
                     })}
                 </Picker>
-                <Text style={styles.inputFieldLabels}> {I18n.t('Status')}</Text>
+                <Text style={styles.inputFieldLabels}> { this.state.languages.includes('ar') ? I18n.t('Status') : 'Status'}</Text>
                 <Picker
                     iosHeader="Select one"
                     mode="dropdown"
@@ -175,7 +176,7 @@ export class Search extends React.Component {
                     <Header searchBar style={styles.header} noShadow={true} androidStatusBarColor={'#D32F2F'}>
                         <Item rounded>
                             <Icon onPress={() => { this.Search() }} name="ios-search" />
-                            <Input onChangeText={(text) => { this.setState({ searchText: text }); }} placeholder= {I18n.t("Search")} />
+                            <Input onChangeText={(text) => { this.setState({ searchText: text }); }} placeholder= {this.state.languages.includes('ar') ?  I18n.t("Search") : 'Search'} />
                         </Item>
 
                     </Header>
@@ -185,7 +186,7 @@ export class Search extends React.Component {
                             checked={this.state.checked}
                             onPress={() => this.setState({ checked: !this.state.checked })} />
                         <Body>
-                            <Text>{I18n.t('Use Filter')}</Text>
+                            <Text>{ this.state.languages.includes('ar') ? I18n.t('Use Filter') : 'Use Filter'}</Text>
                         </Body>
                     </ListItem>
 

@@ -53,8 +53,8 @@ export class EditProfile extends React.Component
             access_token: '',
             auth_service: new AuthService(this),   //instance from an authentication service
             validator: new ValidateService(this), //instance from a validation service
-            valid_state: 0  //indicates the validity state of the form (valid, invalid password, ..)
-
+            valid_state: 0,  //indicates the validity state of the form (valid, invalid password, ..)
+            languages:""
         };
         //alert(params.position.latitude)
         this.checkStoredToken();
@@ -188,7 +188,7 @@ export class EditProfile extends React.Component
 
                     <View style = {styles.form}>
 
-                        <Text style = {styles.inputFieldLabels}> {I18n.t('Username')}</Text>
+                        <Text style = {styles.inputFieldLabels}> {this.state.languages.includes('ar') ?  I18n.t('Username') : 'Username' }</Text>
                         <TextInput 
                             style={[
                                 this.state.valid_username == undefined? styles.inputBoxNormal : 
@@ -208,7 +208,7 @@ export class EditProfile extends React.Component
                             </Badge>
                         )}
 
-                        <Text style = {styles.inputFieldLabels}>{I18n.t('Name')}</Text>
+                        <Text style = {styles.inputFieldLabels}>{ this.state.languages.includes('ar') ? I18n.t('Name') : 'Name'}</Text>
                         <TextInput 
                             style={[
                                 this.state.validName == undefined? styles.inputBoxNormal : 
@@ -228,7 +228,7 @@ export class EditProfile extends React.Component
                             </Badge>
                         )}
 
-                        <Text style = {styles.inputFieldLabels}>{I18n.t('City')}</Text>
+                        <Text style = {styles.inputFieldLabels}>{  this.state.languages.includes('ar') ?  I18n.t('City') : 'City'}</Text>
                         <TextInput 
                             style={[
                                 this.state.validCity == undefined? styles.inputBoxNormal : 
@@ -247,7 +247,7 @@ export class EditProfile extends React.Component
                             </Badge>
                         )}
 
-                        <Text style = {styles.inputFieldLabels}>{I18n.t('State')}</Text>
+                        <Text style = {styles.inputFieldLabels}>{ this.state.languages.includes('ar') ? I18n.t('State') : 'State'}</Text>
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
@@ -260,7 +260,7 @@ export class EditProfile extends React.Component
                             })}
                         </Picker>
                         
-                        <Text style = {styles.inputFieldLabels}>{I18n.t('Blood type')}</Text>
+                        <Text style = {styles.inputFieldLabels}>{  this.state.languages.includes('ar') ? I18n.t('Blood type') : 'Blood type'}</Text>
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
@@ -273,7 +273,7 @@ export class EditProfile extends React.Component
                             })}
                         </Picker>
                         
-                        <Text style = {styles.inputFieldLabels}> {I18n.t('Gender')}</Text>
+                        <Text style = {styles.inputFieldLabels}> { this.state.languages.includes('ar') ? I18n.t('Gender') : 'Gender'}</Text>
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
@@ -286,7 +286,7 @@ export class EditProfile extends React.Component
                             })}
                         </Picker> 
 
-                        <Text style = {styles.inputFieldLabels}>{I18n.t('Date of birth')}</Text>
+                        <Text style = {styles.inputFieldLabels}>{ this.state.languages.includes('ar') ? I18n.t('Date of birth') : 'Date of birth'}</Text>
                         <DatePicker
                             style={{width: 125}}
                             date={this.state.dateOfBirth}

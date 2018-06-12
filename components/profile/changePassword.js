@@ -20,7 +20,10 @@ export class ChangeUserPassword extends React.Component
             access_token: '',
             auth_service: new AuthService(this),
 
-            validator: new ValidateService(this)
+            validator: new ValidateService(this),
+
+            languages:""
+
         }
 
         this.checkStoredToken();
@@ -116,10 +119,12 @@ export class ChangeUserPassword extends React.Component
 
                 <ScrollView>
                     <View style = {styles.form}>
-                        <Text style = {styles.inputFieldLabels}> {I18n.t('Old password')}</Text>
+                        <Text style = {styles.inputFieldLabels}>
+                         { this.state.languages.includes('ar') ?  I18n.t('Old password') : 'Old password'}
+                         </Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= {I18n.t("Enter your old password")}
+                            placeholder= {this.state.languages.includes('ar') ?   I18n.t("Enter your old password") : 'Enter your old password'}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             secureTextEntry = {true}
@@ -127,10 +132,10 @@ export class ChangeUserPassword extends React.Component
                             onChangeText={(text) =>{this.setState({oldPassword: text});}}
                         />
 
-                        <Text style = {styles.inputFieldLabels}> {I18n.t('New password')}</Text>
+                        <Text style = {styles.inputFieldLabels}> { this.state.languages.includes('ar') ?  I18n.t('New password') : 'New password'}</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= {I18n.t("Enter your new password, minimum of 8 characters")}
+                            placeholder= { this.state.languages.includes('ar') ?  I18n.t("Enter your new password, minimum of 8 characters") : "Enter your new password, minimum of 8 characters"}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             secureTextEntry = {true}
@@ -138,10 +143,10 @@ export class ChangeUserPassword extends React.Component
                             onChangeText={(text) =>{this.setState({newPassword: text});}}
                         />
 
-                        <Text style = {styles.inputFieldLabels}> {I18n.t('Confirm password')}</Text>
+                        <Text style = {styles.inputFieldLabels}> { this.state.languages.includes('ar') ?  I18n.t('Confirm password') : 'Confirm password'}</Text>
                         <TextInput style={styles.inputBox} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder= {I18n.t("Re-enter your new password, please don't copy it")}
+                            placeholder= {  this.state.languages.includes('ar') ?  I18n.t("Re-enter your new password, please don't copy it") : "Re-enter your new password, please don't copy it"}
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             secureTextEntry = {true}

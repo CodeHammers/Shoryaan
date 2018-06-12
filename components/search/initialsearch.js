@@ -33,6 +33,7 @@ export class InitialSearch extends Component {
         },
         arrayholder: [],
         auth_service: new AuthService(this),
+        languages:""
       };
       this.Search()
       
@@ -80,13 +81,13 @@ export class InitialSearch extends Component {
 
                 <Tabs initialPage={0}>
                     <Tab tabStyle={styles.inactiveTabStyle} textStyle={styles.inactiveTabTextStyle}
-                        activeTabStyle={styles.activeTabStyle} activeTextStyle={styles.activeTabTextStyle} heading={I18n.t("Search")}>
+                        activeTabStyle={styles.activeTabStyle} activeTextStyle={styles.activeTabTextStyle} heading={ this.state.languages.includes('ar') ?  I18n.t("Search") : 'Search'}>
                         <Search self={this} />
 
                     </Tab>
 
                     <Tab tabStyle={styles.inactiveTabStyle} textStyle={styles.inactiveTabTextStyle}
-                        activeTabStyle={styles.activeTabStyle} activeTextStyle={styles.activeTabTextStyle} heading={I18n.t("Map")}>
+                        activeTabStyle={styles.activeTabStyle} activeTextStyle={styles.activeTabTextStyle} heading={ this.state.languages.includes('ar') ? I18n.t("Map") : 'Map'}>
 
                         <MapView style={{flex:1}}
                             region={this.state.region}

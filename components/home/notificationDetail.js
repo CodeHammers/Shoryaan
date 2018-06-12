@@ -23,6 +23,7 @@ export class NotificationDetail extends React.Component
                 latitudeDelta: 10.0922,
                 longitudeDelta: 10.0421,
               },
+              languages:""
         }
     }
 
@@ -55,10 +56,10 @@ export class NotificationDetail extends React.Component
                     </Right>
                 </Header>
                 <View style={{flex:.5}}>
-                 <H3>{I18n.t('Request Details')}</H3>
-                 <Text> {I18n.t('Title')}: <Text note>{this.state.title}</Text> </Text> 
-                 <Text> {I18n.t('details')}: <Text note>{this.state.details}</Text> </Text> 
-                 <Text> {I18n.t('Needed Blood Types')}: <Text note>{this.state.bloodTypes}</Text> </Text> 
+                 <H3>{  this.state.languages.includes('ar') ?  I18n.t('Request Details') : 'Request Details'}</H3>
+                 <Text> { this.state.languages.includes('ar') ?  I18n.t('Title') : 'Title' }: <Text note>{this.state.title}</Text> </Text> 
+                 <Text> { this.state.languages.includes('ar') ?  I18n.t('details'): 'details'}: <Text note>{this.state.details}</Text> </Text> 
+                 <Text> {  this.state.languages.includes('ar') ? I18n.t('Needed Blood Types') : 'Needed Blood Types'}: <Text note>{this.state.bloodTypes}</Text> </Text> 
                 </View>
 
                 <View  style={{flex:.5}}>

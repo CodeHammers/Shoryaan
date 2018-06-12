@@ -14,11 +14,13 @@ export class Notifications extends React.Component
         super(props)
         this.state ={
             notifications:[],
-            auth_service: new AuthService(this)
+            auth_service: new AuthService(this),
+            languages:""
         }
         this.getViewData();
 
     }
+
 
     /** 
      * A function that retrieves the user data on two steps, first get the access token from the mobile cache
@@ -101,7 +103,7 @@ export class Notifications extends React.Component
 
                 <View >
 
-                    <H3>{I18n.t('Notifications')}</H3>
+                    <H3>{ this.state.languages.includes('ar') ?  I18n.t('Notifications') : 'Notifications' }</H3>
                     <List dataArray={this.state.notifications} renderRow={(arrayholder) =>
                         <ListItem avatar button={true}  
                         onPress={() => {this.props.navigation.navigate('NotificationDetail',arrayholder) }}>
