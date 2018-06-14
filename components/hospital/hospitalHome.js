@@ -16,11 +16,19 @@ export class HospitalHome extends React.Component {
 
         this.state = {
             id: params.id,
-            auth_service: new AuthService()
+            auth_service: new AuthService(),
+            languages: ''
         };
 
     }
 
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+            //alert(languages)
+        });
+    }
 
 
     /** A function that renders the actual the view on the screen */
@@ -58,7 +66,7 @@ export class HospitalHome extends React.Component {
                             />
                             <Text style={styles.textbutton}>
                                
-                                  {I18n.t('Hospital Profile')} 
+                                  { this.state.languages.includes('ar') ?  I18n.t('Hospital Profile')  : 'Hospital Profile'} 
                             </Text>
                         </TouchableOpacity>
 
@@ -68,7 +76,7 @@ export class HospitalHome extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                {I18n.t('Blood Requests')} 
+                                { this.state.languages.includes('ar') ?  I18n.t('Blood Requests') : 'Blood Requests'  } 
 
                             </Text>
                         </TouchableOpacity>
@@ -81,7 +89,7 @@ export class HospitalHome extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton}>
-                                 {I18n.t('Managers')} 
+                                 { this.state.languages.includes('ar') ?  I18n.t('Managers') : 'Managers'} 
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button}  onPress={()=>{ this.props.navigation.navigate('DonorsStats')}} >
@@ -90,7 +98,7 @@ export class HospitalHome extends React.Component {
                                 style={styles.ImageIconStyle}
                             />
                             <Text style={styles.textbutton} >
-                                  {I18n.t('Stats')} 
+                                  {   this.state.languages.includes('ar') ? I18n.t('Stats') : 'Stats'} 
                             </Text>
                         </TouchableOpacity>
                     </View>

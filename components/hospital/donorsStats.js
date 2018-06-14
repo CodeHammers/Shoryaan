@@ -29,10 +29,20 @@ export class DonorsStats extends React.Component
             donors: [],
             btStats:{},
             bloodTypes:  ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-','?'],
+            languages: ''
 
         }
         this.getDonors()
     }
+
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+            //alert(languages)
+        });
+    }
+
     countTypes(donors){
         bStats={};
         for(i=0 ;i < donors.length;i++){
@@ -91,7 +101,7 @@ export class DonorsStats extends React.Component
                     </Right>
                 
                 </Header>
-                <H3>  {I18n.t('Blood Diversity')}  </H3>
+                <H3>  { this.state.languages.includes('ar') ? I18n.t('Blood Diversity') : 'Blood Diversity' }  </H3>
 
 
             

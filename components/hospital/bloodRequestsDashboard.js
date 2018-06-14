@@ -18,11 +18,15 @@ export class BloodRequestsDashboard extends React.Component
       this.state = {
         id: params.id,
         bloodRequests: [],
-        auth_service: new AuthService()
+        auth_service: new AuthService(),
+        languages: ""
 
       };
       this.getRequests()
     }
+
+
+
 
     getRequests(){
         body = JSON.stringify(this.state)
@@ -56,7 +60,7 @@ export class BloodRequestsDashboard extends React.Component
                 </Header>
 
               <View style={{flexDirection:'row',margin:10}}>               
-                <Text>  {I18n.t('Blood Requests')} </Text>
+                <Text>  { this.state.languages.includes('ar') ? I18n.t('Blood Requests') : 'Blood Requests'} </Text>
                 <Right>
                     <Button transparent onPress={()=>{this.getRequests()}}> 
                         <Icon style={{color:'red'}} name='md-sync' />

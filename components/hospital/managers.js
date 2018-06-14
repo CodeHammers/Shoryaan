@@ -18,11 +18,20 @@ export class Managers extends React.Component
             managers:[],
             id: params.id,
             auth_service: new AuthService(this), //instance from an authentication service
-            email: ''
-
+            email: '',
+            languages:""
         }
         this.getManagers()
     }
+
+
+
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+        });
+    }
+
     getManagers(){
         this.state.auth_service.get('/hospital/hospital_users?id='+this.state.id)
         .then((res)=> { return res.json() } )
@@ -50,7 +59,7 @@ export class Managers extends React.Component
                 <Header style = {styles.header} noShadow =  {true} androidStatusBarColor={'#D32F2F'}>
                     <Left style = {{flex: 1}}>
                      
-                            <Icon name='arrow-back'  style={{color:'white'}}  onPress={() => this.props.navigation.goBack()} />
+                        <Icon name='arrow-back'  style={{color:'white'}}  onPress={() => this.props.navigation.goBack()} />
          
                     </Left>
 
@@ -65,12 +74,12 @@ export class Managers extends React.Component
                     </Right>
                 </Header>
                 <View style={{flexDirection:'row',margin:10}}>               
-                        <Text> {I18n.t('Managers')} </Text>
-                        <Right>
-                            <Button transparent onPress={()=>{this.getManagers()}}> 
-                                <Icon style={{color:'red'}} name='md-sync' />
-                            </Button>
-                        </Right>
+                    <Text> {  this.state.languages.includes('ar') ?  I18n.t('Managers') : "Managers" } </Text>
+                    <Right>
+                        <Button transparent onPress={()=>{this.getManagers()}}> 
+                            <Icon style={{color:'red'}} name='md-sync' />
+                        </Button>
+                    </Right>
           
 
                 
@@ -87,7 +96,7 @@ export class Managers extends React.Component
                                 <Text style={styles.StatePickerItem} note>{arrayholder.email}</Text>
                             </Body>
                             <Right>
-                                <Text style={styles.StatePickerItem} note>{I18n.t('Managers')} </Text>
+                                <Text style={styles.StatePickerItem} note>{ this.state.languages.includes('ar') ? I18n.t('Managers') : "Managers"} </Text>
                             </Right>
                         </ListItem>
                     }>
@@ -97,14 +106,14 @@ export class Managers extends React.Component
 
                     <Item style={{marginTop:8,marginBottom:8}} >
                                 <Input   
-                                    placeholder={I18n.t('E-mail')} 
+                                    placeholder={ this.state.languages.includes('ar') ? I18n.t('E-mail') : "E-mail" } 
                                     onChangeText={(text) =>{ this.setState({email: text});}}
 
                                 />
                         
                     </Item>
                     <Button rounded  danger sytle={{marginTop:12}} onPress={()=>{this.setManager()}} >
-                        <Text>  {I18n.t("Add New Manager")}  </Text>
+                        <Text>  { this.state.languages.includes('ar') ? I18n.t("Add New Manager") : "Add New Manager" }  </Text>
                     </Button>
             </Form>
                

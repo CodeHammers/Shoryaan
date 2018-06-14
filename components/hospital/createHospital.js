@@ -35,11 +35,22 @@ export class CreateHospital extends React.Component
             auth_service: new AuthService(this),
 
             valid_email: undefined,
-            validator: new ValidateService(this)
+            validator: new ValidateService(this),
+
+            languages: ''
         }
         
         this.checkStoredToken();        
     }
+
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+            //alert(languages)
+        });
+    }
+
 
     /** A function that retrieves that access token from the mobile's cache */    
     checkStoredToken(){
@@ -147,10 +158,10 @@ export class CreateHospital extends React.Component
 
                     <View style = {styles.form}>
 
-                        <Text style = {styles.inputFieldLabels}> {I18n.t("Hospital name")}  </Text>
+                        <Text style = {styles.inputFieldLabels}> { this.state.languages.includes('ar') ? I18n.t("Hospital name") : 'Hospital name'}  </Text>
                         <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
-                            placeholder=   {I18n.t("Hospital's official name")}  
+                            placeholder=   { this.state.languages.includes('ar') ? I18n.t("Hospital's official name") : "Hospital's official name" }  
                             placeholderTextColor = "#757575"
                             selectionColor="#212121"
                             autoCapitalize={'sentences'}
@@ -170,7 +181,7 @@ export class CreateHospital extends React.Component
                             })}
                         </Picker>
 
-                        <Text style = {styles.inputFieldLabels}>   {I18n.t("District")} </Text>
+                        <Text style = {styles.inputFieldLabels}>   { this.state.languages.includes('ar') ? I18n.t("District"):'District' } </Text>
                         <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             placeholder= {I18n.t("Helioplis")}  
@@ -180,7 +191,7 @@ export class CreateHospital extends React.Component
                             onChangeText={(text) =>{this.setState({district: text});}}
                         />
 
-                        <Text style = {styles.inputFieldLabels}>  {I18n.t("Address")}  </Text>
+                        <Text style = {styles.inputFieldLabels}>  { this.state.languages.includes('ar') ? I18n.t("Address"):'Address'}  </Text>
                         <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             placeholder=  {I18n.t("building number St name off St name")}    
@@ -190,7 +201,7 @@ export class CreateHospital extends React.Component
                             onChangeText={(text) =>{this.setState({address: text});}}
                         />
 
-                        <Text style = {styles.inputFieldLabels}>  {I18n.t("Phone")} </Text>
+                        <Text style = {styles.inputFieldLabels}>  { this.state.languages.includes('ar') ? I18n.t("Phone") : 'Phone' } </Text>
                         <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             placeholder= {I18n.t("City code 8-11 digits")}  
@@ -200,7 +211,7 @@ export class CreateHospital extends React.Component
                             onChangeText={(text) =>{this.setState({phone: text});}}
                         />
                         
-                        <Text style = {styles.inputFieldLabels}>  {I18n.t("E-mail")}</Text>
+                        <Text style = {styles.inputFieldLabels}>  { this.state.languages.includes('ar') ? I18n.t("E-mail") : 'E-mail' }</Text>
                         <TextInput style={styles.inputBoxNormal} 
                             underlineColorAndroid='rgba(0,0,0,0)' 
                             placeholder= "ie. queens@gmail.com"
@@ -211,7 +222,7 @@ export class CreateHospital extends React.Component
                             onChangeText={(text) =>{this.setState({email: text});}}
                         />
                     
-                        <Text style = {styles.inputFieldLabels}> {I18n.t("Status")}</Text>
+                        <Text style = {styles.inputFieldLabels}> { this.state.languages.includes('ar') ? I18n.t("Status") :'Status' }</Text>
                         <Picker
                             iosHeader="Select one"
                             mode="dropdown"
@@ -220,7 +231,7 @@ export class CreateHospital extends React.Component
                             style = {styles.pickerList}
                             >
                             {this.state.statusOptions.map((item, index) => {
-                                return (<Item style = {styles.pickerItem} label={I18n.t(item)} value={item} key={index}/>) 
+                                return (<Item style = {styles.pickerItem} label={ this.state.languages.includes('ar') ? I18n.t(item) :item} value={item} key={index}/>) 
                             })}
                         </Picker>
 

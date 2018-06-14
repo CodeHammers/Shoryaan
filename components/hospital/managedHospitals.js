@@ -27,6 +27,15 @@ export class ManagedHospitals extends React.Component
     }
 
 
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+            //alert(languages)
+            //alert(languages)
+        });
+    }
+
+
     /** A function that retrieves that access token from the mobile's cache */
     checkStoredToken(){
         return AsyncStorage.getItem("access_token").then((value) => {
@@ -81,7 +90,7 @@ export class ManagedHospitals extends React.Component
                 </Header>
 
                 <View style={{flexDirection:'row',margin:10}}>               
-                    <Text>    {I18n.t('Managed Hospitals')} </Text>
+                    <Text>    {  this.state.languages.includes('ar') ? I18n.t('Managed Hospitals') :  'Managed Hospitals' } </Text>
                     <Right>
                         <Button transparent onPress={()=>{this.getHospitalData()}}> 
                             <Icon style={{color:'red'}} name='md-sync' />

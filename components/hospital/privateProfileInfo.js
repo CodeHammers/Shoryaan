@@ -24,11 +24,21 @@ export class PrivateProfileInfo extends React.Component
             status: "",
             access_token: "",
             id: params.id,
-            auth_service: new AuthService(this) //instance from an authentication service
+            auth_service: new AuthService(this), //instance from an authentication service
+            languages: ""
         }
 
         this.getViewData(); //Get the view related data.
     }  
+
+
+
+
+    componentWillMount() {
+        getLanguages().then(languages => {
+            this.setState({ languages: languages });
+        });
+    }
 
     /** A function that retrieves the user data on two steps, first get the access token from the mobile cache
        and then call function to get the user data */
@@ -142,7 +152,7 @@ export class PrivateProfileInfo extends React.Component
                         <List>
 
                             <ListItem>
-                                <Text> {I18n.t("Hospital name")} :{" "}</Text>
+                                <Text> { this.state.languages.includes('ar') ? I18n.t("Hospital name") : "Hospital name" } :{" "}</Text>
                                 <Text note>{this.state.name}</Text>
                             </ListItem>
 
@@ -152,27 +162,27 @@ export class PrivateProfileInfo extends React.Component
                             </ListItem>
                             
                             <ListItem>
-                                <Text style = {styles.listItemLabel}> {I18n.t("District")} :{" "}</Text>
+                                <Text style = {styles.listItemLabel}> { this.state.languages.includes('ar') ? I18n.t("District") :"District"} :{" "}</Text>
                                 <Text note>{this.state.district}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text> {I18n.t("Address")} :{" "}</Text>
+                                <Text> { this.state.languages.includes('ar') ? I18n.t("Address") : "Address"} :{" "}</Text>
                                 <Text note>{this.state.address}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text>{I18n.t("Phone")}:{" "}</Text>
+                                <Text>{ this.state.languages.includes('ar') ? I18n.t("Phone") : "Phone"}:{" "}</Text>
                                 <Text note>{this.state.phone}</Text>
                             </ListItem>
 
                             <ListItem>
-                                <Text>{I18n.t("E-mail")}:{" "}</Text>
+                                <Text>{ this.state.languages.includes('ar') ? I18n.t("E-mail") : "E-mail"}:{" "}</Text>
                                 <Text note>{this.state.email}</Text>
                             </ListItem>
 
                             <ListItem last>
-                                <Text>{I18n.t("Status")}:{" "}</Text>
+                                <Text>{ this.state.languages.includes('ar') ? I18n.t("Status") : "Status"}:{" "}</Text>
                                 <Text note>{this.state.status}</Text>
                             </ListItem>
 
